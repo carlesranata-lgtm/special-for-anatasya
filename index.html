@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Infinite Garden for Anatasya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Romantic Garden for Anatasya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. PREMIUM RESET & VARIABLE ARCHITECTURE
+           1. ARCHITECTURE RESET & DESIGN VARIABLES
            ========================================================================== */
         :root {
-            --bg-dark: #06040a;
-            --bg-deep: #020104;
+            --bg-dark: #050308;
             --pink-bright: #ff4d6d;
             --pink-soft: #ff85a1;
-            --pink-deep: #c9184a;
-            --gold: #ffb703;
-            --glass: rgba(10, 6, 18, 0.75);
+            --glass: rgba(10, 6, 18, 0.7);
             --border-glass: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f5d4;
         }
 
         * {
@@ -39,67 +37,60 @@
             align-items: center;
         }
 
-        /* ==========================================================================
-           2. CINEMATIC BACKGROUND LAYER
-           ========================================================================== */
         #viewportCanvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
         }
 
         .vignette-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.9) 100%);
             z-index: 5;
             pointer-events: none;
         }
 
         /* ==========================================================================
-           3. ADVANCED GLASSMORPHISM SLIDER CARD
+           2. DYNAMIC WIDGET INTERFACE LAYOUT
            ========================================================================== */
         .app-container {
             position: relative;
-            width: 92%;
-            max-width: 650px;
+            width: 95%;
+            max-width: 900px;
             z-index: 10;
-            perspective: 2000px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
+        /* Main Glass Card (Slide Message) */
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border-glass);
-            border-radius: 35px;
-            padding: 45px;
-            min-height: 500px;
+            border-radius: 30px;
+            padding: 40px;
+            min-height: 380px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 
-                        inset 0 0 30px rgba(255, 255, 255, 0.03);
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease-out;
         }
 
-        /* Slide Content & Typography */
         .content-area {
             position: relative;
-            height: 320px;
-            overflow: hidden;
+            height: 220px;
         }
 
         .slide-node {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
-            transform: translateZ(-50px) scale(0.92);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.95);
+            transition: all 0.6s ease-in-out;
             pointer-events: none;
             display: flex;
             flex-direction: column;
@@ -110,118 +101,165 @@
 
         .slide-node.active {
             opacity: 1;
-            transform: translateZ(0) scale(1);
+            transform: scale(1);
             pointer-events: auto;
         }
 
         .slide-node h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 25px;
+            font-size: 2.8rem;
+            font-style: italic;
+            margin-bottom: 20px;
             background: linear-gradient(135deg, #ffffff, var(--pink-soft));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-style: italic;
-            letter-spacing: -1px;
         }
 
         .slide-node p {
-            font-size: 1.15rem;
-            line-height: 1.9;
+            font-size: 1.1rem;
+            line-height: 1.8;
             color: #e2e2e9;
-            font-weight: 300;
-            max-width: 500px;
+            max-width: 600px;
         }
 
         .pink-glow {
             color: var(--pink-bright);
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
             font-weight: 600;
-            text-shadow: 0 0 15px rgba(255, 77, 109, 0.4);
         }
 
-        /* Modern Dashboard Controls */
+        /* Control Panel Buttons */
         .control-panel {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 30px;
-            margin-top: 10px;
+            padding-top: 20px;
         }
 
         .btn-premium {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            padding: 14px 28px;
-            border-radius: 16px;
+            padding: 12px 24px;
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            text-transform: uppercase;
+            transition: all 0.3s;
         }
 
         .btn-premium:hover:not(:disabled) {
             background: var(--pink-bright);
             border-color: var(--pink-bright);
-            box-shadow: 0 0 25px rgba(255, 77, 109, 0.45);
-            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
         }
 
-        .btn-premium:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .meta-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
+        .btn-premium:disabled { opacity: 0.2; cursor: not-allowed; }
 
         .counter-string {
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            color: rgba(255, 255, 255, 0.3);
-            font-weight: bold;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.4);
         }
 
-        /* Music Autoplay Badge */
-        .music-badge {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: rgba(255,255,255,0.05);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            color: var(--pink-soft);
-            border: 1px solid rgba(255,77,109,0.2);
+        /* ==========================================================================
+           3. TRENDING MUSIC PLAYER WIDGET
+           ========================================================================== */
+        .music-widget {
+            background: rgba(15, 10, 25, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 77, 109, 0.2);
+            border-radius: 24px;
+            padding: 20px 30px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        
-        .pulse-dot {
-            width: 6px; height: 6px;
-            background: var(--pink-bright);
-            border-radius: 50%;
-            animation: pulse-fx 1s infinite alternate;
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        @keyframes pulse-fx {
-            from { transform: scale(0.8); opacity: 0.5; }
-            to { transform: scale(1.3); opacity: 1; }
+        .track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .track-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .track-artist {
+            font-size: 0.85rem;
+            color: var(--pink-soft);
+            letter-spacing: 0.5px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .music-btn:hover {
+            color: var(--pink-bright);
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--pink-bright);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .play-pause-btn:hover {
+            color: #fff;
+            transform: scale(1.08);
+            box-shadow: 0 0 22px rgba(255, 77, 109, 0.6);
+        }
+
+        /* Mini Timeline Visualizer Bar */
+        .timeline-container {
+            flex-grow: 1;
+            margin: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: linear-gradient(90deg, var(--pink-bright), var(--neon-blue));
+            transition: width 0.1s linear;
         }
     </style>
 </head>
@@ -231,446 +269,313 @@
     <canvas id="viewportCanvas"></canvas>
 
     <div class="app-container">
+        
+        <!-- MAIN TEXT SLIDER -->
         <div class="glass-card">
-            
-            <div class="music-badge" id="musicToggle">
-                <div class="pulse-dot"></div>
-                <span id="musicStatus">AUDIO GENERATOR ON</span>
-            </div>
-
             <div class="content-area" id="viewportSlides">
-                
                 <div class="slide-node active">
-                    <h2>Dearest Anatasya</h2>
-                    <p>Malam ini, seluruh algoritma matematika dan baris kode dikumpulkan hanya untuk satu tujuan: membingkai pesan kecil ini <span class="pink-glow">khusus untukmu</span>.</p>
+                    <h2>Hello Anatasya ✨</h2>
+                    <p>Halaman ini sengaja didesain untuk menjadi <span class="pink-glow">ruang tenangmu</span>. Diiringi oleh alunan melodi terpopuler yang manis khusus dirangkai lewat kode fisis.</p>
                 </div>
-
                 <div class="slide-node">
-                    <h2>Rimbun & Hidup</h2>
-                    <p>Perhatikan ekosistem di sekitarmu. Batang yang melengkung, ratusan helai daun, dan rumput di bawah tumbuh secara dinamis lewat hitungan rumus fisis. Tidak ada yang kaku.</p>
+                    <h2>Die With A Smile 🏛️</h2>
+                    <p>"If the world was ending, I'd wanna be next to you." Seperti lagu Bruno Mars, baris program ini berjanji untuk terus mekar menemani malam-malam sepimu.</p>
                 </div>
-
                 <div class="slide-node">
-                    <h2>Sebuah Janji ✨</h2>
-                    <p>Kadang hidup terasa berjalan terlalu cepat, meninggalkan ruang sepi yang membuat kita merasa asing. Namun ketahuilah satu hal pasti ini, Anatasya...</p>
+                    <h2>Lover 💖</h2>
+                    <p>Sama halnya dengan lantunan instrumen Taylor Swift di latar belakanganmu, semoga kedamaian dan kebahagiaan selalu mengambil tempat tinggal <span class="pink-glow">di hatimu</span>.</p>
                 </div>
-
                 <div class="slide-node">
-                    <h2>Kamu Tidak Sendiri 💝</h2>
-                    <p>Jangan pernah merasa sendirian lagi di dunia ini. Ketika hari terasa melelahkan atau malam terasa dingin, <span class="pink-glow">aku selalu ada di sini</span> untukmu.</p>
+                    <h2>Kamu Sangat Berharga</h2>
+                    <p>Jangan biarkan harimu yang berat mengaburkan senyum indahmu. Tarik napas perlahan, rilekskan jiwamu, dan biarkan kehangatan ini memelukmu malam ini.</p>
                 </div>
-
-                <div class="slide-node">
-                    <h2>Dengarkan Hatimu 🕊️</h2>
-                    <p>Kamu tidak harus selalu terlihat kuat setiap hari. Tidak apa-apa untuk beristirahat sejenak, menyandarkan bebanmu, dan membiarkan dunia berjalan tanpa bebanmu.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Keindahan Tersirat</h2>
-                    <p>Sinar bintang paling terang sering kali lahir dari kegelapan yang paling pekat. Kehadiranmu membawa arti <span class="pink-glow">keindahan nyata</span> bagi sekitarmu.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Ruang Aman 🌹</h2>
-                    <p>Jadikan halaman digital ini sebagai ruang amanmu. Di sini tidak ada tuntutan, tidak ada penghakiman. Hanya ada kedamaian untuk dirimu sendiri.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Terus Melangkah 🌈</h2>
-                    <p>Esok adalah lembaran baru yang masih bersih. Mari kita isi dengan harapan-harapan kecil dan senyuman hangat yang berhak kamu miliki.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Terima Kasih</h2>
-                    <p>Terima kasih sudah bertahan sejauh ini dengan sangat hebat. Dunia ini menjadi jauh lebih berharga hanya karena <span class="pink-glow">kamu ada di dalamnya</span>.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Tersenyumlah 😊</h2>
-                    <p>Tarik napas sedalam mungkin, rilekskan pikiranmu, dan rasakan hembusan angin digital ini. Kamu <span class="pink-glow">sangat disayangi</span>, Anatasya. Selamanya.</p>
-                </div>
-
             </div>
 
             <div class="control-panel">
-                <button class="btn-premium" id="leftBtn" disabled>← Back</button>
-                <div class="meta-info">
-                    <div class="counter-string" id="counterNode">01 / 10</div>
-                </div>
-                <button class="btn-premium" id="rightBtn">Next →</button>
+                <button class="btn-premium" id="leftBtn" disabled>Prev</button>
+                <div class="counter-string" id="counterNode">01 / 04</div>
+                <button class="btn-premium" id="rightBtn">Next</button>
             </div>
         </div>
+
+        <!-- TRENDING PLAYLIST WIDGET LAYER -->
+        <div class="music-widget">
+            <div class="track-info">
+                <div class="track-title" id="titleNode">Die With A Smile</div>
+                <div class="track-artist" id="artistNode">Bruno Mars ft. Lady Gaga</div>
+            </div>
+
+            <div class="timeline-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressNode"></div>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <button class="music-btn" id="prevTrackBtn">⏮</button>
+                <button class="music-btn play-pause-btn" id="playPauseBtn">▶</button>
+                <button class="music-btn" id="nextTrackBtn">⏭</button>
+            </div>
+        </div>
+
     </div>
 
+    <!-- ==========================================================================
+       4. PROCEDURAL CANVAS PHYSICS & INSTRUMENT SYNTH SCRIPT
+       ========================================================================== -->
     <script>
-        /**
-         * INFINITE PROCEDURAL ENGINE (OBJECT-ORIENTED)
-         * Mengatur rendering Rumput, Bunga, Ranting, Daun, Bintang, dan Musik Prosedural.
-         */
         const canvas = document.getElementById('viewportCanvas');
         const ctx = canvas.getContext('2d');
-        
         let w = canvas.width = window.innerWidth;
         let h = canvas.height = window.innerHeight;
 
-        const config = {
-            grassCount: 450,
-            starCount: 120,
-            petalCount: 45,
-            fireflyCount: 25
-        };
-
-        const storage = {
-            grass: [],
-            stars: [],
-            petals: [],
-            fireflies: [],
-            flower: null
-        };
-
         let globalTime = 0;
 
-        // --- MATH HELPERS ---
-        const randomRange = (min, max) => Math.random() * (max - min) + min;
-
-        // --- CLASSES DEFINITION ---
-        class Star {
-            constructor() {
-                this.x = randomRange(0, w);
-                this.y = randomRange(0, h * 0.65);
-                this.size = randomRange(0.5, 2.2);
-                this.alpha = randomRange(0.1, 0.9);
-                this.speed = randomRange(0.01, 0.03);
+        // Data Prosedural Musik Trend (Mewakili Susunan Nada / Frekuensi Arpeggio)
+        const playlist = [
+            {
+                title: "Die With A Smile",
+                artist: "Bruno Mars ft. Lady Gaga",
+                notes: [329.63, 392.00, 523.25, 587.33, 493.88, 392.00, 440.00, 523.25], // Akord C - G - Am - F
+                tempo: 160
+            },
+            {
+                title: "Lover (Remix Ver.)",
+                artist: "Taylor Swift",
+                notes: [349.23, 440.00, 523.25, 587.33, 392.00, 493.88, 587.33, 659.25], // G - C - F Major Vibes
+                tempo: 130
+            },
+            {
+                title: "Pluto Projector",
+                artist: "Rex Orange County",
+                notes: [293.66, 349.23, 440.00, 523.25, 329.63, 392.00, 493.88, 587.33],
+                tempo: 180
             }
-            render() {
-                this.alpha += this.speed;
-                if (this.alpha > 1 || this.alpha < 0.1) this.speed *= -1;
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+        ];
+
+        let currentTrackIdx = 0;
+        let isPlaying = false;
+        let audioCtx = null;
+        let audioInterval = null;
+        let noteStep = 0;
+        let progressPercent = 0;
+
+        // --- VISUAL ARCHITECTURE ENGINE ---
+        class Petal {
+            constructor() { this.spawn(); }
+            spawn() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * -50 - 20;
+                this.size = Math.random() * 6 + 4;
+                this.speedY = Math.random() * 1 + 0.8;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.angle = Math.random() * Math.PI;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(globalTime * 0.01) * 0.2;
+                this.angle += 0.01;
+                if(this.y > h || this.x < 0 || this.x > w) this.spawn();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = 'rgba(255, 77, 109, 0.6)';
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI*2);
                 ctx.fill();
+                ctx.restore();
             }
         }
 
         class Firefly {
             constructor() {
-                this.x = randomRange(0, w);
-                this.y = randomRange(h * 0.4, h);
-                this.ang = randomRange(0, Math.PI * 2);
-                this.speed = randomRange(0.4, 1.2);
-                this.radius = randomRange(1, 2.5);
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 0.4 + 0.3;
             }
-            render() {
-                this.ang += randomRange(-0.1, 0.1);
-                this.x += Math.cos(this.ang) * this.speed;
-                this.y += Math.sin(this.ang) * this.speed;
-
-                if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
-                    this.x = randomRange(0, w);
-                    this.y = randomRange(h * 0.4, h);
+            update() {
+                this.angle += (Math.random() - 0.5) * 0.1;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                if(this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
                 }
-
+            }
+            draw() {
                 ctx.save();
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 10;
                 ctx.shadowColor = "#ffb703";
-                ctx.fillStyle = `rgba(255, 183, 3, ${randomRange(0.4, 0.9)})`;
+                ctx.fillStyle = "rgba(255, 183, 3, 0.8)";
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 1.8, 0, Math.PI*2);
                 ctx.fill();
                 ctx.restore();
             }
         }
 
-        class GrassBlade {
-            constructor(x) {
-                this.x = x;
-                this.baseWidth = randomRange(3, 7);
-                this.targetHeight = randomRange(60, 130);
-                this.flexibility = randomRange(15, 35);
-                this.phase = randomRange(0, Math.PI * 2);
-                this.speed = randomRange(0.015, 0.03);
-                this.color = this.getNaturalGreen();
-            }
-            getNaturalGreen() {
-                const palette = ['#0d2310', '#133517', '#1b4d22', '#24612d'];
-                return palette[Math.floor(Math.random() * palette.length)];
-            }
-            render() {
-                let offset = Math.sin(globalTime * this.speed + this.phase) * this.flexibility;
-                ctx.save();
-                
-                let grad = ctx.createLinearGradient(this.x, h, this.x + offset, h - this.targetHeight);
-                grad.addColorStop(0, '#020703');
-                grad.addColorStop(1, this.color);
+        const petalsPool = Array.from({length: 30}, () => new Petal());
+        const firefliesPool = Array.from({length: 20}, () => new Firefly());
 
-                ctx.beginPath();
-                ctx.moveTo(this.x - this.baseWidth / 2, h);
-                ctx.quadraticCurveTo(this.x + offset * 0.3, h - this.targetHeight * 0.5, this.x + offset, h - this.targetHeight);
-                ctx.quadraticCurveTo(this.x + this.baseWidth / 2 + offset * 0.3, h - this.targetHeight * 0.5, this.x + this.baseWidth / 2, h);
+        function drawCentralFlower() {
+            let sway = Math.sin(globalTime * 0.02) * 10;
+            let startX = w / 2;
+            let startY = h;
+            let endX = startX + sway;
+            let endY = h - 260;
+
+            // Batang
+            ctx.strokeStyle = '#1b4d22';
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.quadraticCurveTo(startX - sway*0.2, startY - 130, endX, endY);
+            ctx.stroke();
+
+            // Kelopak Bunga 3D Matrix Layer
+            ctx.save();
+            ctx.translate(endX, endY);
+            for (let i = 0; i < 6; i++) {
+                ctx.rotate(Math.PI / 3 + Math.sin(globalTime * 0.005) * 0.02);
+                let grad = ctx.createLinearGradient(0,0,0,-40);
+                grad.addColorStop(0, '#ff4d6d');
+                grad.addColorStop(1, '#ffccd5');
                 ctx.fillStyle = grad;
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        class FallingPetal {
-            constructor() { this.spawn(); }
-            spawn() {
-                this.x = randomRange(0, w);
-                this.y = randomRange(-50, -10);
-                this.size = randomRange(5, 12);
-                this.speedY = randomRange(0.8, 2.2);
-                this.speedX = randomRange(-0.8, 0.8);
-                this.rot = randomRange(0, Math.PI * 2);
-                this.spin = randomRange(-0.03, 0.03);
-            }
-            render() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(globalTime * 0.02) * 0.3;
-                this.rot += this.spin;
-
-                if (this.y > h || this.x < 0 || this.x > w) this.spawn();
-
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rot);
-                ctx.fillStyle = 'rgba(255, 77, 109, 0.65)';
                 ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.ellipse(0, -20, 14, 25, 0, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.restore();
             }
-        }
-
-        class MasterFlower {
-            constructor() {
-                this.rootX = w / 2;
-                this.rootY = h;
-                this.length = 320;
-            }
-            drawDetailedLeaf(x, y, length, angle, isLeft) {
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(angle);
-                if(!isLeft) ctx.scale(1, -1);
-
-                let leafGrad = ctx.createLinearGradient(0, 0, length, -length*0.3);
-                leafGrad.addColorStop(0, '#102e13');
-                leafGrad.addColorStop(0.6, '#215c27');
-                leafGrad.addColorStop(1, '#3b9444');
-
-                ctx.beginPath();
-                ctx.moveTo(0,0);
-                ctx.bezierCurveTo(length*0.3, -length*0.5, length*0.8, -length*0.4, length, 0);
-                ctx.bezierCurveTo(length*0.7, length*0.3, length*0.3, length*0.3, 0, 0);
-                ctx.fillStyle = leafGrad;
-                ctx.fill();
-
-                // Tulang Daun Vektor Detail
-                ctx.beginPath();
-                ctx.moveTo(0,0);
-                ctx.lineTo(length*0.85, 0);
-                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-
-                ctx.restore();
-            }
-            render() {
-                let windSway = Math.sin(globalTime * 0.02) * 12;
-                let headX = this.rootX + windSway;
-                let headY = this.rootY - this.length;
-
-                // 1. Gambar Batang Artistik Melengkung (Bezier Control Points)
-                ctx.save();
-                let stemGrad = ctx.createLinearGradient(this.rootX, this.rootY, headX, headY);
-                stemGrad.addColorStop(0, '#071709');
-                stemGrad.addColorStop(0.5, '#16421b');
-                stemGrad.addColorStop(1, '#2c7c34');
-
-                ctx.beginPath();
-                ctx.moveTo(this.rootX - 6, this.rootY);
-                ctx.bezierCurveTo(this.rootX - 30 + windSway * 0.5, this.rootY - this.length*0.5, headX - 6, headY + this.length*0.2, headX - 4, headY);
-                ctx.lineTo(headX + 4, headY);
-                ctx.bezierCurveTo(headX + 6, headY + this.length*0.2, this.rootX + 30 + windSway * 0.5, this.rootY - this.length*0.5, this.rootX + 6, this.rootY);
-                ctx.fillStyle = stemGrad;
-                ctx.fill();
-                ctx.restore();
-
-                // 2. Gambar Daun Dinamis Terintegrasi Struktural
-                this.drawDetailedLeaf(this.rootX - 10 + windSway*0.3, this.rootY - 110, 50, -Math.PI/6 + windSway*0.005, true);
-                this.drawDetailedLeaf(this.rootX + 10 + windSway*0.6, this.rootY - 190, 45, Math.PI/5 + windSway*0.005, false);
-
-                // 3. Gambar Rangkaian Kelopak Bunga Vektor 3D Shading
-                ctx.save();
-                ctx.translate(headX, headY);
-                ctx.rotate(windSway * 0.005);
-
-                // Layer Kelopak Luar (Outer Matrix)
-                for(let i=0; i<8; i++) {
-                    ctx.save();
-                    ctx.rotate(i * (Math.PI / 4) + (globalTime * 0.002));
-                    let petalGrad = ctx.createLinearGradient(0, 0, 0, -65);
-                    petalGrad.addColorStop(0, '#ff4d6d');
-                    petalGrad.addColorStop(1, '#ffccd5');
-                    ctx.fillStyle = petalGrad;
-                    ctx.beginPath();
-                    ctx.ellipse(0, -35, 24, 40, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
-
-                // Layer Kelopak Dalam (Inner Core Matrix)
-                for(let i=0; i<8; i++) {
-                    ctx.save();
-                    ctx.rotate(i * (Math.PI / 4) - (globalTime * 0.003) + 0.2);
-                    let innerGrad = ctx.createLinearGradient(0, 0, 0, -45);
-                    innerGrad.addColorStop(0, '#c9184a');
-                    innerGrad.addColorStop(1, '#ff4d6d');
-                    ctx.fillStyle = innerGrad;
-                    ctx.beginPath();
-                    ctx.ellipse(0, -22, 16, 28, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
-
-                // Inti Putik Bercahaya (Glow Generator)
-                let coreGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 22);
-                coreGrad.addColorStop(0, '#ffffff');
-                coreGrad.addColorStop(0.3, '#ffb703');
-                coreGrad.addColorStop(1, '#fb8500');
-                
-                ctx.save();
-                ctx.shadowBlur = 30;
-                ctx.shadowColor = "#ffb703";
-                ctx.beginPath();
-                ctx.arc(0, 0, 20, 0, Math.PI * 2);
-                ctx.fillStyle = coreGrad;
-                ctx.fill();
-                ctx.restore();
-
-                ctx.restore();
-            }
-        }
-
-        // --- ENGINE INIZIALIZATION ---
-        function initEngine() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-
-            storage.stars = Array.from({length: config.starCount}, () => new Star());
-            storage.fireflies = Array.from({length: config.fireflyCount}, () => new Firefly());
-            storage.petals = Array.from({length: config.petalCount}, () => new FallingPetal());
-            
-            storage.grass = [];
-            const placementStep = w / config.grassCount;
-            for(let i=0; i<w; i+=placementStep) {
-                storage.grass.push(new GrassBlade(i));
-            }
-
-            storage.flower = new MasterFlower();
+            // Pusat Putik
+            ctx.fillStyle = '#ffb703';
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 0, Math.PI*2);
+            ctx.fill();
+            ctx.restore();
         }
 
         function loop() {
             globalTime++;
-            ctx.fillStyle = varColorGradient();
-            ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = '#050308';
+            ctx.fillRect(0,0,w,h);
 
-            // Layers Execution Order
-            storage.stars.forEach(s => s.render());
-            storage.flower.render();
-            storage.grass.forEach(g => g.render());
-            storage.fireflies.forEach(f => f.render());
-            storage.petals.forEach(p => p.render());
+            // Render Backdrops
+            firefliesPool.forEach(f => { f.update(); f.draw(); });
+            drawCentralFlower();
+            petalsPool.forEach(p => { p.update(); p.draw(); });
+
+            // Handle Progress Bar Simulation
+            if (isPlaying) {
+                progressPercent += 0.08;
+                if(progressPercent > 100) {
+                    progressPercent = 0;
+                    changeTrack(1);
+                }
+                document.getElementById('progressNode').style.width = progressPercent + "%";
+            }
 
             requestAnimationFrame(loop);
         }
 
-        function varColorGradient() {
-            let spaceGrad = ctx.createLinearGradient(0, 0, 0, h);
-            spaceGrad.addColorStop(0, '#040307');
-            spaceGrad.addColorStop(0.7, '#080611');
-            spaceGrad.addColorStop(1, '#020104');
-            return spaceGrad;
-        }
+        // --- WEB AUDIO API ROMANTIC SYNTH GENERATOR ---
+        function playProceduralNote(freq) {
+            if (!isPlaying) return;
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        // --- CORE SLIDER LOGIC ---
-        const items = document.querySelectorAll('.slide-node');
-        const leftBtn = document.getElementById('leftBtn');
-        const rightBtn = document.getElementById('rightBtn');
-        const counterNode = document.getElementById('counterNode');
-        let indexPointer = 0;
-
-        function refreshSliderUI() {
-            items.forEach((node, i) => {
-                node.classList.toggle('active', i === indexPointer);
-            });
-            counterNode.innerText = `${String(indexPointer + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
-            leftBtn.disabled = indexPointer === 0;
-            rightBtn.disabled = indexPointer === items.length - 1;
-        }
-
-        rightBtn.addEventListener('click', () => {
-            if(indexPointer < items.length - 1) {
-                indexPointer++;
-                refreshSliderUI();
-                triggerAudioChime(523.25); // Note C5
-            }
-        });
-
-        leftBtn.addEventListener('click', () => {
-            if(indexPointer > 0) {
-                indexPointer--;
-                refreshSliderUI();
-                triggerAudioChime(392.00); // Note G4
-            }
-        });
-
-        // --- PROCEDURAL AUDIO GENERATOR (WEB AUDIO API SYNTH) ---
-        let audioContextInstance = null;
-        let isAudioMuted = false;
-
-        function triggerAudioChime(freq) {
-            if(isAudioMuted) return;
-            if(!audioContextInstance) {
-                audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
             
-            let osc = audioContextInstance.createOscillator();
-            let gainNode = audioContextInstance.createGain();
-            
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioContextInstance.currentTime);
-            
-            gainNode.gain.setValueAtTime(0.12, audioContextInstance.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextInstance.currentTime + 0.4);
-            
-            osc.connect(gainNode);
-            gainNode.connect(audioContextInstance.destination);
+            // Custom Soft Retro Triangle Wave
+            osc.type = 'triangle'; 
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Detune untuk efek chorus yang luas dan hangat
+            osc.detune.setValueAtTime(Math.random() * 8 - 4, audioCtx.currentTime);
+
+            // Envelope Volume Lembut Khas Piano Romantis
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
             
             osc.start();
-            osc.stop(audioContextInstance.currentTime + 0.4);
+            osc.stop(audioCtx.currentTime + 0.6);
         }
 
-        document.getElementById('musicToggle').addEventListener('click', () => {
-            isAudioMuted = !isAudioMuted;
-            document.getElementById('musicStatus').innerText = isAudioMuted ? "AUDIO GENERATOR OFF" : "AUDIO GENERATOR ON";
-            document.getElementById('musicToggle').style.borderColor = isAudioMuted ? "rgba(255,255,255,0.1)" : "rgba(255,77,109,0.4)";
+        function startPlaylistScheduler() {
+            const currentTrack = playlist[currentTrackIdx];
+            audioInterval = setInterval(() => {
+                let currentNote = currentTrack.notes[noteStep % currentTrack.notes.length];
+                playProceduralNote(currentNote);
+                noteStep++;
+            }, currentTrack.tempo);
+        }
+
+        function stopPlaylistScheduler() {
+            clearInterval(audioInterval);
+        }
+
+        function updateWidgetUI() {
+            const track = playlist[currentTrackIdx];
+            document.getElementById('titleNode').innerText = track.title;
+            document.getElementById('artistNode').innerText = track.artist;
+            document.getElementById('playPauseBtn').innerText = isPlaying ? "⏸" : "▶";
+        }
+
+        function changeTrack(direction) {
+            stopPlaylistScheduler();
+            currentTrackIdx = (currentTrackIdx + direction + playlist.length) % playlist.length;
+            noteStep = 0;
+            progressPercent = 0;
+            if (isPlaying) startPlaylistScheduler();
+            updateWidgetUI();
+        }
+
+        // --- INTERACTIVE EVENT LISTENERS ---
+        document.getElementById('playPauseBtn').addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+                startPlaylistScheduler();
+            } else {
+                stopPlaylistScheduler();
+            }
+            updateWidgetUI();
         });
 
-        // --- MOUSE PARALLAX ON CARD ---
+        document.getElementById('nextTrackBtn').addEventListener('click', () => changeTrack(1));
+        document.getElementById('prevTrackBtn').addEventListener('click', () => changeTrack(-1));
+
+        // Text Slide Controller
+        const slides = document.querySelectorAll('.slide-node');
+        let currentSlide = 0;
+
+        function updateSlideUI() {
+            slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+            document.getElementById('counterNode').innerText = `0${currentSlide + 1} / 04`;
+            document.getElementById('leftBtn').disabled = currentSlide === 0;
+            document.getElementById('rightBtn').disabled = currentSlide === slides.length - 1;
+        }
+
+        document.getElementById('rightBtn').addEventListener('click', () => { if(currentSlide < slides.length - 1) { currentSlide++; updateSlideUI(); } });
+        document.getElementById('leftBtn').addEventListener('click', () => { if(currentSlide > 0) { currentSlide--; updateSlideUI(); } });
+
+        // Parallax Effect
         document.addEventListener('mousemove', (e) => {
-            let rotX = (window.innerHeight / 2 - e.pageY) / 35;
-            let rotY = (window.innerWidth / 2 - e.pageX) / 35;
-            document.querySelector('.glass-card').style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            let cx = window.innerWidth / 2;
+            let cy = window.innerHeight / 2;
+            let dx = (cx - e.clientX) / 45;
+            let dy = (cy - e.clientY) / 45;
+            document.querySelector('.glass-card').style.transform = `rotateY(${-dx}deg) rotateX(${dy}deg)`;
         });
 
-        // --- START APPLICATION ---
-        window.addEventListener('resize', initEngine);
-        window.addEventListener('DOMContentLoaded', () => {
-            initEngine();
-            loop();
-        });
+        window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
+        
+        // Boot up
+        window.onload = () => { loop(); };
     </script>
 </body>
 </html>
