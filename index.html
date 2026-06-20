@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Cinematic Space for Anatasya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <title>Anatasya's Radiant Bioluminescent Garden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           1. CORE ARCHITECTURE & SYSTEM DESIGN
-           ========================================================================== */
         :root {
-            --bg-dark: #040206;
-            --pink-bright: #ff4d6d;
-            --pink-soft: #ff85a1;
-            --pink-deep: #c9184a;
-            --gold: #ffb703;
-            --neon-cyan: #00f5d4;
-            --glass: rgba(12, 8, 20, 0.75);
-            --border-glass: rgba(255, 255, 255, 0.08);
+            --cyan-glow: #00f5d4;
+            --pink-glow: #ff758f;
+            --blue-glow: #00b4d8;
+            --glass-bg: rgba(10, 20, 38, 0.45);
+            --border-glow: rgba(0, 245, 212, 0.25);
         }
 
         * {
@@ -28,666 +22,549 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
+            background-color: #020104;
             font-family: 'Montserrat', sans-serif;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative;
         }
 
-        #viewportCanvas {
+        /* --- LAYER 1: TEXT CODE BACKGROUND --- */
+        .code-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
+            font-family: 'Fira Code', monospace;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: rgba(0, 245, 212, 0.1);
+            padding: 40px;
+            white-space: pre;
+            pointer-events: none;
             z-index: 1;
         }
 
-        .vignette-overlay {
+        .code-keyword { color: rgba(255, 117, 143, 0.15); }
+        .code-function { color: rgba(0, 180, 216, 0.15); }
+
+        /* --- LAYER 2: SYSTEM CANVAS GRAPHICS --- */
+        #gardenCanvas {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%);
-            z-index: 5;
+            z-index: 2;
             pointer-events: none;
         }
 
-        /* ==========================================================================
-           2. INTERFACE CONTAINER SYSTEM
-           ========================================================================== */
-        .app-container {
-            position: relative;
-            width: 92%;
-            max-width: 650px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            perspective: 1500px;
-        }
-
-        /* Message Glass Card */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-glass);
-            border-radius: 32px;
-            padding: 45px;
-            min-height: 420px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255,255,255,0.02);
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease-out;
-        }
-
-        .content-area {
-            position: relative;
-            height: 250px;
-        }
-
-        .slide-node {
+        .vignette {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            transform: translateZ(-30px) scale(0.95);
-            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            background: radial-gradient(circle at 50% 30%, transparent 20%, rgba(2, 1, 4, 0.9) 100%);
+            z-index: 3;
             pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
 
-        .slide-node.active {
-            opacity: 1;
-            transform: translateZ(0) scale(1);
-            pointer-events: auto;
-        }
-
-        .slide-node h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            font-style: italic;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff, var(--pink-soft));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .slide-node p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #dcdce5;
-            font-weight: 300;
-        }
-
-        .pink-glow {
-            color: var(--pink-bright);
-            text-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
-            font-weight: 600;
-        }
-
-        /* Nav Controls */
-        .control-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 25px;
-        }
-
-        .btn-premium {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            padding: 12px 26px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-
-        .btn-premium:hover:not(:disabled) {
-            background: var(--pink-bright);
-            border-color: var(--pink-bright);
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
-        }
-
-        .btn-premium:disabled { opacity: 0.15; cursor: not-allowed; }
-
-        .counter-string {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            color: rgba(255,255,255,0.3);
-            font-weight: bold;
-        }
-
-        /* ==========================================================================
-           3. TRENDING MUSIC WIDGET COMPONENT
-           ========================================================================== */
-        .music-widget {
-            background: rgba(14, 8, 22, 0.8);
+        /* --- LAYER 3: FLOATING GLASSMORPHISM MUSIC WIDGETS --- */
+        .widget {
+            position: absolute;
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 77, 109, 0.25);
-            border-radius: 24px;
-            padding: 22px 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-glow);
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 0 35px rgba(0, 245, 212, 0.12), inset 0 0 15px rgba(255,255,255,0.02);
+            z-index: 10;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
         }
 
-        .track-info {
+        .widget:hover {
+            transform: scale(1.03) translateY(-3px);
+            border-color: var(--pink-glow);
+            box-shadow: 0 0 45px rgba(255, 117, 143, 0.2);
+        }
+
+        #widget-bruno { top: 42%; left: 6%; width: 320px; }
+        #widget-taylor { top: 12%; right: 8%; width: 340px; border-color: rgba(255, 117, 143, 0.25); }
+        #widget-playlist { bottom: 12%; right: 6%; width: 300px; }
+
+        .track-header {
             display: flex;
-            flex-direction: column;
-            gap: 3px;
-            min-width: 180px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
         .track-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #ffffff;
-            letter-spacing: -0.5px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        .heart-icon {
+            color: var(--pink-glow);
+            font-size: 0.9rem;
+            animation: pulse 1.4s infinite;
         }
 
         .track-artist {
-            font-size: 0.85rem;
-            color: var(--pink-soft);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 15px;
+            display: block;
         }
 
         .timeline-container {
-            flex-grow: 1;
-            margin: 0 35px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 3px;
+            width: 100%; height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
             position: relative;
+            margin-bottom: 15px;
             overflow: hidden;
         }
 
-        .progress-fill {
+        .timeline-fill {
             position: absolute;
             top: 0; left: 0; width: 0%; height: 100%;
-            background: linear-gradient(90deg, var(--pink-bright), var(--neon-cyan));
+            background: linear-gradient(90deg, var(--cyan-glow), var(--pink-glow));
         }
 
-        .player-controls {
+        .controls-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 18px;
         }
 
-        .music-btn {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
+        .stars-indicator { color: #ffb703; font-size: 0.85rem; }
+
+        .media-buttons { display: flex; gap: 14px; align-items: center; }
+
+        .btn-media {
+            background: none; border: none;
+            color: #ffffff; cursor: pointer;
+            font-size: 1rem; transition: color 0.2s;
         }
 
-        .music-btn:hover { color: var(--pink-bright); transform: scale(1.15); }
-
-        .play-pause-btn {
-            width: 48px; height: 48px;
-            background: var(--pink-bright);
+        .btn-media:hover { color: var(--cyan-glow); }
+        
+        .btn-play-circle {
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.06);
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.1rem;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.4);
+            border: 1px solid rgba(255,255,255,0.15);
         }
+        .btn-play-circle:hover { background: var(--cyan-glow); color: #020104; border-color: var(--cyan-glow); }
 
-        .play-pause-btn:hover { transform: scale(1.08); box-shadow: 0 0 22px rgba(255, 77, 109, 0.6); }
+        .loop-mode { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+        .heart-row { display: flex; gap: 5px; color: var(--blue-glow); margin: 8px 0; font-size: 0.8rem; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.18); opacity: 1; text-shadow: 0 0 10px var(--pink-glow); }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="vignette-overlay"></div>
-    <canvas id="viewportCanvas"></canvas>
+    <div class="code-bg" id="codeContainer"></div>
 
-    <div class="app-container">
-        
-        <div class="glass-card">
-            <div class="content-area" id="viewportSlides">
-                
-                <div class="slide-node active">
-                    <h2>Untuk Anatasya ✨</h2>
-                    <p>Malam ini aku mengumpulkan ribuan baris logika fisis matematika untuk membangun taman ini. Coba klik tombol "Next" di bawah.</p>
-                </div>
+    <div class="vignette"></div>
+    <canvas id="gardenCanvas"></canvas>
 
-                <div class="slide-node">
-                    <h2>Jangan Sendiri... 💝</h2>
-                    <p>Aku ingin kamu ingat satu hal penting ini: <span class="pink-glow">Kamu tidak pernah sendirian</span>. Kapan pun kamu merasa lelah, aku bakal selalu ada buat kamu.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Melodi Penenang 🎵</h2>
-                    <p>Di bawah, aku rakit mesin pemutar musik tren romantis khusus untuk menemani malammu. Nyalakan audionya dan biarkan lagunya memeluk perasaanmu.</p>
-                </div>
-
-                <div class="slide-node">
-                    <h2>Terus Mekar 🌸</h2>
-                    <p>Sama halnya seperti bunga besar di belakang kartumu yang berayun lembut, kamu juga berhak tumbuh bahagia di waktumu sendiri. Senyum ya, Anatasya!</p>
-                </div>
-
+    <div class="widget" id="widget-bruno">
+        <div class="track-header">
+            <div class="track-title">Bruno Mars - Die With A Smile</div>
+            <div class="heart-icon">💙</div>
+        </div>
+        <span class="track-artist">Trending Romantic Base - System Active</span>
+        <div class="timeline-container"><div class="timeline-fill" id="fill-bruno" style="width: 45%"></div></div>
+        <div class="controls-row">
+            <span class="stars-indicator">⭐</span>
+            <div class="media-buttons">
+                <button class="btn-media">⏮</button>
+                <button class="btn-media btn-play-circle" onclick="toggleAudio(160, [329.63, 392.00, 523.25, 587.33], 'fill-bruno')">▶</button>
+                <button class="btn-media">⏭</button>
             </div>
+            <span class="btn-media loop-mode">🔁</span>
+        </div>
+    </div>
 
-            <div class="control-panel">
-                <button class="btn-premium" id="leftBtn" disabled>Prev</button>
-                <div class="counter-string" id="counterNode">01 / 04</div>
-                <button class="btn-premium" id="rightBtn">Next</button>
+    <div class="widget" id="widget-taylor">
+        <div class="track-header">
+            <div class="track-title">Taylor Swift - Lover (Remix)</div>
+            <div class="heart-icon">💖</div>
+        </div>
+        <span class="track-artist">Midnight Room Ver. - Wave Generation</span>
+        <div class="timeline-container"><div class="timeline-fill" id="fill-taylor" style="width: 20%"></div></div>
+        <div class="controls-row">
+            <span class="stars-indicator">🌸</span>
+            <div class="media-buttons">
+                <button class="btn-media">⏮</button>
+                <button class="btn-media btn-play-circle" onclick="toggleAudio(140, [349.23, 440.00, 523.25, 659.25], 'fill-taylor')">▶</button>
+                <button class="btn-media">⏭</button>
+            </div>
+            <span class="btn-media loop-mode">🔀</span>
+        </div>
+    </div>
+
+    <div class="widget" id="widget-playlist">
+        <div class="track-header">
+            <div class="track-title">NewRomantics Playlist</div>
+        </div>
+        <div class="heart-row">💙 ❤️ 💜 🩵 💖</div>
+        <div class="timeline-container"><div class="timeline-fill" id="fill-playlist" style="width: 75%"></div></div>
+        <div class="controls-row">
+            <div class="media-buttons">
+                <button class="btn-media">⏮</button>
+                <button class="btn-media btn-play-circle" onclick="toggleAudio(180, [293.66, 349.23, 440.00, 523.25], 'fill-playlist')">▶</button>
+                <button class="btn-media">⏭</button>
             </div>
         </div>
-
-        <div class="music-widget">
-            <div class="track-info">
-                <div class="track-title" id="titleNode">Die With A Smile</div>
-                <div class="track-artist" id="artistNode">Bruno Mars ft. Lady Gaga</div>
-            </div>
-
-            <div class="timeline-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressNode"></div>
-                </div>
-            </div>
-
-            <div class="player-controls">
-                <button class="music-btn" id="prevTrackBtn">⏮</button>
-                <button class="music-btn play-pause-btn" id="playPauseBtn">▶</button>
-                <button class="music-btn" id="nextTrackBtn">⏭</button>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        const canvas = document.getElementById('viewportCanvas');
+        // 1. GENERATE BACKGROUND TEXT CODE WRAPPER
+        const codeLines = [
+            "def create_bioluminescent_complex():",
+            "    initialize_garden()",
+            "    set_initialize_garden()",
+            "    self.space = true",
+            "    self.tosoe = tone()",
+            "    self.renot = true",
+            "    matis = store_tonsasntiation()",
+            "    muds = rstere_towsanttiercleon()",
+            "    return true",
+            "",
+            "class RomanticEngine:",
+            "    garden = garmon",
+            "    self.stant()",
+            "    self.ronon('BM 18 &$tamiediVo')",
+            "    self.space = true",
+            "    self.roat_one(0)",
+            "    self.cot._classefewdtot()",
+            "    self.name._classiGnon()",
+            "    self.tosoe = 2",
+            "    return gardent()",
+            "",
+            "def RomanticEngine():",
+            "    self.okser()",
+            "    self.rkoker()",
+            "    self.rstit()",
+            "    self.rseiizelas()"
+        ];
+        
+        const container = document.getElementById('codeContainer');
+        let codeBuffer = "";
+        codeLines.forEach(line => {
+            let processed = line
+                .replace(/(def|class|return|self|true)/g, `<span class="code-keyword">$1</span>`)
+                .replace(/(\w+)(?=\()/g, `<span class="code-function">$1</span>`);
+            codeBuffer += processed + "\n";
+        });
+        container.innerHTML = codeBuffer;
+
+        // 2. CANVAS CORE RENDERING SYSTEM
+        const canvas = document.getElementById('gardenCanvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
         let h = canvas.height = window.innerHeight;
 
         let globalTime = 0;
+        let bloomScale = 0; // Mengatur jalannya animasi mekar bunga (0 ke 1)
 
-        // --- PLAYLIST DATA FREKUENSI PROSEDURAL PIANO/SYNTH ---
-        const playlist = [
-            {
-                title: "Die With A Smile",
-                artist: "Bruno Mars ft. Lady Gaga",
-                notes: [329.63, 392.00, 523.25, 587.33, 493.88, 392.00, 440.00, 523.25], 
-                tempo: 160
-            },
-            {
-                title: "Lover",
-                artist: "Taylor Swift",
-                notes: [349.23, 440.00, 523.25, 587.33, 392.00, 493.88, 587.33, 659.25], 
-                tempo: 140
-            },
-            {
-                title: "Pluto Projector",
-                artist: "Rex Orange County",
-                notes: [293.66, 349.23, 440.00, 523.25, 329.63, 392.00, 493.88, 587.33],
-                tempo: 185
-            }
-        ];
+        const hearts = [], notes = [], butterflies = [], grasses = [], hangingLeaves = [];
 
-        let currentTrackIdx = 0;
-        let isPlaying = false;
-        let audioCtx = null;
-        let audioInterval = null;
-        let noteStep = 0;
-        let progressPercent = 0;
-
-        // --- OBJECT ORIENTED PROCEDURAL ENGINE GRAPHICS ---
-        class Star {
-            constructor() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h * 0.65;
-                this.size = Math.random() * 1.8 + 0.4;
-                this.alpha = Math.random();
-                this.speed = Math.random() * 0.02 + 0.01;
-            }
-            render() {
-                this.alpha += this.speed;
-                if(this.alpha > 1 || this.alpha < 0) this.speed *= -1;
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(this.alpha)})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        class Firefly {
-            constructor() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * (h - 100) + 100;
-                this.angle = Math.random() * Math.PI * 2;
-                this.speed = Math.random() * 0.4 + 0.2;
-            }
-            render() {
-                this.angle += (Math.random() - 0.5) * 0.1;
-                this.x += Math.cos(this.angle) * this.speed;
-                this.y += Math.sin(this.angle) * this.speed;
-
-                if(this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
-                    this.x = Math.random() * w;
-                    this.y = Math.random() * h;
-                }
-
-                ctx.save();
-                ctx.shadowBlur = 12;
-                ctx.shadowColor = "#ffb703";
-                ctx.fillStyle = "rgba(255, 183, 3, 0.75)";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        class FallingPetal {
-            constructor() { this.spawn(); }
-            spawn() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * -50 - 20;
-                this.size = Math.random() * 7 + 4;
-                this.speedY = Math.random() * 1 + 0.7;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.rot = Math.random() * Math.PI;
-            }
-            render() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(globalTime * 0.01) * 0.2;
-                this.rot += 0.01;
-                if(this.y > h || this.x < 0 || this.x > w) this.spawn();
-
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rot);
-                ctx.fillStyle = 'rgba(255, 77, 109, 0.6)';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size * 0.55, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
+        // --- EXTENSION STRUCT: GRASS BLADE ---
         class GrassBlade {
             constructor(x) {
                 this.x = x;
-                this.width = Math.random() * 3 + 3;
-                this.height = Math.random() * 45 + 55;
-                this.curveMax = Math.random() * 30 - 15;
+                this.height = Math.random() * 40 + 35;
+                this.width = Math.random() * 2 + 2;
+                this.swayMax = Math.random() * 12 + 6;
                 this.phase = Math.random() * Math.PI * 2;
-                this.speed = Math.random() * 0.02 + 0.015;
+                this.speed = Math.random() * 0.02 + 0.01;
             }
-            render() {
-                const sway = Math.sin(globalTime * this.speed + this.phase) * this.curveMax;
+            draw() {
+                let sway = Math.sin(globalTime * this.speed + this.phase) * this.swayMax;
                 let grad = ctx.createLinearGradient(this.x, h, this.x + sway, h - this.height);
-                grad.addColorStop(0, '#040d05');
-                grad.addColorStop(0.5, '#133917');
-                grad.addColorStop(1, '#2e7d32');
+                grad.addColorStop(0, '#02090f');
+                grad.addColorStop(0.5, '#005f73');
+                grad.addColorStop(1, '#00b4d8');
 
                 ctx.beginPath();
                 ctx.moveTo(this.x - this.width/2, h);
-                ctx.quadraticCurveTo(this.x + sway * 0.3, h - this.height * 0.5, this.x + sway, h - this.height);
-                ctx.quadraticCurveTo(this.x + this.width/2 + sway * 0.3, h - this.height * 0.5, this.x + this.width/2, h);
+                ctx.quadraticCurveTo(this.x + sway*0.3, h - this.height*0.5, this.x + sway, h - this.height);
+                ctx.quadraticCurveTo(this.x + this.width/2 + sway*0.3, h - this.height*0.5, this.x + this.width/2, h);
                 ctx.fillStyle = grad;
                 ctx.fill();
             }
         }
 
-        // --- ARTISTIC FLOWER RENDERING ARCHITECTURE ---
-        function drawDetailedLeaf(x, y, size, angle, isLeft) {
+        // --- EXTENSION STRUCT: HANGING LEAVES (ATAS SKRIN) ---
+        class HangingLeaf {
+            constructor(x) {
+                this.x = x;
+                this.length = Math.random() * 60 + 40;
+                this.phase = Math.random() * Math.PI;
+                this.swaySpeed = Math.random() * 0.015 + 0.005;
+            }
+            draw() {
+                let sway = Math.sin(globalTime * this.swaySpeed + this.phase) * 8;
+                ctx.save();
+                ctx.translate(this.x, 0);
+                
+                // Tali Tangkai Daun
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(sway*0.5, this.length*0.5, sway, this.length);
+                ctx.strokeStyle = 'rgba(0, 180, 216, 0.3)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Daun Menjuntai
+                ctx.translate(sway, this.length);
+                ctx.rotate(sway * 0.02);
+                let leafGrad = ctx.createLinearGradient(0, 0, 0, 18);
+                leafGrad.addColorStop(0, '#00b4d8');
+                leafGrad.addColorStop(1, '#00f5d4');
+                ctx.fillStyle = leafGrad;
+
+                ctx.beginPath();
+                ctx.ellipse(0, 8, 6, 12, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // --- DECORATIVE FLOATING OBJECT MATRIX ---
+        class FloatingDecoration {
+            constructor(type) {
+                this.type = type;
+                this.x = Math.random() * w;
+                this.y = h + Math.random() * 100;
+                this.speedY = Math.random() * 0.5 + 0.4;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.scale = Math.random() * 0.3 + 0.6;
+                this.phase = Math.random() * 100;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX + Math.sin(globalTime * 0.02 + this.phase) * 0.3;
+                if(this.y < -50) {
+                    this.y = h + 20;
+                    this.x = Math.random() * w;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.scale, this.scale);
+                
+                if(this.type === 'heart') {
+                    ctx.fillStyle = 'rgba(255, 117, 143, 0.5)';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-10, -12, -20, -5, -20, 5);
+                    ctx.bezierCurveTo(-20, 15, -10, 22, 0, 30);
+                    ctx.bezierCurveTo(10, 22, 20, 15, 20, 5);
+                    ctx.bezierCurveTo(20, -5, 10, -12, 0, 0);
+                    ctx.fill();
+                } else if(this.type === 'note') {
+                    ctx.fillStyle = 'rgba(0, 245, 212, 0.55)';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 4, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.fillRect(3, -12, 2.5, 12);
+                    ctx.fillRect(3, -12, 8, 3);
+                } else {
+                    let bSway = Math.sin(globalTime * 0.1 + this.phase) * 5;
+                    ctx.fillStyle = 'rgba(162, 210, 255, 0.55)';
+                    ctx.beginPath();
+                    ctx.ellipse(-5, 0, Math.abs(bSway) + 2, 7, 0, 0, Math.PI*2);
+                    ctx.ellipse(5, 0, Math.abs(bSway) + 2, 7, 0, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        // --- DRAW CEILING LIGHT SYSTEM (GOD RAYS) ---
+        function drawGodRays() {
             ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle);
-            if (!isLeft) ctx.scale(1, -1);
-
-            let grad = ctx.createLinearGradient(0, 0, size, -size/2);
-            grad.addColorStop(0, '#0f2b11');
-            grad.addColorStop(0.6, '#2e7d32');
-            grad.addColorStop(1, '#4caf50');
-
+            let rayGrad = ctx.createLinearGradient(w/2, 0, w/2, h*0.7);
+            rayGrad.addColorStop(0, 'rgba(0, 245, 212, 0.15)');
+            rayGrad.addColorStop(0.5, 'rgba(0, 180, 216, 0.05)');
+            rayGrad.addColorStop(1, 'rgba(2, 1, 4, 0)');
+            
+            ctx.fillStyle = rayGrad;
             ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.bezierCurveTo(size * 0.3, -size * 0.6, size * 0.8, -size * 0.5, size, 0);
-            ctx.bezierCurveTo(size * 0.8, size * 0.2, size * 0.3, size * 0.3, 0, 0);
-            ctx.fillStyle = grad;
+            ctx.moveTo(w/2 - 120, 0);
+            ctx.lineTo(w/2 + 120, 0);
+            ctx.lineTo(w/2 + 350, h * 0.8);
+            ctx.lineTo(w/2 - 350, h * 0.8);
+            ctx.closePath();
             ctx.fill();
-
-            // Serat Daun Vektor
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(size * 0.85, 0);
-            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
             ctx.restore();
         }
 
-        function drawMasterFlowerSystem() {
-            let windSway = Math.sin(globalTime * 0.02) * 12;
-            let startX = w / 2;
-            let startY = h;
-            let endX = startX + windSway;
-            let endY = h - 300;
+        // --- ADVANCED BLOOMING BIOLUMINESCENT FLOWER SHAPER ---
+        function drawBloomingFlower(centerX, centerY, baseSize, maxSway) {
+            let sway = Math.sin(globalTime * 0.018 + centerX) * maxSway;
+            let endX = centerX + sway;
+            let endY = centerY - baseSize;
 
-            // 1. Render Batang Bergradasi & Tebal
-            let stemGrad = ctx.createLinearGradient(startX, startY, endX, endY);
-            stemGrad.addColorStop(0, '#071408');
-            stemGrad.addColorStop(0.5, '#16421b');
-            stemGrad.addColorStop(1, '#2c7c34');
-
-            ctx.save();
+            // 1. Stem Path
             ctx.beginPath();
-            ctx.moveTo(startX - 6, startY);
-            ctx.quadraticCurveTo(startX - windSway * 0.1, startY - 150, endX - 3, endY);
-            ctx.lineTo(endX + 3, endY);
-            ctx.quadraticCurveTo(startX + windSway * 0.1, startY - 150, startX + 6, startY);
-            ctx.fillStyle = stemGrad;
-            ctx.fill();
+            ctx.moveTo(centerX, centerY);
+            ctx.quadraticCurveTo(centerX - sway*0.2, centerY - baseSize*0.5, endX, endY);
+            ctx.strokeStyle = 'rgba(0, 132, 186, 0.5)';
+            ctx.lineWidth = 3.5;
+            ctx.stroke();
+
+            // Tangkai Daun Bawah
+            ctx.save();
+            ctx.translate(centerX + sway*0.4, centerY - baseSize*0.3);
+            ctx.rotate(Math.PI/4 + sway*0.01);
+            let leafGrad = ctx.createLinearGradient(0,0,25,0);
+            leafGrad.addColorStop(0, '#005f73');
+            leafGrad.addColorStop(1, '#00f5d4');
+            ctx.fillStyle = leafGrad;
+            ctx.beginPath(); ctx.ellipse(12, 0, 14, 5, 0, 0, Math.PI*2); ctx.fill();
             ctx.restore();
 
-            // 2. Render Dedaunan Bertekstur Vektor Kiri & Kanan Batang
-            drawDetailedLeaf(startX - 5 + windSway*0.2, startY - 100, 55, -Math.PI/5 + windSway*0.003, true);
-            drawDetailedLeaf(startX + 5 + windSway*0.5, startY - 170, 48, Math.PI/6 + windSway*0.003, false);
-
-            // 3. Render Kepala Kelopak Berlapis (Outer & Inner Core Matrix)
+            // 2. Blooming Petals Matrix (Mekar Tergantung Nilai bloomScale)
             ctx.save();
             ctx.translate(endX, endY);
-            ctx.rotate(windSway * 0.004);
-
-            // Kelopak Layer Luar (8 Sudut)
-            for (let i = 0; i < 8; i++) {
-                ctx.save();
-                ctx.rotate(i * (Math.PI / 4) + (globalTime * 0.002));
-                let petalGrad = ctx.createLinearGradient(0, 0, 0, -55);
-                petalGrad.addColorStop(0, '#ff4d6d');
-                petalGrad.addColorStop(1, '#ffccd5');
+            ctx.scale(bloomScale, bloomScale); // Efek pertumbuhan animasi mekar
+            ctx.rotate(sway * 0.004);
+            
+            // Outer Ring Petals (6 unit)
+            for(let i=0; i<6; i++) {
+                ctx.rotate(Math.PI / 3);
+                let petalGrad = ctx.createLinearGradient(0, 0, 0, -28);
+                petalGrad.addColorStop(0, '#00b4d8');
+                petalGrad.addColorStop(0.7, '#00f5d4');
+                petalGrad.addColorStop(1, '#ffffff');
                 ctx.fillStyle = petalGrad;
                 ctx.beginPath();
-                ctx.ellipse(0, -28, 18, 32, 0, 0, Math.PI * 2);
+                ctx.ellipse(0, -14, 8, 18, 0, 0, Math.PI*2);
                 ctx.fill();
-                ctx.restore();
             }
 
-            // Kelopak Layer Dalam (8 Sudut - Arah Berlawanan)
-            for (let i = 0; i < 8; i++) {
-                ctx.save();
-                ctx.rotate(i * (Math.PI / 4) - (globalTime * 0.002) + 0.3);
-                let innerGrad = ctx.createLinearGradient(0, 0, 0, -38);
-                innerGrad.addColorStop(0, '#c9184a');
-                innerGrad.addColorStop(1, '#ff4d6d');
-                ctx.fillStyle = innerGrad;
-                ctx.beginPath();
-                ctx.ellipse(0, -20, 12, 22, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-
-            // Inti Putik Menyala Bercahaya
-            let coreGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 16);
-            coreGrad.addColorStop(0, '#ffffff');
-            coreGrad.addColorStop(0.4, '#ffb703');
-            coreGrad.addColorStop(1, '#fb8500');
-            ctx.save();
-            ctx.shadowBlur = 25;
-            ctx.shadowColor = "#ffb703";
+            // Inner Core Light Putik
             ctx.beginPath();
-            ctx.arc(0, 0, 15, 0, Math.PI * 2);
-            ctx.fillStyle = coreGrad;
+            ctx.arc(0, 0, 6, 0, Math.PI*2);
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = '#00f5d4';
             ctx.fill();
             ctx.restore();
-
-            ctx.restore();
+            ctx.shadowBlur = 0;
         }
 
-        // --- INSTANTIATION DATA POOL ---
-        const starsPool = Array.from({length: 100}, () => new Star());
-        const firefliesPool = Array.from({length: 22}, () => new Firefly());
-        const petalsPool = Array.from({length: 35}, () => new FallingPetal());
-        const grassPool = [];
-        
-        function initGrass() {
-            grassPool.length = 0;
-            const densityStep = w / 350; // Gambar 350 helai rumput rapat bergradasi
-            for(let x = 0; x < w; x += densityStep) {
-                grassPool.push(new GrassBlade(x));
-            }
-        }
+        // --- POOL CONSTRUCTOR INITIALIZER ---
+        function setupEnvironmentPool() {
+            grasses.length = 0;
+            hangingLeaves.length = 0;
 
-        // --- MASTER LOOP CANVAS ENGINE ---
-        function mainEngineLoop() {
-            globalTime++;
-            ctx.fillStyle = '#050308';
-            ctx.fillRect(0, 0, w, h);
-
-            // Menjalankan render sesuai urutan layer kedalaman (Z-index)
-            starsPool.forEach(s => s.render());
-            drawMasterFlowerSystem();
-            grassPool.forEach(g => g.render());
-            firefliesPool.forEach(f => f.render());
-            petalsPool.forEach(p => p.render());
-
-            // Simulasi Progress Musik Musik
-            if (isPlaying) {
-                progressPercent += 0.08;
-                if(progressPercent > 100) {
-                    progressPercent = 0;
-                    changeTrack(1);
-                }
-                document.getElementById('progressNode').style.width = progressPercent + "%";
-            }
-
-            requestAnimationFrame(mainEngineLoop);
-        }
-
-        // --- SYNTH AUDIO CONTROLLER LOGIC ---
-        function playTrackNote(freq) {
-            if (!isPlaying) return;
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
+            // Susun Rerumputan Rapat di Bawah
+            for(let x=0; x<w; x+=5) grasses.push(new GrassBlade(x));
+            // Susun Daun Menggantung di Atas
+            for(let x=20; x<w; x+=45) hangingLeaves.push(new HangingLeaf(x));
             
-            osc.type = 'triangle'; 
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.detune.setValueAtTime(Math.random() * 6 - 3, audioCtx.currentTime);
-
-            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.6);
+            hearts.length = 0; notes.length = 0; butterflies.length = 0;
+            for(let i=0; i<10; i++) hearts.push(new FloatingDecoration('heart'));
+            for(let i=10; i<20; i++) notes.push(new FloatingDecoration('note'));
+            for(let i=0; i<7; i++) butterflies.push(new FloatingDecoration('butterfly'));
         }
 
-        function startScheduler() {
-            const track = playlist[currentTrackIdx];
-            audioInterval = setInterval(() => {
-                let note = track.notes[noteStep % track.notes.length];
-                playTrackNote(note);
-                noteStep++;
-            }, track.tempo);
-        }
+        // 3. MASTER REAL-TIME REFRESH RENDER PIPELINE
+        function masterEngineRun() {
+            globalTime++;
+            
+            // Jalankan Animasi Mekar Perlahan di Awal Load
+            if(bloomScale < 1) bloomScale += 0.006;
 
-        function stopScheduler() { clearInterval(audioInterval); }
+            ctx.clearRect(0, 0, w, h);
 
-        function changeTrack(dir) {
-            stopScheduler();
-            currentTrackIdx = (currentTrackIdx + dir + playlist.length) % playlist.length;
-            noteStep = 0;
-            progressPercent = 0;
-            if(isPlaying) startScheduler();
-            updateMusicWidgetUI();
-        }
+            // Layer 1: Sorotan Cahaya Langit (Menerangi Atas ke Bawah)
+            drawGodRays();
 
-        function updateMusicWidgetUI() {
-            const currentTrack = playlist[currentTrackIdx];
-            document.getElementById('titleNode').innerText = currentTrack.title;
-            document.getElementById('artistNode').innerText = currentTrack.artist;
-            document.getElementById('playPauseBtn').innerText = isPlaying ? "⏸" : "▶";
-        }
+            // Layer 2: Daun Atas Layar
+            hangingLeaves.forEach(l => l.draw());
 
-        document.getElementById('playPauseBtn').addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
-                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-                startScheduler();
-            } else {
-                stopScheduler();
+            // Layer 3: Elemen Dekorasi Melayang
+            hearts.forEach(h => { h.update(); h.draw(); });
+            notes.forEach(n => { n.update(); n.draw(); });
+            butterflies.forEach(b => { b.update(); b.draw(); });
+
+            // Layer 4: Rimbunan Semak Bunga Mekar (Tengah Bawah)
+            let centerPoint = w / 2;
+            for(let xOffset = -240; xOffset <= 240; xOffset += 28) {
+                let currentX = centerPoint + xOffset;
+                let heightFactor = (1 - Math.abs(xOffset) / 320); 
+                let calculatedHeight = 110 + (heightFactor * 140) + Math.sin(currentX) * 15;
+                
+                drawBloomingFlower(currentX, h + 5, calculatedHeight, 14 + (heightFactor * 10));
             }
-            updateMusicWidgetUI();
-        });
 
-        document.getElementById('nextTrackBtn').addEventListener('click', () => changeTrack(1));
-        document.getElementById('prevTrackBtn').addEventListener('click', () => changeTrack(-1));
+            // Layer 5: Hamparan Rumput Keliling di Depan Bunga
+            grasses.forEach(g => g.draw());
 
-        // --- TEXT SLIDER INTERACTIONS ---
-        const slides = document.querySelectorAll('.slide-node');
-        let slideIndex = 0;
+            // Timeline Player Tracker Bar Sync
+            if(activeFillId) {
+                trackProgress = (trackProgress + 0.05) % 100;
+                document.getElementById(activeFillId).style.width = trackProgress + "%";
+            }
 
-        function refreshSlideUI() {
-            slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
-            document.getElementById('counterNode').innerText = `0${slideIndex + 1} / 04`;
-            document.getElementById('leftBtn').disabled = slideIndex === 0;
-            document.getElementById('rightBtn').disabled = slideIndex === slides.length - 1;
+            requestAnimationFrame(masterEngineRun);
         }
 
-        document.getElementById('rightBtn').addEventListener('click', () => { if(slideIndex < slides.length - 1) { slideIndex++; refreshSlideUI(); } });
-        document.getElementById('leftBtn').addEventListener('click', () => { if(slideIndex > 0) { slideIndex--; refreshSlideUI(); } });
+        // 4. AUDIO CONTROLLER INTEGRATION (WEB AUDIO API)
+        let audioCtx = null, audioInterval = null, isPlaying = false, activeFillId = null, trackProgress = 0;
 
-        // Mouse Move Parallax Card
-        document.addEventListener('mousemove', (e) => {
-            let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-            let dx = (cx - e.clientX) / 40, dy = (cy - e.clientY) / 40;
-            document.querySelector('.glass-card').style.transform = `rotateY(${-dx}deg) rotateX(${dy}deg)`;
+        function toggleAudio(tempo, notesArr, fillId) {
+            if(isPlaying) {
+                clearInterval(audioInterval);
+                isPlaying = false; activeFillId = null;
+                return;
+            }
+
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+
+            isPlaying = true;
+            activeFillId = fillId;
+            trackProgress = parseFloat(document.getElementById(fillId).style.width) || 0;
+            let step = 0;
+
+            audioInterval = setInterval(() => {
+                let freq = notesArr[step % notesArr.length];
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+                step++;
+            }, tempo);
+        }
+
+        window.addEventListener('resize', () => { 
+            w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; 
+            setupEnvironmentPool(); 
         });
 
-        window.addEventListener('resize', () => {
-            w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight;
-            initGrass();
-        });
-
-        window.onload = () => { initGrass(); mainEngineLoop(); };
+        setupEnvironmentPool();
+        masterEngineRun();
     </script>
 </body>
 </html>
