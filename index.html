@@ -92,7 +92,7 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 340px;
+            width: 360px;
             background: linear-gradient(to bottom, rgba(162, 210, 255, 0.22) 0%, rgba(162, 210, 255, 0.04) 65%, rgba(255,255,255,0) 100%);
             clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
             opacity: 0;
@@ -101,7 +101,7 @@
         }
         @keyframes lightBeamOn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* STRUKTUR STRUKTUR BUNGA ORGANIK BARU (FIXED ATTACHMENT) */
+        /* STRUKTUR STRUKTUR BUNGA ORGANIK BARU */
         .organic-flower-container {
             position: absolute;
             left: 50%;
@@ -112,7 +112,7 @@
             z-index: 6;
         }
 
-        /* 1. Batang Utama Tengah (Tumbuh Lambat Ke Atas) */
+        /* 1. Batang Utama Tengah */
         .main-stem {
             position: absolute;
             bottom: 0;
@@ -127,7 +127,7 @@
         }
         @keyframes growStemOrganic { 0% { height: 0px; } 100% { height: 270px; } }
 
-        /* 2. Batang Cabang Kiri (Menempel di Batang Utama & Miring) */
+        /* 2. Batang Cabang Kiri Miring */
         .side-branch-left {
             position: absolute;
             bottom: 110px;
@@ -136,13 +136,13 @@
             background: linear-gradient(to top, #0f4c5c, #48cae4);
             border-radius: 4px;
             transform-origin: bottom left;
-            transform: rotate(-30deg); /* Kemiringan Kiri */
+            transform: rotate(-30deg);
             height: 0;
             animation: growBranchL 2s ease-out 3.2s forwards;
         }
         @keyframes growBranchL { 0% { height: 0; } 100% { height: 85px; } }
 
-        /* 3. Batang Cabang Kanan (Menempel di Batang Utama & Miring) */
+        /* 3. Batang Cabang Kanan Miring */
         .side-branch-right {
             position: absolute;
             bottom: 130px;
@@ -151,33 +151,32 @@
             background: linear-gradient(to top, #0f4c5c, #48cae4);
             border-radius: 4px;
             transform-origin: bottom right;
-            transform: rotate(35deg); /* Kemiringan Kanan */
+            transform: rotate(35deg);
             height: 0;
             animation: growBranchR 2s ease-out 3.7s forwards;
         }
         @keyframes growBranchR { 0% { height: 0; } 100% { height: 80px; } }
 
-        /* KEPALA BUNGA (Ditaruh tepat di top: 0 internal tangkai agar selalu menyatu otomatis) */
+        /* KEPALA BUNGA MENYATU */
         .flower-head {
             position: absolute;
-            top: 0; /* Mengunci tepat di ujung atas tangkai */
+            top: 0;
             left: 50%;
             width: 52px;
             height: 52px;
             transform: translate(-50%, -100%) scale(0);
             transform-origin: center bottom;
         }
-        /* Trigger Mekar Masing-masing setelah tangkainya selesai memanjang */
         .main-stem .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.2s forwards; transform: translate(-50%, -100%) scale(0) rotate(-5deg); }
-        .side-branch-left .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.0s forwards; transform: translate(-50%, -100%) scale(0) rotate(-25deg); } /* Kepala miring kiri */
-        .side-branch-right .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.5s forwards; transform: translate(-50%, -100%) scale(0) rotate(20deg); } /* Kepala miring kanan */
+        .side-branch-left .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.0s forwards; transform: translate(-50%, -100%) scale(0) rotate(-25deg); }
+        .side-branch-right .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.5s forwards; transform: translate(-50%, -100%) scale(0) rotate(20deg); }
 
         @keyframes bloomOrganic { 
             0% { transform: translate(-50%, -100%) scale(0) rotate(var(--r, 0deg)); } 
             100% { transform: translate(-50%, -100%) scale(1) rotate(var(--r, 0deg)); } 
         }
 
-        /* Kelopak Seni Biru Estetik Sesuai Referensi Gambar */
+        /* Kelopak Biru Glowing */
         .organic-petal { position: absolute; width: 100%; height: 100%; background: #90e0ef; border-radius: 50% 50% 0 50%; transform-origin: center; box-shadow: 0 0 12px rgba(144, 224, 239, 0.7); border: 1px solid rgba(255,255,255,0.3); }
         .op-1 { transform: rotate(0deg); background: #caf0f8; }
         .op-2 { transform: rotate(72deg); background: #90e0ef; }
@@ -186,7 +185,7 @@
         .op-5 { transform: rotate(288deg); background: #90e0ef; }
         .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 19px; left: 19px; z-index: 12; box-shadow: 0 0 12px 3px #fff; }
 
-        /* Rimbun Rumpun Daun Bawah Melengkung */
+        /* Rimbun Daun Bawah Tanaman */
         .leaf-cluster {
             position: absolute;
             bottom: 10px;
@@ -196,7 +195,6 @@
             height: 90px;
             opacity: 0;
             animation: fadeInCluster 2.5s ease-out 2.5s forwards;
-            pointer-events: none;
         }
         @keyframes fadeInCluster { 0% { opacity: 0; transform: translateX(-50%) scale(0.5); } 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
 
@@ -211,16 +209,42 @@
         .base-leaf.mid-left { width: 55px; height: 28px; bottom: 32px; left: 0px; transform: rotate(-15deg); }
         .base-leaf.mid-right { width: 55px; height: 28px; bottom: 32px; right: 0px; transform: scaleX(-1) rotate(-15deg); }
 
-        /* Rerumputan Dasar */
-        .grass-node { position: absolute; bottom: -5px; width: 6px; background: #0f4c5c; border-radius: 4px 4px 0 0; transform-origin: bottom center; animation: swaySide 4.5s ease-in-out infinite alternate, grassFade 1.5s ease-out forwards; opacity: 0; z-index: 5; }
+        /* DESAIN RUMPUT MELENGKUNG DAN BERGERAK KENA ANGIN (ORGANIK) */
+        .organic-grass {
+            position: absolute;
+            bottom: -5px;
+            width: 14px;
+            background: linear-gradient(to top, #061c24, #0f4c5c, #2a9d8f);
+            /* Membuat kelengkungan lancip natural di ujung daun */
+            clip-path: polygon(50% 0%, 100% 70%, 75% 100%, 25% 100%, 0% 70%);
+            transform-origin: bottom center;
+            opacity: 0;
+            z-index: 5;
+            animation: grassFadeUp 1.8s ease-out forwards, swayGrass 4s ease-in-out infinite alternate;
+        }
+
+        /* Variasi kelengkungan awal rumput ke arah kiri atau kanan */
+        .grass-left { transform: rotate(-18deg); }
+        .grass-right { transform: rotate(18deg); }
+
+        @keyframes grassFadeUp {
+            0% { height: 0px; opacity: 0; }
+            100% { opacity: 0.85; }
+        }
+
+        /* Animasi Efek Hembusan Angin Malam Alami */
+        @keyframes swayGrass {
+            0% { transform: rotate(var(--init-rot, -10deg)) skewX(-3deg); }
+            100% { transform: rotate(calc(var(--init-rot, -10deg) + 15deg)) skewX(4deg); }
+        }
+
+        /* Lampu Utama di Atas */
         .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; }
         
         @keyframes flashLamp { 0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); } 100% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
         @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes grassFade { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 0.8; } }
-        @keyframes swaySide { 0% { transform: rotate(-5deg); } 100% { transform: rotate(8deg); } }
 
-        /* Kunang-kunang terbang */
+        /* Kunang-kunang */
         .firefly { position: absolute; width: 5px; height: 5px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 6s linear infinite; z-index: 8; }
         @keyframes flyFirefly {
             0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
@@ -234,14 +258,12 @@
 
     <div id="garden"></div>
 
-    <!-- TAHAP 1 -->
     <div id="tahap1" class="card">
         <h1>Hai, Anatasya Rembulan! 👋</h1>
         <p>Ada halaman interaktif kecil yang sengaja kubuat khusus buat kamu hari ini. Coba ikutin kuis singkat ini sebentar yuk, seru-seruan aja!</p>
         <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
     </div>
 
-    <!-- TAHAP 2 -->
     <div id="tahap2" class="card hidden">
         <h1>Pertanyaan Pertama</h1>
         <p>Dari semua momen atau topik seru yang belakangan ini sering kita bahas, apa sih yang paling berkesan menurut kamu?</p>
@@ -250,7 +272,6 @@
         <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
     </div>
 
-    <!-- TAHAP 3 -->
     <div id="tahap3" class="card hidden">
         <h1>Pertanyaan Kedua</h1>
         <p>Jawab jujur, seberapa sering kamu nyariin atau nungguin kabar dari aku pas lagi senggang? 😉</p>
@@ -259,14 +280,12 @@
         <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
     </div>
 
-    <!-- TAHAP 4: TEKS TERIMA KASIH SEBELUM HADIAH -->
     <div id="tahap4" class="card hidden">
         <h1>Terima Kasih, Anatasya! ✨</h1>
         <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru ke hari-hariku. Tetap jadi seseorang yang menyenangkan ya! 😊🙌</p>
         <button class="btn" onclick="playBeep(784); next(4)">Lihat Hadiah 🎁</button>
     </div>
 
-    <!-- TAHAP 5: HADIAH DARI CARLES (SLIDE TERAKHIR SEBELUM BUNGA TUMBUH) -->
     <div id="tahap5" class="card hidden">
         <h1>Ada Hadiah dari Carles! ✨</h1>
         <p>Carles punya satu bingkisan kotak hadiah ajaib khusus buat kamu. Silakan ketuk kotaknya untuk membuka kejutan malam ini...</p>
@@ -317,7 +336,7 @@
         }
         function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
 
-        // PROSES UTAMA: BUNGA DIJAMIN MENYATU & BERGABUNG DENGAN TANGKAI
+        // PROSES UTAMA BUNGA DAN RUMPUT MELENGKUNG BERGOYANG ANGIN
         function triggerFlowerMagic() {
             const finalCard = document.getElementById('tahap5');
             finalCard.style.opacity = '0';
@@ -327,15 +346,26 @@
             document.body.classList.add('night-mode');
             const garden = document.getElementById('garden');
             
-            // Rerumputan bawah terpusat
-            for (let i = 0; i < 20; i++) {
+            // MENUMBUHKAN RUMPUT MELENGKUNG ORGANIK (Kiri & Kanan Tengah)
+            const totalRumput = 24;
+            for (let i = 0; i < totalRumput; i++) {
                 const grass = document.createElement('div');
-                grass.className = 'grass-node';
-                grass.style.left = (Math.random() * 26 + 37) + 'vw';
-                grass.style.height = (Math.random() * 45 + 30) + 'px';
-                grass.style.animationDelay = (Math.random() * 1) + 's';
-                const grassColors = ['#0a2f35', '#0f4c5c', '#143642'];
-                grass.style.backgroundColor = grassColors[Math.floor(Math.random() * grassColors.length)];
+                
+                // Distribusi rumput mengitari sisi kiri dan kanan dari titik tengah bunga (50vw)
+                const isLeft = i % 2 === 0;
+                const posLeft = isLeft ? (Math.random() * 14 + 32) : (Math.random() * 14 + 54);
+                const initRotation = isLeft ? (Math.random() * -15 - 10) : (Math.random() * 15 + 10);
+                
+                grass.className = `organic-grass ${isLeft ? 'grass-left' : 'grass-right'}`;
+                grass.style.left = posLeft + 'vw';
+                
+                // Tinggi dan durasi ayunan bervariasi biar estetik
+                const h = Math.random() * 60 + 40;
+                grass.style.height = h + 'px';
+                grass.style.setProperty('--init-rot', initRotation + 'deg');
+                grass.style.animationDelay = (Math.random() * 0.8) + 's, ' + (Math.random() * -2) + 's';
+                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 3) + 's';
+                
                 garden.appendChild(grass);
             }
 
@@ -368,21 +398,21 @@
             const mainStem = document.createElement('div');
             mainStem.className = 'main-stem';
 
-            // Membuat kepala bunga Tengah & dimasukkan KE DALAM elemen batang utama
+            // Kepala bunga Tengah menyatu
             const headTop = createFlowerHeadElement('0deg');
             mainStem.appendChild(headTop);
 
-            // Batang Samping Kiri (Miring) dimasukkan KE DALAM elemen batang utama agar nempel
+            // Batang Samping Kiri Miring menyatu
             const branchL = document.createElement('div');
             branchL.className = 'side-branch-left';
-            const headLeft = createFlowerHeadElement('-25deg'); // kelopak miring kiri
+            const headLeft = createFlowerHeadElement('-25deg');
             branchL.appendChild(headLeft);
             mainStem.appendChild(branchL);
 
-            // Batang Samping Kanan (Miring) dimasukkan KE DALAM elemen batang utama
+            // Batang Samping Kanan Miring menyatu
             const branchR = document.createElement('div');
             branchR.className = 'side-branch-right';
-            const headRight = createFlowerHeadElement('20deg'); // kelopak miring kanan
+            const headRight = createFlowerHeadElement('20deg');
             branchR.appendChild(headRight);
             mainStem.appendChild(branchR);
 
@@ -402,7 +432,6 @@
             }
         }
 
-        // Fungsi pembentuk kepala kelopak bunga
         function createFlowerHeadElement(rotationAngle) {
             const head = document.createElement('div');
             head.className = 'flower-head';
