@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%); display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; margin: 0; position: relative; }
         
-        .card { text-align: center; background: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); max-width: 400px; width: 90%; transition: 0.5s; z-index: 10; }
+        .card { text-align: center; background: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); max-width: 400px; width: 90%; transition: 0.5s; z-index: 10; border: 2px solid rgba(255, 255, 255, 0.5); }
         h1 { color: #ff4d6d; font-size: 1.6rem; margin-bottom: 20px; }
         p { color: #495057; font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; }
         
@@ -20,23 +20,34 @@
         .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.6; pointer-events: none; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
 
-        /* Area Kebun Bunga Tumbuh */
-        #garden { position: absolute; bottom: 0; left: 0; width: 100vw; height: 30vh; pointer-events: none; display: flex; justify-content: space-around; align-items: flex-end; z-index: 5; }
+        /* Area Kebun di Bawah */
+        #garden { position: absolute; bottom: 0; left: 0; width: 100vw; height: 35vh; pointer-events: none; z-index: 5; }
         
-        /* Animasi Bunga Tumbuh Tangkai & Kelopak */
-        .flower { position: relative; width: 20px; animation: grow 2s ease-out forwards; transform-origin: bottom; }
-        .stem { width: 6px; background: #70e000; margin: 0 auto; border-radius: 3px 3px 0 0; animation: stemGrow 2s ease-out forwards; }
-        .flower-head { width: 40px; height: 40px; background: #ff4d6d; border-radius: 50%; position: absolute; top: -35px; left: -10px; transform: scale(0); animation: bloom 1s 1.5s ease-out forwards; box-shadow: inset 0 0 10px #ffb3c6; }
-        .flower-head::after { content: ''; width: 14px; height: 14px; background: #ffe5ec; border-radius: 50%; position: absolute; top: 13px; left: 13px; }
+        /* Animasi Bunga Tumbuh */
+        .flower { position: absolute; bottom: 0; width: 40px; animation: grow 2s ease-out forwards; transform-origin: bottom; z-index: 6; }
+        .stem { width: 6px; background: #52b788; margin: 0 auto; border-radius: 3px 3px 0 0; animation: stemGrow 2s ease-out forwards; }
+        .flower-head { width: 40px; height: 40px; border-radius: 50%; position: absolute; top: -35px; left: 0; transform: scale(0); animation: bloom 1s 1.5s ease-out forwards; box-shadow: inset 0 0 10px rgba(255,255,255,0.5); }
+        .flower-head::after { content: ''; width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 13px; left: 13px; }
 
         @keyframes grow { 0% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
-        @keyframes stemGrow { 0% { height: 0px; } 100% { height: 120px; } }
+        @keyframes stemGrow { 0% { height: 0px; } 100% { height: 130px; } }
         @keyframes bloom { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+        /* Rumput Goyang */
+        .grass-blade { position: absolute; bottom: 0; width: 10px; background: #74c69d; border-radius: 5px 5px 0 0; transform-origin: bottom; animation: sway 3s ease-in-out infinite alternate; opacity: 0; }
+        @keyframes sway {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(15deg); }
+        }
+        @keyframes grassGrow {
+            0% { height: 0; opacity: 0; }
+            100% { opacity: 0.9; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Wadah Bunga Tumbuh di Latar Belakang -->
+    <!-- Wadah Kebun Bunga & Rumput -->
     <div id="garden"></div>
 
     <!-- Tahap 1: Pembuka -->
@@ -62,29 +73,50 @@
         <button class="btn" onclick="startGarden()">Buka Hadiah ✨</button>
     </div>
 
-    <!-- Tahap 4: Pesan Akhir + Animasi Bunga Tumbuh -->
+    <!-- Tahap 4: Pesan Akhir -->
     <div id="tahap4" class="card hidden">
         <h1>Terima kasih, Anatasya! ❤️</h1>
         <p>Apapun harimu hari ini, semoga senyummu terus tumbuh mekar seperti bunga-bunga ini ya. Semangat terus! 🌙✨🌷</p>
     </div>
 
     <script>
-        // Fungsi pindah halaman
         function next(tahap) {
             document.getElementById('tahap' + tahap).classList.add('hidden');
             document.getElementById('tahap' + (tahap + 1)).classList.remove('hidden');
         }
 
-        // Fungsi khusus memicu halaman akhir dan menumbuhkan bunga
         function startGarden() {
-            next(3); // Pindah ke tahap 4
-            
-            // Buat 8 bunga tumbuh di bagian bawah layar secara acak
+            next(3);
             const garden = document.getElementById('garden');
+            
+            // 1. Tumbuhkan banyak Rumput Goyang terlebih dahulu
+            for (let i = 0; i < 40; i++) {
+                const grass = document.createElement('div');
+                grass.className = 'grass-blade';
+                grass.style.left = (i * 2.5) + 'vw';
+                const h = Math.random() * 40 + 30; // tinggi rumput acak
+                grass.style.height = h + 'px';
+                grass.style.animationDelay = (Math.random() * 2) + 's';
+                grass.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                // Efek rumput tumbuh pelan
+                grass.style.animationName = 'sway, grassGrow';
+                grass.style.animationTimingFunction = 'ease-in-out, ease-out';
+                grass.style.animationFillMode = 'both';
+                
+                // Variasi warna hijau rumput
+                const grassColors = ['#52b788', '#74c69d', '#95d5b2', '#40916c'];
+                grass.style.backgroundColor = grassColors[Math.floor(Math.random() * grassColors.length)];
+                
+                garden.appendChild(grass);
+            }
+
+            // 2. Tumbuhkan Bunga di antara rumput
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const flower = document.createElement('div');
                     flower.className = 'flower';
+                    flower.style.left = (Math.random() * 85 + 5) + 'vw'; // posisi acak
                     
                     const stem = document.createElement('div');
                     stem.className = 'stem';
@@ -92,18 +124,17 @@
                     const head = document.createElement('div');
                     head.className = 'flower-head';
                     
-                    // Variasi warna bunga secara acak (pink, ungu muda, merah)
-                    const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#c77dff'];
+                    const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#c77dff', '#ffb3c6'];
                     head.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                     
                     flower.appendChild(head);
                     flower.appendChild(stem);
                     garden.appendChild(flower);
-                }, i * 300); // Bunga tumbuh bergantian biar estetik
+                }, i * 300);
             }
         }
 
-        // Efek kelopak bunga jatuh
+        // Efek kelopak bunga jatuh di latar belakang
         function createBlossom() {
             const b = document.createElement('div');
             b.className = 'blossom';
