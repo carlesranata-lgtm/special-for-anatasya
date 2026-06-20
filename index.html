@@ -101,7 +101,7 @@
         }
         @keyframes lightBeamOn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* STRUKTUR STRUKTUR BUNGA ORGANIK BARU */
+        /* STRUKTUR BUNGA ORGANIK */
         .organic-flower-container {
             position: absolute;
             left: 50%;
@@ -157,7 +157,7 @@
         }
         @keyframes growBranchR { 0% { height: 0; } 100% { height: 80px; } }
 
-        /* KEPALA BUNGA MENYATU */
+        /* KEPALA BUNGA */
         .flower-head {
             position: absolute;
             top: 0;
@@ -185,7 +185,7 @@
         .op-5 { transform: rotate(288deg); background: #90e0ef; }
         .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 19px; left: 19px; z-index: 12; box-shadow: 0 0 12px 3px #fff; }
 
-        /* Rimbun Daun Bawah Tanaman */
+        /* Rimbun Daun Bawah */
         .leaf-cluster {
             position: absolute;
             bottom: 10px;
@@ -209,42 +209,47 @@
         .base-leaf.mid-left { width: 55px; height: 28px; bottom: 32px; left: 0px; transform: rotate(-15deg); }
         .base-leaf.mid-right { width: 55px; height: 28px; bottom: 32px; right: 0px; transform: scaleX(-1) rotate(-15deg); }
 
-        /* DESAIN RUMPUT MELENGKUNG DAN BERGERAK KENA ANGIN (ORGANIK) */
+        /* ================= DETAIL BARU: RUMPUT MIRIP REFERENSI FOTO ================= */
         .organic-grass {
             position: absolute;
-            bottom: -5px;
-            width: 14px;
-            background: linear-gradient(to top, #061c24, #0f4c5c, #2a9d8f);
-            /* Membuat kelengkungan lancip natural di ujung daun */
-            clip-path: polygon(50% 0%, 100% 70%, 75% 100%, 25% 100%, 0% 70%);
+            bottom: -10px;
             transform-origin: bottom center;
             opacity: 0;
             z-index: 5;
-            animation: grassFadeUp 1.8s ease-out forwards, swayGrass 4s ease-in-out infinite alternate;
+            box-shadow: inset -2px 0 6px rgba(255, 255, 255, 0.15);
+            animation: grassFadeUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, swayGrass 4.5s ease-in-out infinite alternate;
         }
 
-        /* Variasi kelengkungan awal rumput ke arah kiri atau kanan */
-        .grass-left { transform: rotate(-18deg); }
-        .grass-right { transform: rotate(18deg); }
+        /* Rumput Sisi Kiri: Melengkung Indah ke Kiri (Gaya Daun Melengkung Lebar) */
+        .grass-left {
+            border-radius: 100% 0px 100% 0px;
+            background: linear-gradient(to top right, #051923 15%, #0f4c5c 50%, #4ea8de 90%, #a2d2ff 100%);
+            filter: drop-shadow(0 0 8px rgba(78, 168, 222, 0.5));
+        }
+
+        /* Rumput Sisi Kanan: Melengkung Terbalik secara Simetris ke Kanan */
+        .grass-right {
+            border-radius: 0px 100% 0px 100%;
+            background: linear-gradient(to top left, #051923 15%, #0f4c5c 50%, #4ea8de 90%, #a2d2ff 100%);
+            filter: drop-shadow(0 0 8px rgba(78, 168, 222, 0.5));
+        }
 
         @keyframes grassFadeUp {
             0% { height: 0px; opacity: 0; }
-            100% { opacity: 0.85; }
+            100% { opacity: 0.9; }
         }
 
-        /* Animasi Efek Hembusan Angin Malam Alami */
+        /* Goyangan Daun Rumput Alami Akibat Hembusan Angin */
         @keyframes swayGrass {
-            0% { transform: rotate(var(--init-rot, -10deg)) skewX(-3deg); }
-            100% { transform: rotate(calc(var(--init-rot, -10deg) + 15deg)) skewX(4deg); }
+            0% { transform: rotate(var(--init-rot, -15deg)) scaleX(0.95) skewY(-1deg); }
+            100% { transform: rotate(calc(var(--init-rot, -15deg) + 12deg)) scaleX(1.05) skewY(2deg); }
         }
 
-        /* Lampu Utama di Atas */
+        /* Lampu Sorot & Elemen Lain */
         .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; }
-        
         @keyframes flashLamp { 0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); } 100% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
         @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* Kunang-kunang */
         .firefly { position: absolute; width: 5px; height: 5px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 6s linear infinite; z-index: 8; }
         @keyframes flyFirefly {
             0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
@@ -258,12 +263,14 @@
 
     <div id="garden"></div>
 
+    <!-- TAHAP 1 -->
     <div id="tahap1" class="card">
         <h1>Hai, Anatasya Rembulan! 👋</h1>
         <p>Ada halaman interaktif kecil yang sengaja kubuat khusus buat kamu hari ini. Coba ikutin kuis singkat ini sebentar yuk, seru-seruan aja!</p>
         <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
     </div>
 
+    <!-- TAHAP 2 -->
     <div id="tahap2" class="card hidden">
         <h1>Pertanyaan Pertama</h1>
         <p>Dari semua momen atau topik seru yang belakangan ini sering kita bahas, apa sih yang paling berkesan menurut kamu?</p>
@@ -272,6 +279,7 @@
         <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
     </div>
 
+    <!-- TAHAP 3 -->
     <div id="tahap3" class="card hidden">
         <h1>Pertanyaan Kedua</h1>
         <p>Jawab jujur, seberapa sering kamu nyariin atau nungguin kabar dari aku pas lagi senggang? 😉</p>
@@ -280,12 +288,14 @@
         <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
     </div>
 
+    <!-- TAHAP 4 -->
     <div id="tahap4" class="card hidden">
         <h1>Terima Kasih, Anatasya! ✨</h1>
         <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru ke hari-hariku. Tetap jadi seseorang yang menyenangkan ya! 😊🙌</p>
         <button class="btn" onclick="playBeep(784); next(4)">Lihat Hadiah 🎁</button>
     </div>
 
+    <!-- TAHAP 5 -->
     <div id="tahap5" class="card hidden">
         <h1>Ada Hadiah dari Carles! ✨</h1>
         <p>Carles punya satu bingkisan kotak hadiah ajaib khusus buat kamu. Silakan ketuk kotaknya untuk membuka kejutan malam ini...</p>
@@ -336,7 +346,7 @@
         }
         function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
 
-        // PROSES UTAMA BUNGA DAN RUMPUT MELENGKUNG BERGOYANG ANGIN
+        // GENERATOR STRUKTUR UTAMA
         function triggerFlowerMagic() {
             const finalCard = document.getElementById('tahap5');
             finalCard.style.opacity = '0';
@@ -346,25 +356,31 @@
             document.body.classList.add('night-mode');
             const garden = document.getElementById('garden');
             
-            // MENUMBUHKAN RUMPUT MELENGKUNG ORGANIK (Kiri & Kanan Tengah)
-            const totalRumput = 24;
+            // GENERATOR HELAI DAUN RUMPUT MIRIP FOTO
+            const totalRumput = 22;
             for (let i = 0; i < totalRumput; i++) {
                 const grass = document.createElement('div');
-                
-                // Distribusi rumput mengitari sisi kiri dan kanan dari titik tengah bunga (50vw)
                 const isLeft = i % 2 === 0;
-                const posLeft = isLeft ? (Math.random() * 14 + 32) : (Math.random() * 14 + 54);
-                const initRotation = isLeft ? (Math.random() * -15 - 10) : (Math.random() * 15 + 10);
+                
+                // Distribusi melebar mengelilingi pusat bunga
+                const posLeft = isLeft ? (Math.random() * 15 + 30) : (Math.random() * 15 + 55);
+                // Menentukan sudut kemiringan awal helai daun
+                const initRotation = isLeft ? (Math.random() * -20 - 10) : (Math.random() * 20 + 10);
                 
                 grass.className = `organic-grass ${isLeft ? 'grass-left' : 'grass-right'}`;
                 grass.style.left = posLeft + 'vw';
                 
-                // Tinggi dan durasi ayunan bervariasi biar estetik
-                const h = Math.random() * 60 + 40;
-                grass.style.height = h + 'px';
+                // Menghasilkan dimensi daun rumput yang lebar dan tebal di bagian dasar
+                const lebarDaun = Math.random() * 12 + 16; 
+                const tinggiDaun = Math.random() * 70 + 50; 
+                
+                grass.style.width = lebarDaun + 'px';
+                grass.style.height = tinggiDaun + 'px';
+                
                 grass.style.setProperty('--init-rot', initRotation + 'deg');
-                grass.style.animationDelay = (Math.random() * 0.8) + 's, ' + (Math.random() * -2) + 's';
-                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 3) + 's';
+                // Mengacak delay animasi ayunan angin biar ga kompak/kaku
+                grass.style.animationDelay = (Math.random() * 0.6) + 's, ' + (Math.random() * -3) + 's';
+                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 3.5) + 's';
                 
                 garden.appendChild(grass);
             }
@@ -383,7 +399,7 @@
             const container = document.createElement('div');
             container.className = 'organic-flower-container';
 
-            // Daun Rimbun Bawah
+            // Daun Rimbun Bawah Tanaman
             const leafCluster = document.createElement('div');
             leafCluster.className = 'leaf-cluster';
             leafCluster.innerHTML = `
@@ -398,18 +414,18 @@
             const mainStem = document.createElement('div');
             mainStem.className = 'main-stem';
 
-            // Kepala bunga Tengah menyatu
+            // Kepala bunga Tengah
             const headTop = createFlowerHeadElement('0deg');
             mainStem.appendChild(headTop);
 
-            // Batang Samping Kiri Miring menyatu
+            // Batang Samping Kiri Miring
             const branchL = document.createElement('div');
             branchL.className = 'side-branch-left';
             const headLeft = createFlowerHeadElement('-25deg');
             branchL.appendChild(headLeft);
             mainStem.appendChild(branchL);
 
-            // Batang Samping Kanan Miring menyatu
+            // Batang Samping Kanan Miring
             const branchR = document.createElement('div');
             branchR.className = 'side-branch-right';
             const headRight = createFlowerHeadElement('20deg');
