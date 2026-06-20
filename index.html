@@ -101,7 +101,7 @@
         /* Latar Belakang Kebun Megah */
         #garden { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
         
-        /* Animasi Bunga Mekar 3D Multi-Kelopak */
+        /* Animasi Bunga Mekar 3D Multi-Kelopak (Tumbuh dari Bawah) */
         .flower-node { position: absolute; transform-origin: bottom center; animation: growUp 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .stem-line { width: 6px; background: linear-gradient(to top, #2d6a4f, #52b788); border-radius: 4px; margin: 0 auto; }
         
@@ -113,22 +113,22 @@
         .petal-4 { background: #ffb3c6; transform: rotate(135deg); }
         .flower-center { width: 14px; height: 14px; background: #ffb703; border-radius: 50%; position: absolute; top: 14px; left: 14px; z-index: 2; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
 
-        /* Rumput Bergoyang */
-        .grass-node { position: absolute; width: 6px; background: #74c69d; border-radius: 4px 4px 0 0; transform-origin: bottom center; animation: swaySide 3.5s ease-in-out infinite alternate, grassFade 1.3s ease-out forwards; opacity: 0; }
+        /* Rumput Bergoyang di Bagian Bawah */
+        .grass-node { position: absolute; bottom: 0; width: 6px; background: #74c69d; border-radius: 4px 4px 0 0; transform-origin: bottom center; animation: swaySide 3.5s ease-in-out infinite alternate, grassFade 1.3s ease-out forwards; opacity: 0; }
 
-        /* Efek Kilauan Cahaya Tetap */
-        .sparkle { position: absolute; width: 8px; height: 8px; background: #fff3b0; border-radius: 50%; box-shadow: 0 0 14px 5px #fff, 0 0 22px 9px #ffea00; opacity: 0; animation: flash 1.5s 1.9s ease-out infinite alternate; }
+        /* Efek Kilauan Cahaya Bintang di Atas Layar */
+        .sparkle { position: absolute; width: 8px; height: 8px; background: #fff3b0; border-radius: 50%; box-shadow: 0 0 14px 5px #fff, 0 0 22px 9px #ffea00; opacity: 0; animation: flash 1.5s ease-out infinite alternate; }
 
-        /* Partikel Kembang Api Magic (Burst) */
+        /* Partikel Burst */
         .magic-particle { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; pointer-events: none; opacity: 0; animation: particleBurst 1.8s ease-out forwards; z-index: 6; }
 
         /* Animasi */
         @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes growUp { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
         @keyframes bloom { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
-        @keyframes grassFade { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 0.65; } }
+        @keyframes grassFade { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 0.75; } }
         @keyframes swaySide { 0% { transform: rotate(-9deg); } 100% { transform: rotate(15deg); } }
-        @keyframes flash { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.4); } 100% { opacity: 0.2; transform: scale(0.6); } }
+        @keyframes flash { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.3); } 100% { opacity: 0.1; transform: scale(0.6); } }
         @keyframes particleBurst {
             0% { transform: translate(0, 0) scale(1); opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
@@ -144,45 +144,45 @@
 
     <!-- TAHAP 1: SCREEN PEMBUKA -->
     <div id="tahap1" class="card">
-        <div class="floating-emoji">🌸</div>
-        <h1>Hai, Anatasya Rembulan! ✨</h1>
-        <p>Aku sengaja luangkan waktu buat bikin halaman kuis interaktif rahasia ini khusus untuk kamu. Yuk, ikuti petualangan mini ini sampai selesai!</p>
-        <button class="btn" onclick="playBeep(440); next(1)">Mulai Petualangan 🚀</button>
+        <div class="floating-emoji">✨</div>
+        <h1>Hai, Anatasya Rembulan! 👋</h1>
+        <p>Ada halaman interaktif kecil yang sengaja kubuat khusus buat kamu hari ini. Coba ikutin kuis singkat ini sebentar yuk, seru-seruan aja!</p>
+        <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
     </div>
 
     <!-- TAHAP 2: PERTANYAAN INPUT TEXT -->
     <div id="tahap2" class="card hidden">
-        <div class="floating-emoji">🤔</div>
+        <div class="floating-emoji">💭</div>
         <h1>Pertanyaan Pertama</h1>
-        <p>Coba tulis satu hal sederhana apa pun yang paling bisa bikin mood kamu bahagia belakangan ini?</p>
-        <input type="text" id="jawabanTeks" class="input-custom" placeholder="Ketik jawabannya di sini ya Anatasya..." autocomplete="off">
+        <p>Dari semua momen atau topik seru yang belakangan ini sering kita bahas, apa sih yang paling berkesan menurut kamu?</p>
+        <input type="text" id="jawabanTeks" class="input-custom" placeholder="Ketik di sini ya..." autocomplete="off">
         <br><br>
-        <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim Jawaban 📩</button>
+        <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
     </div>
 
-    <!-- TAHAP 3: PERTANYAAN PILIHAN GANDA KABUR (EDISI RAMAH TEMAN DEKAT) -->
+    <!-- TAHAP 3: PERTANYAAN PILIHAN GANDA -->
     <div id="tahap3" class="card hidden">
-        <div class="floating-emoji">🤭</div>
+        <div class="floating-emoji">😜</div>
         <h1>Pertanyaan Kedua</h1>
-        <p>Jawab jujur, seberapa seru dan asyik ngobrol atau temenan sama aku belakangan ini? 😜</p>
-        <button class="btn-choice" id="btn-kabur" onmouseover="playBeep(220); hindar()" onclick="hindarClicked()">A. Gak seru, garing banget wkwk</button>
-        <button class="btn-choice" onclick="playBeep(587); next(3)">B. Lumayan seru, sering bikin ketawa</button>
-        <button class="btn-choice" onclick="playBeep(659); next(3)">C. Seru parah, selalu asyik diajak seru-seruan! 🎉</button>
+        <p>Jawab jujur, seberapa sering kamu nyariin atau nungguin kabar dari aku pas lagi senggang? 😉</p>
+        <button class="btn-choice" id="btn-kabur" onmouseover="playBeep(220); hindar()" onclick="hindarClicked()">A. Ga pernah sama sekali wkwk</button>
+        <button class="btn-choice" onclick="playBeep(587); next(3)">B. Lumayan sering, kalau pas lagi sepi</button>
+        <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
     </div>
 
     <!-- TAHAP 4: SCREEN TRANSISI HADIAH -->
     <div id="tahap4" class="card hidden">
         <div class="floating-emoji">🎁</div>
-        <h1>Jawaban Diterima!</h1>
-        <p>Haha mantap! Makasih banyak ya Anatasya sudah mau meluangkan waktu mengikuti kuis iseng ini. Nah, sebagai gantinya, sekarang kamu berhak melihat kejutan utama dariku...</p>
-        <button class="btn" onclick="playChime(); startMegaGardenMagic()">Buka Kejutan Utama ✨</button>
+        <h1>Jawaban Disimpan!</h1>
+        <p>Haha, asyik juga! Makasih ya Anatasya sudah mau meluangkan waktu buat main game iseng ini. Sekarang, ada sesuatu yang siap mekar buat kamu...</p>
+        <button class="btn" onclick="playChime(); startMegaGardenMagic()">Buka ✨</button>
     </div>
 
-    <!-- TAHAP 5: SCREEN AKHIR (AMAN DARI UNSUR ROMANTIS) -->
+    <!-- TAHAP 5: SCREEN AKHIR -->
     <div id="tahap5" class="card hidden">
-        <div class="floating-emoji">🌙✨</div>
-        <h1>Terima Kasih, Anatasya! 🙌</h1>
-        <p>Makasih banyak ya sudah jadi teman dekat yang super baik, seru, dan selalu asyik diajak cerita. Semoga harimu ke depan terus mekar indah, penuh semangat, dan cerah seperti kebun bunga ajaib ini! Semangat terus buat semua aktivitasmu! 🌷😎</p>
+        <div class="floating-emoji">🌙🌷</div>
+        <h1>Terima Kasih, Anatasya! ✨</h1>
+        <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru ke hari-hariku. Apapun kesibukan atau bagaimanapun dinamisnya hari-hari ke depan, semoga kamu selalu dikelilingi kebahagiaan dan semangat yang terus mekar indah seperti kebun ini. Tetap jadi seseorang yang selalu menyenangkan ya! 😊🙌</p>
     </div>
 
     <script>
@@ -210,6 +210,12 @@
             });
         }
 
+        document.addEventListener('click', function() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        });
+
         function next(tahap) {
             document.getElementById('tahap' + tahap).classList.add('hidden');
             setTimeout(() => {
@@ -220,7 +226,7 @@
         function validasiTahap2() {
             const val = document.getElementById('jawabanTeks').value.trim();
             if(val === "") {
-                alert("Eits, diisi dulu dong jawabannya! Jangan dilewatkan ya Anatasya 😜");
+                alert("Eits, diisi dulu dong jawabannya! Jangan dikosongin ya Anatasya 😜");
             } else {
                 next(2);
             }
@@ -236,37 +242,50 @@
             alert("Hayo mau klik Pilihan A ya? Gak bisa dong, harus pilih B atau C! 😜");
         }
 
+        // LOGIKA KEBUN BARU (Bunga Tumbuh di Sekitar Rumput & Cahaya di Atas)
         function startMegaGardenMagic() {
             next(4);
             const garden = document.getElementById('garden');
             
-            for (let i = 0; i < 42; i++) {
+            // 1. Sebarkan Rumput Merata di Bagian Bawah Layar
+            for (let i = 0; i < 45; i++) {
                 const grass = document.createElement('div');
                 grass.className = 'grass-node';
-                grass.style.left = Math.random() * 95 + 'vw';
-                grass.style.bottom = Math.random() * 85 + 'vh';
-                grass.style.height = (Math.random() * 35 + 20) + 'px';
+                grass.style.left = Math.random() * 98 + 'vw';
+                grass.style.height = (Math.random() * 40 + 30) + 'px'; // Tinggi rumput di dasar
                 grass.style.animationDelay = (Math.random() * 1.5) + 's';
                 
-                const grassColors = ['#52b788', '#74c69d', '#95d5b2', '#40916c'];
+                const grassColors = ['#2d6a4f', '#40916c', '#52b788', '#74c69d'];
                 grass.style.backgroundColor = grassColors[Math.floor(Math.random() * grassColors.length)];
                 garden.appendChild(grass);
             }
 
+            // 2. Sebarkan Cahaya Berkedip (Sparkle) Eksklusif di Bagian ATAS Layar (Langit)
+            for (let s = 0; s < 15; s++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 95 + 'vw';
+                sparkle.style.top = Math.random() * 30 + 'vh'; // Dibatasi hanya di 0% - 30% tinggi layar dari atas
+                sparkle.style.animationDelay = (Math.random() * 2) + 's';
+                garden.appendChild(sparkle);
+            }
+
+            // 3. Tumbuhkan Bunga di Samping/Sekitar Rumput (Area Bawah Layar)
             const totalBunga = 22;
             for (let i = 0; i < totalBunga; i++) {
                 setTimeout(() => {
                     const fNode = document.createElement('div');
                     fNode.className = 'flower-node';
                     
-                    const rLeft = Math.random() * 90 + 5; 
-                    const rBottom = Math.random() * 82 + 5; 
+                    const rLeft = Math.random() * 92 + 4; 
+                    // Penempatan bottom dibuat rendah agar bunga berpadu rapi di atas & sekitar rumput
+                    const rBottom = 0; 
                     fNode.style.left = rLeft + 'vw';
-                    fNode.style.bottom = rBottom + 'vh';
+                    fNode.style.bottom = rBottom + 'px';
                     
                     const stem = document.createElement('div');
                     stem.className = 'stem-line';
-                    const stemH = Math.random() * 45 + 40;
+                    const stemH = Math.random() * 60 + 50; // Panjang batang menyesuaikan rumput
                     stem.style.height = stemH + 'px';
                     
                     const head = document.createElement('div');
@@ -287,34 +306,29 @@
                     centerCircle.className = 'flower-center';
                     head.appendChild(centerCircle);
                     
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.left = 'calc(' + rLeft + 'vw - 4px)';
-                    sparkle.style.bottom = 'calc(' + rBottom + 'vh + ' + (stemH + 25) + 'px)';
-                    
                     fNode.appendChild(head);
                     fNode.appendChild(stem);
                     garden.appendChild(fNode);
-                    garden.appendChild(sparkle);
 
-                    createSparksBurst(rLeft, rBottom, stemH);
+                    // Efek Ledakan Partikel Magic tepat di kepala bunga saat mekar
+                    createSparksBurst(rLeft, stemH);
                     
-                }, i * 130);
+                }, i * 140);
             }
         }
 
-        function createSparksBurst(left, bottom, stemHeight) {
+        function createSparksBurst(left, stemHeight) {
             const garden = document.getElementById('garden');
-            const jumlahPartikel = 7;
+            const jumlahPartikel = 6;
             
             for(let j=0; j < jumlahPartikel; j++) {
                 const p = document.createElement('div');
                 p.className = 'magic-particle';
                 p.style.left = left + 'vw';
-                p.style.bottom = 'calc(' + bottom + 'vh + ' + (stemHeight + 20) + 'px)';
+                p.style.bottom = (stemHeight + 10) + 'px';
                 
-                const mx = (Math.random() * 90 - 45) + 'px';
-                const my = (Math.random() * -90 - 25) + 'px';
+                const mx = (Math.random() * 80 - 40) + 'px';
+                const my = (Math.random() * -70 - 20) + 'px';
                 p.style.setProperty('--mx', mx);
                 p.style.setProperty('--my', my);
                 
