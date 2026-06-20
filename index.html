@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for Anatasya ✨</title>
+    <title>Special Gift ✨</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
@@ -16,12 +16,12 @@
             overflow: hidden; 
             margin: 0; 
             position: relative; 
-            transition: background 2.5s ease-in-out;
+            transition: background 3.5s ease-in-out;
         }
         
-        /* Background Khusus Slide Akhir (Malam Estetik) */
+        /* Background Khusus Slide Akhir Kebun Malam Gelap */
         body.night-mode {
-            background: linear-gradient(to bottom, #070B19 0%, #101428 40%, #1A122C 80%, #0A141A 100%) !important;
+            background: linear-gradient(to bottom, #050714 0%, #0b0e22 40%, #110d1f 80%, #050a0d 100%) !important;
         }
         
         /* Desain Kartu Premium (Glassmorphism) */
@@ -64,85 +64,118 @@
         #btn-kabur { position: relative; transition: all 0.15s ease; z-index: 25; }
         
         .hidden { display: none !important; opacity: 0; transform: scale(0.8); }
-        .fade-out-card { opacity: 0 !important; transform: scale(0.7) translateY(-50px) !important; pointer-events: none; }
         
+        /* Kotak Input */
         .input-custom { 
             padding: 15px; width: 100%; border-radius: 16px; border: 2px solid #ff758f; outline: none; 
             font-size: 1rem; color: #495057; text-align: center; transition: 0.3s; background: rgba(255, 255, 255, 0.6); 
         }
         .input-custom:focus { border-color: #ff4d6d; background: white; box-shadow: 0 0 14px rgba(255, 77, 109, 0.35); }
         
-        /* Kelopak Sakura */
+        /* Animasi Kotak Hadiah Bergetar */
+        .gift-box { font-size: 4.5rem; cursor: pointer; display: inline-block; animation: shakeGift 1.2s infinite ease-in-out; transition: transform 0.3s; }
+        .gift-box:hover { transform: scale(1.15); }
+        @keyframes shakeGift {
+            0% { transform: rotate(0deg); }
+            15% { transform: rotate(8deg); }
+            30% { transform: rotate(-8deg); }
+            45% { transform: rotate(4deg); }
+            60% { transform: rotate(-4deg); }
+            75% { transform: rotate(2deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Kelopak Sakura Berguguran */
         .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.4; pointer-events: none; animation: fall linear infinite; z-index: 1; }
         @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
 
-        /* Latar Belakang Kebun */
+        /* Wadah Kebun Utama */
         #garden { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
         
-        /* Efek Cahaya Lampu Sorot Semu (Spotlight Downward Glow) */
+        /* Efek Cahaya Lampu Sorot Semu Atas (Menerangi Tengah Layar) */
         .spotlight-glow {
             position: absolute;
             top: 0;
-            width: 140px;
-            background: linear-gradient(to bottom, rgba(255, 243, 176, 0.25) 0%, rgba(255, 202, 58, 0.08) 50%, rgba(255,255,255,0) 100%);
-            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+            left: 50%;
+            transform: translateX(-50%) scaleX(0.5);
+            width: 260px;
+            background: linear-gradient(to bottom, rgba(255, 244, 186, 0.3) 0%, rgba(255, 112, 166, 0.08) 60%, rgba(255,255,255,0) 100%);
+            clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
             transform-origin: top center;
             opacity: 0;
-            animation: lightBeamOn 1.5s 1.5s ease-out forwards;
+            animation: lightBeamOn 2.5s 2s ease-out forwards;
             z-index: 4;
         }
-        @keyframes lightBeamOn { 0% { opacity: 0; transform: scaleX(0.5); } 100% { opacity: 1; transform: scaleX(1); } }
+        @keyframes lightBeamOn { 0% { opacity: 0; transform: translateX(-50%) scaleX(0.5); } 100% { opacity: 1; transform: translateX(-50%) scaleX(1); } }
 
-        /* DESAIN BUNGA BARU (Lebih Jelas, Tegas & Besar) */
-        .flower-node { position: absolute; transform-origin: bottom center; animation: growUp 2.2s cubic-bezier(0.19, 1, 0.22, 1) forwards; z-index: 6; }
-        .stem-line { width: 8px; background: linear-gradient(to top, #1b4332, #2d6a4f, #52b788); border-radius: 6px; margin: 0 auto; box-shadow: 0 0 8px rgba(45, 106, 79, 0.4); }
+        /* DESAIN STRUKTUR BUNGA UTAMA (Tinggi & Tumbuh Pelan) */
+        .flower-node { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); transform-origin: bottom center; z-index: 6; }
         
-        .flower-head { width: 56px; height: 56px; position: absolute; top: -44px; left: 50%; transform: translate(-50%, -50%) scale(0); animation: bloom 1.2s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards; }
-        .petal { position: absolute; width: 100%; height: 100%; border-radius: 50% 50% 0 50%; border: 1px solid rgba(255,255,255,0.3); }
-        .petal-1 { background: #ff3366; transform: rotate(0deg) scale(1); }
-        .petal-2 { background: #ff5c8a; transform: rotate(72deg) scale(0.95); }
-        .petal-3 { background: #ff7096; transform: rotate(144deg) scale(1); }
-        .petal-4 { background: #ff85a1; transform: rotate(216deg) scale(0.95); }
-        .petal-5 { background: #ff99b6; transform: rotate(288deg) scale(1); }
-        .flower-center { width: 18px; height: 18px; background: #ffca3a; border-radius: 50%; position: absolute; top: 19px; left: 19px; z-index: 2; box-shadow: 0 0 12px #ffca3a; }
+        /* Animasi Batang Naik Diperlambat (4.5 detik) */
+        .stem-line { 
+            width: 10px; 
+            background: linear-gradient(to top, #0f261c, #1b4332, #2d6a4f, #52b788); 
+            border-radius: 8px; 
+            margin: 0 auto; 
+            box-shadow: 0 0 10px rgba(45, 106, 79, 0.5); 
+            height: 0px;
+            animation: growStemSlow 4.5s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+        }
+        @keyframes growStemSlow { 0% { height: 0px; } 100% { height: 210px; } } /* Batang Sangat Tinggi */
+        
+        /* Kelopak Mekar Setelah Batang Selesai Tumbuh (Delay 5.5 detik) */
+        .flower-head { 
+            width: 80px; height: 80px; 
+            position: absolute; top: 0px; left: 50%; 
+            transform: translate(-50%, -50%) scale(0); 
+            animation: bloomSlow 2s cubic-bezier(0.175, 0.885, 0.32, 1.2) 5.5s forwards;
+        }
+        @keyframes bloomSlow { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        
+        /* Lapisan 5 Kelopak Besar & Tegas */
+        .petal { position: absolute; width: 100%; height: 100%; border-radius: 50% 50% 0 50%; border: 1px solid rgba(255,255,255,0.25); }
+        .petal-1 { background: #ff0054; transform: rotate(0deg); }
+        .petal-2 { background: #ff477e; transform: rotate(72deg); }
+        .petal-3 { background: #ff70a6; transform: rotate(144deg); }
+        .petal-4 { background: #ff85a1; transform: rotate(216deg); }
+        .petal-5 { background: #ff99b6; transform: rotate(288deg); }
+        .flower-center { width: 24px; height: 24px; background: #ffca3a; border-radius: 50%; position: absolute; top: 28px; left: 28px; z-index: 2; box-shadow: 0 0 16px #ffca3a; }
 
-        /* Rumput Dasar */
-        .grass-node { position: absolute; bottom: -5px; width: 7px; background: #2d6a4f; border-radius: 5px 5px 0 0; transform-origin: bottom center; animation: swaySide 4s ease-in-out infinite alternate, grassFade 1.5s ease-out forwards; opacity: 0; z-index: 5; }
+        /* Rerumputan Fokus di Sekitar Bunga Tengah */
+        .grass-node { position: absolute; bottom: -5px; width: 8px; background: #1b4332; border-radius: 5px 5px 0 0; transform-origin: bottom center; animation: swaySide 4.5s ease-in-out infinite alternate, grassFade 1.5s ease-out forwards; opacity: 0; z-index: 5; }
 
-        /* Cahaya di Atas (Langit Malam Bersinar / Sumber Lampu) */
-        .sparkle { position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; box-shadow: 0 0 25px 10px #fff, 0 0 45px 20px #ffca3a; opacity: 0; animation: flash 2s ease-out infinite alternate; z-index: 7; }
+        /* Sumber Cahaya Lampu Utama di Atas */
+        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 20px; height: 20px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 60px 30px #ffca3a; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; }
+        @keyframes flashLamp { 0% { opacity: 0.4; transform: translateX(-50%) scale(0.8); } 100% { opacity: 1; transform: translateX(-50%) scale(1.1); } }
 
-        /* Efek Kunang-Kunang Terbang */
+        /* Kunang-Kunang */
         .firefly { position: absolute; width: 6px; height: 6px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 6s linear infinite; z-index: 8; }
         @keyframes flyFirefly {
             0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
+            15% { opacity: 0.8; }
+            85% { opacity: 0.8; }
             100% { opacity: 0; transform: translate(var(--fx), var(--fy)) scale(1); }
         }
 
-        /* Efek Kupu-Kupu Bercahaya Magic */
+        /* Kupu-Kupu Magic Melintasi Tengah */
         .butterfly { position: absolute; width: 14px; height: 14px; background: #a2d2ff; border-radius: 50% 50% 50% 0; box-shadow: 0 0 12px #a2d2ff; opacity: 0; animation: flyButterfly 8s ease-in-out infinite; transform-origin: center; z-index: 8; }
         @keyframes flyButterfly {
-            0% { opacity: 0; transform: translate(0, 10vh) rotate(0deg) scale(0.6); }
-            20% { opacity: 0.9; }
-            80% { opacity: 0.9; }
-            100% { opacity: 0; transform: translate(var(--bx), var(--by)) rotate(360deg) scale(1); }
+            0% { opacity: 0; transform: translate(-50px, 15vh) rotate(0deg); }
+            25% { opacity: 0.9; }
+            75% { opacity: 0.9; }
+            100% { opacity: 0; transform: translate(var(--bx), var(--by)) rotate(180deg); }
         }
 
-        /* Partikel Burst */
-        .magic-particle { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; pointer-events: none; opacity: 0; animation: particleBurst 1.8s ease-out forwards; z-index: 9; }
+        /* Partikel Burst Saat Bunga Mekar (Delay Menyesuaikan Mekar) */
+        .magic-particle { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; pointer-events: none; opacity: 0; animation: particleBurst 2s ease-out 5.5s forwards; z-index: 9; }
 
-        /* Animasi Inti */
+        /* Animasi Umum */
         @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes growUp { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
-        @keyframes bloom { 0% { transform: translate(-50%, -50%) scale(0); } 100% { transform: translate(-50%, -50%) scale(1); } }
-        @keyframes grassFade { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 0.8; } }
-        @keyframes swaySide { 0% { transform: rotate(-8deg); } 100% { transform: rotate(12deg); } }
-        @keyframes flash { 0% { opacity: 0; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.3; transform: scale(0.7); } }
+        @keyframes grassFade { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 0.85; } }
+        @keyframes swaySide { 0% { transform: rotate(-6deg); } 100% { transform: rotate(10deg); } }
         @keyframes particleBurst {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
+            0% { transform: translate(0, -210px) scale(1); opacity: 1; }
+            100% { transform: translate(var(--mx), calc(var(--my) - 210px)) scale(0); opacity: 0; }
         }
         
         .floating-emoji { font-size: 3rem; animation: floatAnim 2.2s ease-in-out infinite alternate; margin-bottom: 15px; }
@@ -153,6 +186,7 @@
 
     <div id="garden"></div>
 
+    <!-- TAHAP 1 -->
     <div id="tahap1" class="card">
         <div class="floating-emoji">✨</div>
         <h1>Hai, Anatasya Rembulan! 👋</h1>
@@ -160,6 +194,7 @@
         <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
     </div>
 
+    <!-- TAHAP 2 -->
     <div id="tahap2" class="card hidden">
         <div class="floating-emoji">💭</div>
         <h1>Pertanyaan Pertama</h1>
@@ -169,6 +204,7 @@
         <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
     </div>
 
+    <!-- TAHAP 3 -->
     <div id="tahap3" class="card hidden">
         <div class="floating-emoji">😜</div>
         <h1>Pertanyaan Kedua</h1>
@@ -178,17 +214,21 @@
         <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
     </div>
 
+    <!-- TAHAP 4 -->
     <div id="tahap4" class="card hidden">
-        <div class="floating-emoji">🎁</div>
+        <div class="floating-emoji">📩</div>
         <h1>Jawaban Disimpan!</h1>
-        <p>Haha, asyik juga! Makasih ya Anatasya sudah mau meluangkan waktu buat main game iseng ini. Sekarang, persiapkan pandanganmu ke layar...</p>
-        <button class="btn" onclick="playChime(); startMegaGardenMagic()">Buka Kejutan ✨</button>
+        <p>Haha, asyik juga! Makasih ya Anatasya sudah mau meluangkan waktu buat main game ini. Yuk kita lihat halaman selanjutnya!</p>
+        <button class="btn" onclick="playBeep(784); next(4)">Lanjut 🎁</button>
     </div>
 
+    <!-- TAHAP 5: SLIDE KEJUTAN HADIAH DARI CARLES -->
     <div id="tahap5" class="card hidden">
-        <div class="floating-emoji">🌙🌷</div>
-        <h1>Terima Kasih, Anatasya! ✨</h1>
-        <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru. Selamat menikmati kebun ajaib khusus ini, biarkan bunganya mekar penuh di layarmu! 😊🙌</p>
+        <div class="floating-emoji">🎁</div>
+        <h1>Ada Hadiah dari Carles! ✨</h1>
+        <p>Sebelum halaman utamanya terbuka, Carles punya satu bingkisan kotak hadiah ajaib khusus buat kamu. Silakan ketuk kotaknya untuk membuka kejutan malam ini...</p>
+        <br>
+        <div class="gift-box" onclick="playChime(); triggerFlowerMagic(this)">🎁</div>
     </div>
 
     <script>
@@ -234,131 +274,112 @@
         }
         function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
 
-        function startMegaGardenMagic() {
-            next(4);
+        // PERTUNJUKAN VISUAL RAHASIA (100% CLEAN VIEW & SINEMATIK)
+        function triggerFlowerMagic(giftElement) {
+            // Hapus kartu hadiah secara instan agar layar bersih tanpa teks apa pun
+            const finalCard = document.getElementById('tahap5');
+            finalCard.style.opacity = '0';
+            finalCard.style.transform = 'scale(0.6)';
+            setTimeout(() => finalCard.remove(), 400);
+
+            // Transisi ke mode malam gelap gulita
             document.body.classList.add('night-mode');
             
-            setTimeout(() => {
-                const finalCard = document.getElementById('tahap5');
-                finalCard.classList.add('fade-out-card');
-                setTimeout(() => finalCard.remove(), 600);
-            }, 4500);
-
             const garden = document.getElementById('garden');
             
-            // Rumput Dasar
-            for (let i = 0; i < 45; i++) {
+            // 1. Tumbuhkan Rerumputan Khusus Terpusat di Bagian Tengah Bawah
+            for (let i = 0; i < 22; i++) {
                 const grass = document.createElement('div');
                 grass.className = 'grass-node';
-                grass.style.left = Math.random() * 98 + 'vw';
-                grass.style.height = (Math.random() * 50 + 35) + 'px';
-                grass.style.animationDelay = (Math.random() * 1.2) + 's';
-                const grassColors = ['#132a13', '#1b4332', '#2d6a4f', '#40916c'];
+                // Penempatan rumput dibuat fokus mengitari area tengah (40vw - 60vw)
+                grass.style.left = (Math.random() * 20 + 40) + 'vw';
+                grass.style.height = (Math.random() * 45 + 35) + 'px';
+                grass.style.animationDelay = (Math.random() * 1) + 's';
+                const grassColors = ['#0f261c', '#1b4332', '#2d6a4f'];
                 grass.style.backgroundColor = grassColors[Math.floor(Math.random() * grassColors.length)];
                 garden.appendChild(grass);
             }
 
-            // Kunang-Kunang
-            for (let f = 0; f < 20; f++) {
+            // 2. Munculkan Sumber Lampu Sorot Besar dari Atas Tengah
+            const lamp = document.createElement('div');
+            lamp.className = 'sparkle';
+            garden.appendChild(lamp);
+
+            const beam = document.createElement('div');
+            beam.className = 'spotlight-glow';
+            // Menghubungkan lampu atas ke area kuncup bunga setinggi 210px
+            beam.style.height = 'calc(100vh - 8vh - 210px)';
+            garden.appendChild(beam);
+
+            // 3. Bangun Objek Bunga Istimewa Tumbuh Pelan di Tengah
+            const fNode = document.createElement('div');
+            fNode.className = 'flower-node';
+            
+            const stem = document.createElement('div');
+            stem.className = 'stem-line';
+            
+            const head = document.createElement('div');
+            head.className = 'flower-head';
+            head.style.top = '-210px'; // Menyesuaikan tinggi maksimum batang (210px)
+            
+            // Formasi 5 Kelopak Premium Berwarna Cerah Tegas
+            for(let k = 1; k <= 5; k++) {
+                const petal = document.createElement('div');
+                petal.className = `petal petal-${k}`;
+                head.appendChild(petal);
+            }
+            
+            const centerCircle = document.createElement('div');
+            centerCircle.className = 'flower-center';
+            head.appendChild(centerCircle);
+            
+            fNode.appendChild(head);
+            fNode.appendChild(stem);
+            garden.appendChild(fNode);
+
+            // 4. Efek Ledakan Magic Burst Tepat Saat Bunga Mekar Sempurna
+            createSparksBurst();
+
+            // 5. Terbangkan Kunang-Kunang di Sekitar Bunga Tengah
+            for (let f = 0; f < 15; f++) {
                 const firefly = document.createElement('div');
                 firefly.className = 'firefly';
-                firefly.style.left = Math.random() * 95 + 'vw';
-                firefly.style.bottom = (Math.random() * 50 + 10) + 'vh';
-                firefly.style.setProperty('--fx', (Math.random() * 120 - 60) + 'px');
-                firefly.style.setProperty('--fy', (Math.random() * -150 - 50) + 'px');
-                firefly.style.animationDelay = (Math.random() * 4) + 's';
+                firefly.style.left = (Math.random() * 30 + 35) + 'vw'; // Terpusat di tengah
+                firefly.style.bottom = (Math.random() * 45 + 10) + 'vh';
+                firefly.style.setProperty('--fx', (Math.random() * 140 - 70) + 'px');
+                firefly.style.setProperty('--fy', (Math.random() * -180 - 40) + 'px');
+                firefly.style.animationDelay = (Math.random() * 3) + 's';
                 garden.appendChild(firefly);
             }
 
-            // Kupu-Kupu
-            for (let b = 0; b < 6; b++) {
+            // 6. Jalankan Kupu-Kupu Magic Melintasi Sorotan Lampu Tengah
+            for (let b = 0; b < 4; b++) {
                 const butterfly = document.createElement('div');
                 butterfly.className = 'butterfly';
-                butterfly.style.left = Math.random() * 85 + 'vw';
-                butterfly.style.bottom = (Math.random() * 30 + 5) + 'vh';
-                butterfly.style.setProperty('--bx', (Math.random() * 160 - 80) + 'px');
-                butterfly.style.setProperty('--by', (Math.random() * -250 - 100) + 'px');
-                butterfly.style.animationDelay = (Math.random() * 5) + 's';
+                butterfly.style.left = (Math.random() * 20 + 40) + 'vw';
+                butterfly.style.bottom = (Math.random() * 25 + 5) + 'vh';
+                butterfly.style.setProperty('--bx', (Math.random() * 200 - 100) + 'px');
+                butterfly.style.setProperty('--by', (Math.random() * -300 - 80) + 'px');
+                butterfly.style.animationDelay = (Math.random() * 4) + 's';
                 garden.appendChild(butterfly);
-            }
-
-            // PROSES BUNGA + LAMPU SOROT ATAS
-            const totalBunga = 16;
-            for (let i = 0; i < totalBunga; i++) {
-                setTimeout(() => {
-                    const rLeft = Math.random() * 88 + 6; 
-                    const stemH = Math.random() * 70 + 60; 
-                    const currentTopVH = Math.random() * 20 + 5; // Posisi vertikal lampu di atas (5vh - 25vh)
-
-                    // 1. Buat Sumber Cahaya Lampu di Langit Atas
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.left = `calc(${rLeft}vw - 3px)`;
-                    sparkle.style.top = `${currentTopVH}vh`;
-                    sparkle.style.animationDelay = (Math.random() * 0.5) + 's';
-                    garden.appendChild(sparkle);
-
-                    // 2. Buat Efek Kerucut Cahaya Sinar Kebawah (Lampu Sorot)
-                    const beam = document.createElement('div');
-                    beam.className = 'spotlight-glow';
-                    beam.style.left = `calc(${rLeft}vw - 67px)`; 
-                    beam.style.top = `${currentTopVH}vh`;
-                    // Tinggi sorotan lampu ditarik pas dari lampu atas menuju kepala bunga di dasar tanah
-                    beam.style.height = `calc(100vh - ${currentTopVH}vh - ${stemH}px)`;
-                    garden.appendChild(beam);
-
-                    // 3. Buat Entitas Bunga Mekar Jelas di bawah
-                    const fNode = document.createElement('div');
-                    fNode.className = 'flower-node';
-                    fNode.style.left = rLeft + 'vw';
-                    fNode.style.bottom = '0px';
-                    
-                    const stem = document.createElement('div');
-                    stem.className = 'stem-line';
-                    stem.style.height = stemH + 'px';
-                    
-                    const head = document.createElement('div');
-                    head.className = 'flower-head';
-                    head.style.top = '-' + (stemH - 12) + 'px';
-                    
-                    const baseColors = ['#ff0054', '#ff5400', '#ff007f', '#7209b7', '#ff70a6', '#ff477e'];
-                    const pickedColor = baseColors[Math.floor(Math.random() * baseColors.length)];
-                    
-                    for(let k = 1; k <= 5; k++) {
-                        const petal = document.createElement('div');
-                        petal.className = `petal petal-${k}`;
-                        petal.style.backgroundColor = pickedColor;
-                        head.appendChild(petal);
-                    }
-                    
-                    const centerCircle = document.createElement('div');
-                    centerCircle.className = 'flower-center';
-                    head.appendChild(centerCircle);
-                    
-                    fNode.appendChild(head);
-                    fNode.appendChild(stem);
-                    garden.appendChild(fNode);
-
-                    createSparksBurst(rLeft, stemH);
-                    
-                }, i * 220);
             }
         }
 
-        function createSparksBurst(left, stemHeight) {
+        function createSparksBurst() {
             const garden = document.getElementById('garden');
-            const jumlahPartikel = 6;
+            const jumlahPartikel = 8;
             for(let j=0; j < jumlahPartikel; j++) {
                 const p = document.createElement('div');
                 p.className = 'magic-particle';
-                p.style.left = left + 'vw'; p.style.bottom = (stemHeight + 10) + 'px';
-                const mx = (Math.random() * 80 - 40) + 'px';
-                const my = (Math.random() * -70 - 20) + 'px';
+                p.style.left = '50vw';
+                p.style.bottom = '0px';
+                const mx = (Math.random() * 120 - 60) + 'px';
+                const my = (Math.random() * -100 - 40) + 'px';
                 p.style.setProperty('--mx', mx); p.style.setProperty('--my', my);
-                const pColors = ['#ccff33', '#fff', '#ff85a1', '#a2d2ff'];
+                const pColors = ['#fff', '#ffca3a', '#ff477e', '#a2d2ff', '#ccff33'];
                 p.style.backgroundColor = pColors[Math.floor(Math.random() * pColors.length)];
                 garden.appendChild(p);
-                setTimeout(() => p.remove(), 1800);
+                setTimeout(() => p.remove(), 3500);
             }
         }
 
