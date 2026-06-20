@@ -2,693 +2,675 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Magical Night Garden ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Infinite Garden for Anatasya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 40%, #f7a1c4 70%, #e8a598 100%); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            overflow: hidden; 
-            margin: 0; 
-            position: relative; 
-            transition: background 4s cubic-bezier(0.4, 0, 0.2, 1);
-            perspective: 1000px;
-            -webkit-user-select: none;
+        /* ==========================================================================
+           1. PREMIUM RESET & VARIABLE ARCHITECTURE
+           ========================================================================== */
+        :root {
+            --bg-dark: #06040a;
+            --bg-deep: #020104;
+            --pink-bright: #ff4d6d;
+            --pink-soft: #ff85a1;
+            --pink-deep: #c9184a;
+            --gold: #ffb703;
+            --glass: rgba(10, 6, 18, 0.75);
+            --border-glass: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             user-select: none;
         }
-        
-        body.night-mode {
-            background: linear-gradient(to bottom, #02040a 0%, #050814 30%, #0a0718 70%, #020305 100%) !important;
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
-        /* ================= KOSMETIK LANGIT MALAM MAGIS ================= */
-        .sky-elements {
+
+        /* ==========================================================================
+           2. CINEMATIC BACKGROUND LAYER
+           ========================================================================== */
+        #viewportCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 3s ease;
             z-index: 1;
         }
-        body.night-mode .sky-elements { opacity: 1; }
 
-        /* Efek Tirai Aurora Gelombang */
-        .aurora {
+        .vignette-overlay {
             position: absolute;
-            top: -20%;
-            left: -50%;
-            width: 200%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(78, 168, 222, 0.15), rgba(128, 255, 219, 0.1), transparent 60%);
-            filter: blur(60px);
-            animation: auroraWave 18s ease-in-out infinite alternate;
-            mix-blend-mode: screen;
-            will-change: transform;
-        }
-        @keyframes auroraWave {
-            0% { transform: rotate(-5deg) translateY(0px) scale(1); }
-            50% { transform: rotate(2deg) translateY(30px) scale(1.1); }
-            100% { transform: rotate(-3deg) translateY(-20px) scale(0.95); }
-        }
-
-        /* Bintang Kedip */
-        .star {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            animation: twistStar infinite alternate;
-        }
-        @keyframes twistStar {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px #fff; }
-        }
-
-        /* Bintang Jatuh */
-        .shooting-star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
-            animation: shoot linear infinite;
-            filter: drop-shadow(0 0 4px #fff);
-            opacity: 0;
-        }
-        @keyframes shoot {
-            0% { transform: translate3d(0,0,0) rotate(-35deg) scaleX(0); opacity: 0; }
-            5% { opacity: 1; transform: translate3d(50px,35px,0) rotate(-35deg) scaleX(30); }
-            15% { opacity: 0; transform: translate3d(300px,210px,0) rotate(-35deg) scaleX(0); }
-            100% { opacity: 0; transform: translate3d(300px,210px,0) rotate(-35deg) scaleX(0); }
-        }
-
-        /* ================= INTERFACE INTERAKTIF KARTU ================= */
-        .card { 
-            text-align: center; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px); 
-            padding: 35px 25px; 
-            border-radius: 30px; 
-            box-shadow: 0 25px 55px rgba(255, 77, 109, 0.3); 
-            max-width: 400px; 
-            width: 88%; 
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            z-index: 100; 
-            border: 2px solid rgba(255, 255, 255, 0.7); 
-            animation: cardPop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) ease-out; 
-            position: relative; 
-        }
-        
-        h1 { color: #ff4d6d; font-size: 1.6rem; margin-bottom: 12px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        p { color: #495057; font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
-        
-        .btn { 
-            background: linear-gradient(135deg, #ff758f 0%, #ff4d6d 100%); 
-            color: white; border: none; padding: 14px 32px; font-size: 0.95rem; 
-            border-radius: 50px; cursor: pointer; font-weight: bold; margin: 8px 4px; 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4); 
-            display: inline-block; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 28px rgba(255, 77, 109, 0.55); }
-        
-        .btn-choice { 
-            background: white; color: #ff4d6d; border: 2px solid #ff758f; width: 100%; 
-            text-align: left; padding: 14px 20px; border-radius: 18px; font-weight: 600; font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 12px; transition: all 0.25s ease; cursor: pointer; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn-choice:hover { background: #ffe5ec; transform: translateX(5px); border-color: #ff4d6d; }
-        #btn-kabur { position: relative; transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1); z-index: 105; }
-        
-        .hidden { display: none !important; opacity: 0; transform: scale(0.7) translateY(40px); }
-        
-        .input-custom { 
-            padding: 14px; width: 100%; border-radius: 16px; border: 2px solid #ff758f; outline: none; 
-            font-size: 1rem; color: #495057; text-align: center; transition: 0.3s; background: rgba(255, 255, 255, 0.7); 
-        }
-        .input-custom:focus { border-color: #ff4d6d; background: white; box-shadow: 0 0 16px rgba(255, 77, 109, 0.4); }
-        
-        .gift-box { font-size: 4.5rem; cursor: pointer; display: inline-block; animation: shakeGift 1s infinite ease-in-out; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
-        .gift-box:hover { transform: scale(1.15) rotate(5deg); }
-        @keyframes shakeGift {
-            0%, 100% { transform: rotate(0deg); }
-            20% { transform: rotate(10deg); }
-            40% { transform: rotate(-10deg); }
-            60% { transform: rotate(6deg); }
-            80% { transform: rotate(-6deg); }
-        }
-
-        /* Kelopak Sakura Berguguran Alami */
-        .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.35; pointer-events: none; animation: fall linear infinite; z-index: 2; will-change: transform; }
-        @keyframes fall { 
-            0% { transform: translate3d(0, -5vh, 0) rotate(0deg); }
-            100% { transform: translate3d(100px, 105vh, 0) rotate(430deg); }
-        }
-
-        /* ================= SISTEM CAMERA LAYER 3D PARALLAX ================= */
-        #viewport-3d {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.85) 100%);
             z-index: 5;
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease-out;
-            will-change: transform;
+            pointer-events: none;
         }
 
-        /* Lapisan-lapisan Kebun */
-        .garden-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* ==========================================================================
+           3. ADVANCED GLASSMORPHISM SLIDER CARD
+           ========================================================================== */
+        .app-container {
+            position: relative;
+            width: 92%;
+            max-width: 650px;
+            z-index: 10;
+            perspective: 2000px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-glass);
+            border-radius: 35px;
+            padding: 45px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 
+                        inset 0 0 30px rgba(255, 255, 255, 0.03);
             transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Slide Content & Typography */
+        .content-area {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .slide-node {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transform: translateZ(-50px) scale(0.92);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-node.active {
+            opacity: 1;
+            transform: translateZ(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .slide-node h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff, var(--pink-soft));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-style: italic;
+            letter-spacing: -1px;
+        }
+
+        .slide-node p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #e2e2e9;
+            font-weight: 300;
+            max-width: 500px;
+        }
+
+        .pink-glow {
+            color: var(--pink-bright);
+            font-weight: 600;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Modern Dashboard Controls */
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 30px;
+            margin-top: 10px;
+        }
+
+        .btn-premium {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-premium:hover:not(:disabled) {
+            background: var(--pink-bright);
+            border-color: var(--pink-bright);
+            box-shadow: 0 0 25px rgba(255, 77, 109, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .btn-premium:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .counter-string {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        /* Music Autoplay Badge */
+        .music-badge {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--pink-soft);
+            border: 1px solid rgba(255,77,109,0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
         }
         
-        .layer-bg { transform: translateZ(-100px) scale(1.15); z-index: 10; }
-        .layer-mid { transform: translateZ(0px); z-index: 20; }
-        .layer-fg { transform: translateZ(60px) scale(0.95); z-index: 30; }
-
-        /* Spotlight Cahaya Lentera Atas */
-        .spotlight-glow {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            max-width: 400px;
-            background: linear-gradient(to bottom, rgba(162, 210, 255, 0.25) 0%, rgba(144, 224, 239, 0.05) 60%, rgba(0,0,0,0) 100%);
-            clip-path: polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%);
-            opacity: 0;
-            animation: lightBeamOn 4s 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            z-index: 11;
-        }
-        @keyframes lightBeamOn { 0% { opacity: 0; transform: translate3d(-50%,0,0) scale(0.8); } 100% { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
-
-        /* ARSITEKTUR STRUKTUR POHON UTAMA */
-        .organic-flower-container {
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            width: 280px;
-            height: 380px;
-        }
-
-        .main-stem {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            background: linear-gradient(to top, #06151c, #0f4c5c, #52b788, #90e0ef);
-            border-radius: 6px;
-            height: 0;
-            animation: growStemOrganic 5s cubic-bezier(0.34, 1.1, 0.64, 1) 0.8s forwards;
-            box-shadow: 0 0 10px rgba(144, 224, 239, 0.4);
-        }
-        @keyframes growStemOrganic { 0% { height: 0px; } 100% { height: 240px; } }
-
-        .side-branch-left {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            width: 4px;
-            background: linear-gradient(to top, #0f4c5c, #3a0ca3, #48cae4);
-            border-radius: 4px;
-            transform-origin: bottom left;
-            transform: rotate(-28deg);
-            height: 0;
-            animation: growBranchL 2.2s cubic-bezier(0.4, 0, 0.2, 1) 2.8s forwards;
-        }
-        @keyframes growBranchL { 0% { height: 0; } 100% { height: 80px; } }
-
-        .side-branch-right {
-            position: absolute;
-            bottom: 115px;
-            left: 50%;
-            width: 4px;
-            background: linear-gradient(to top, #0f4c5c, #3a0ca3, #48cae4);
-            border-radius: 4px;
-            transform-origin: bottom right;
-            transform: rotate(32deg);
-            height: 0;
-            animation: growBranchR 2.2s cubic-bezier(0.4, 0, 0.2, 1) 3.3s forwards;
-        }
-        @keyframes growBranchR { 0% { height: 0; } 100% { height: 75px; } }
-
-        /* MEKARNYA KEPALA BUNGA BERTIKAT STAGGERED */
-        .flower-head {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 46px;
-            height: 46px;
-            transform: translate(-50%, -100%) scale(0);
-            transform-origin: center bottom;
-        }
-        .main-stem .flower-head { animation: bloomOrganic 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 4.8s forwards; transform: translate(-50%, -100%) scale(0) rotate(-3deg); }
-        .side-branch-left .flower-head { animation: bloomOrganic 2.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s forwards; transform: translate(-50%, -100%) scale(0) rotate(-22deg); }
-        .side-branch-right .flower-head { animation: bloomOrganic 2.4s cubic-bezier(0.34, 1.56, 0.64, 1) 5.2s forwards; transform: translate(-50%, -100%) scale(0) rotate(18deg); }
-
-        @keyframes bloomOrganic { 
-            0% { transform: translate(-50%, -100%) scale(0) rotate(var(--r, 0deg)); } 
-            100% { transform: translate(-50%, -100%) scale(1) rotate(var(--r, 0deg)); } 
-        }
-
-        /* Kelopak Seni Neon */
-        .organic-petal { position: absolute; width: 100%; height: 100%; background: #90e0ef; border-radius: 50% 50% 0 50%; transform-origin: center; box-shadow: 0 0 12px rgba(144, 224, 239, 0.85); border: 1px solid rgba(255,255,255,0.4); }
-        .op-1 { transform: rotate(0deg); background: #caf0f8; }
-        .op-2 { transform: rotate(72deg); background: #90e0ef; }
-        .op-3 { transform: rotate(144deg); background: #00b4d8; }
-        .op-4 { transform: rotate(216deg); background: #0077b6; }
-        .op-5 { transform: rotate(288deg); background: #90e0ef; }
-        .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 16px; left: 16px; z-index: 12; box-shadow: 0 0 14px 4px #fff; animation: corePulse 2s infinite alternate; }
-        @keyframes corePulse { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 18px 6px #fff, 0 0 10px #90e0ef; } }
-
-        /* Kluster Rimbun Dedauan Bawah */
-        .leaf-cluster {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%) scale(0);
-            width: 130px;
-            height: 80px;
-            animation: fadeInCluster 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s forwards;
-        }
-        @keyframes fadeInCluster { 0% { transform: translateX(-50%) scale(0); opacity: 0; } 100% { transform: translateX(-50%) scale(1); opacity: 1; } }
-
-        .base-leaf {
-            position: absolute;
-            background: linear-gradient(135deg, #00b4d8, #03045e);
-            border-radius: 100% 0% 100% 0%;
-            transform-origin: bottom left;
-            box-shadow: inset -1px 1px 4px rgba(255,255,255,0.2);
-        }
-        .base-leaf.left { width: 42px; height: 24px; bottom: 10px; left: 10px; transform: rotate(-35deg); }
-        .base-leaf.right { width: 42px; height: 24px; bottom: 10px; right: 10px; transform: scaleX(-1) rotate(-35deg); }
-        .base-leaf.mid-left { width: 50px; height: 26px; bottom: 30px; left: -2px; transform: rotate(-18deg); }
-        .base-leaf.mid-right { width: 50px; height: 26px; bottom: 30px; right: -2px; transform: scaleX(-1) rotate(-18deg); }
-
-        /* ================= ARSITEKTUR KODE RUMPUT BUSUR ASIMETRIS ================= */
-        .organic-grass {
-            position: absolute;
-            bottom: -15px;
-            transform-origin: bottom center;
-            opacity: 0;
-            pointer-events: auto;
-            cursor: pointer;
-            box-shadow: inset -1.5px 0 5px rgba(255, 255, 255, 0.12);
-            animation: grassFadeUp 2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards, swayGrass 5s ease-in-out infinite alternate;
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), filter 0.4s ease;
-            -webkit-tap-highlight-color: transparent;
-            will-change: transform;
-        }
-
-        /* Lengkungan Sisi Kiri (Tebal & Pipih Sempurna Bak Vektor) */
-        .grass-left {
-            border-radius: 100% 0px 100% 0px;
-            background: linear-gradient(to top right, #020b12 10%, #0c3c4a 45%, #00b4d8 88%, #caf0f8 100%);
-            filter: drop-shadow(0 0 4px rgba(0, 180, 216, 0.4));
-        }
-
-        /* Lengkungan Sisi Kanan */
-        .grass-right {
-            border-radius: 0px 100% 0px 100%;
-            background: linear-gradient(to top left, #020b12 10%, #0c3c4a 45%, #00b4d8 88%, #caf0f8 100%);
-            filter: drop-shadow(0 0 4px rgba(0, 180, 216, 0.4));
-        }
-
-        /* HOVER RUMPUT: Bereaksi Goyang Hebat & Pancarkan Neon Terang */
-        .organic-grass:hover, .organic-grass.active {
-            filter: drop-shadow(0 0 15px #90e0ef) brightness(1.35) !important;
-            transform: rotate(calc(var(--init-rot) * 1.7)) scaleY(1.08) skewX(3deg) !important;
-        }
-
-        /* Kelas Pemicu Ombak Angin Berantai via JS */
-        .grass-ripple {
-            transform: rotate(calc(var(--init-rot) + 15deg)) scaleY(1.03);
-            filter: brightness(1.15);
-        }
-
-        @keyframes grassFadeUp {
-            0% { height: 0px; opacity: 0; transform: translate3d(0,30px,0) rotate(0deg); }
-            100% { opacity: 0.95; }
-        }
-
-        @keyframes swayGrass {
-            0% { transform: rotate(var(--init-rot, -12deg)) scaleX(0.96) skewY(-0.5deg); }
-            100% { transform: rotate(calc(var(--init-rot, -12deg) + 8deg)) scaleX(1.04) skewY(1deg); }
-        }
-
-        /* ================= PARTIKEL ENERGY & ENTITAS KUNANG-KUNANG HIDUP ================= */
-        /* Spora Sari Bunga Terbang */
-        .spore {
-            position: absolute;
-            background: radial-gradient(circle, #fff, rgba(144, 224, 239, 0.8));
+        .pulse-dot {
+            width: 6px; height: 6px;
+            background: var(--pink-bright);
             border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            animation: floatSpore 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-            will-change: transform;
-        }
-        @keyframes floatSpore {
-            0% { transform: translate3d(0,0,0) scale(0.4); opacity: 0; }
-            30% { opacity: 0.8; filter: drop-shadow(0 0 4px #90e0ef); }
-            90% { opacity: 0.5; }
-            100% { transform: translate3d(var(--sx), -75vh, 0) scale(1.2); opacity: 0; }
+            animation: pulse-fx 1s infinite alternate;
         }
 
-        /* Kunang-Kunang Dinamis */
-        .firefly { 
-            position: absolute; 
-            width: 5px; 
-            height: 5px; 
-            background: #d8f3dc; 
-            border-radius: 50%; 
-            box-shadow: 0 0 12px 3px #ccff33, 0 0 5px 1px #fff; 
-            opacity: 0; 
-            z-index: 25;
-            pointer-events: none; 
-            transition: left 2s ease-in-out, bottom 2s ease-in-out, opacity 1s;
-            will-change: left, bottom, opacity;
+        @keyframes pulse-fx {
+            from { transform: scale(0.8); opacity: 0.5; }
+            to { transform: scale(1.3); opacity: 1; }
         }
-
-        /* Lampu Lentera Utama */
-        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 30px 12px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 3s ease-in-out infinite alternate; z-index: 40; pointer-events: none; }
-        @keyframes flashLamp { 0% { opacity: 0.6; transform: translate3d(-50%,0,0) scale(0.9); } 100% { opacity: 1; transform: translate3d(-50%,0,0) scale(1.1); } }
-        @keyframes cardPop { 0% { transform: scale(0.7) translateY(30px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="sky-elements" id="skyBox">
-        <div class="aurora"></div>
-    </div>
+    <div class="vignette-overlay"></div>
+    <canvas id="viewportCanvas"></canvas>
 
-    <div id="viewport-3d">
-        <div class="garden-layer layer-bg" id="l-bg"></div>
-        <div class="garden-layer layer-mid" id="l-mid"></div>
-        <div class="garden-layer layer-fg" id="l-fg"></div>
-    </div>
+    <div class="app-container">
+        <div class="glass-card">
+            
+            <div class="music-badge" id="musicToggle">
+                <div class="pulse-dot"></div>
+                <span id="musicStatus">AUDIO GENERATOR ON</span>
+            </div>
 
-    <div id="tahap1" class="card">
-        <h1>Hai, Anatasya Rembulan! 👋</h1>
-        <p>Ada halaman interaktif kecil yang sengaja kubuat khusus buat kamu hari ini. Coba ikutin kuis singkat ini sebentar yuk, seru-seruan aja!</p>
-        <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
-    </div>
+            <div class="content-area" id="viewportSlides">
+                
+                <div class="slide-node active">
+                    <h2>Dearest Anatasya</h2>
+                    <p>Malam ini, seluruh algoritma matematika dan baris kode dikumpulkan hanya untuk satu tujuan: membingkai pesan kecil ini <span class="pink-glow">khusus untukmu</span>.</p>
+                </div>
 
-    <div id="tahap2" class="card hidden">
-        <h1>Pertanyaan Pertama</h1>
-        <p>Dari semua momen atau topik seru yang belakangan ini sering kita bahas, apa sih yang paling berkesan menurut kamu?</p>
-        <input type="text" id="jawabanTeks" class="input-custom" placeholder="Ketik di sini ya..." autocomplete="off">
-        <br><br>
-        <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
-    </div>
+                <div class="slide-node">
+                    <h2>Rimbun & Hidup</h2>
+                    <p>Perhatikan ekosistem di sekitarmu. Batang yang melengkung, ratusan helai daun, dan rumput di bawah tumbuh secara dinamis lewat hitungan rumus fisis. Tidak ada yang kaku.</p>
+                </div>
 
-    <div id="tahap3" class="card hidden">
-        <h1>Pertanyaan Kedua</h1>
-        <p>Jawab jujur, seberapa sering kamu nyariin atau nungguin kabar dari aku pas lagi senggang? 😉</p>
-        <button class="btn-choice" id="btn-kabur" onmouseover="playBeep(220); hindar()" onclick="hindarClicked()">A. Ga pernah sama sekali wkwk</button>
-        <button class="btn-choice" onclick="playBeep(587); next(3)">B. Lumayan sering, kalau pas lagi sepi</button>
-        <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
-    </div>
+                <div class="slide-node">
+                    <h2>Sebuah Janji ✨</h2>
+                    <p>Kadang hidup terasa berjalan terlalu cepat, meninggalkan ruang sepi yang membuat kita merasa asing. Namun ketahuilah satu hal pasti ini, Anatasya...</p>
+                </div>
 
-    <div id="tahap4" class="card hidden">
-        <h1>Terima Kasih, Anatasya! ✨</h1>
-        <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru ke hari-hariku. Tetap jadi seseorang yang menyenangkan ya! 😊🙌</p>
-        <button class="btn" onclick="playBeep(784); next(4)">Lihat Hadiah 🎁</button>
-    </div>
+                <div class="slide-node">
+                    <h2>Kamu Tidak Sendiri 💝</h2>
+                    <p>Jangan pernah merasa sendirian lagi di dunia ini. Ketika hari terasa melelahkan atau malam terasa dingin, <span class="pink-glow">aku selalu ada di sini</span> untukmu.</p>
+                </div>
 
-    <div id="tahap5" class="card hidden">
-        <h1>Ada Hadiah dari Carles! ✨</h1>
-        <p>Carles punya satu bingkisan kotak hadiah ajaib khusus buat kamu. Silakan ketuk kotaknya untuk membuka kejutan malam ini...</p>
-        <br>
-        <div class="gift-box" onclick="playChime(); triggerFlowerMagic()">🎁</div>
+                <div class="slide-node">
+                    <h2>Dengarkan Hatimu 🕊️</h2>
+                    <p>Kamu tidak harus selalu terlihat kuat setiap hari. Tidak apa-apa untuk beristirahat sejenak, menyandarkan bebanmu, dan membiarkan dunia berjalan tanpa bebanmu.</p>
+                </div>
+
+                <div class="slide-node">
+                    <h2>Keindahan Tersirat</h2>
+                    <p>Sinar bintang paling terang sering kali lahir dari kegelapan yang paling pekat. Kehadiranmu membawa arti <span class="pink-glow">keindahan nyata</span> bagi sekitarmu.</p>
+                </div>
+
+                <div class="slide-node">
+                    <h2>Ruang Aman 🌹</h2>
+                    <p>Jadikan halaman digital ini sebagai ruang amanmu. Di sini tidak ada tuntutan, tidak ada penghakiman. Hanya ada kedamaian untuk dirimu sendiri.</p>
+                </div>
+
+                <div class="slide-node">
+                    <h2>Terus Melangkah 🌈</h2>
+                    <p>Esok adalah lembaran baru yang masih bersih. Mari kita isi dengan harapan-harapan kecil dan senyuman hangat yang berhak kamu miliki.</p>
+                </div>
+
+                <div class="slide-node">
+                    <h2>Terima Kasih</h2>
+                    <p>Terima kasih sudah bertahan sejauh ini dengan sangat hebat. Dunia ini menjadi jauh lebih berharga hanya karena <span class="pink-glow">kamu ada di dalamnya</span>.</p>
+                </div>
+
+                <div class="slide-node">
+                    <h2>Tersenyumlah 😊</h2>
+                    <p>Tarik napas sedalam mungkin, rilekskan pikiranmu, dan rasakan hembusan angin digital ini. Kamu <span class="pink-glow">sangat disayangi</span>, Anatasya. Selamanya.</p>
+                </div>
+
+            </div>
+
+            <div class="control-panel">
+                <button class="btn-premium" id="leftBtn" disabled>← Back</button>
+                <div class="meta-info">
+                    <div class="counter-string" id="counterNode">01 / 10</div>
+                </div>
+                <button class="btn-premium" id="rightBtn">Next →</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // AUDIO SYSTEM ENGINE
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playBeep(freq) {
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine'; osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.35);
-            } catch(e) {}
-        }
-
-        function playChime() {
-            const notes = [523, 659, 784, 988, 1175, 1318];
-            notes.forEach((note, idx) => {
-                setTimeout(() => playBeep(note), idx * 100);
-            });
-        }
-
-        function next(tahap) {
-            document.getElementById('tahap' + tahap).classList.add('hidden');
-            setTimeout(() => {
-                document.getElementById('tahap' + (tahap + 1)).classList.remove('hidden');
-            }, 200);
-        }
-
-        function validasiTahap2() {
-            if(document.getElementById('jawabanTeks').value.trim() === "") {
-                alert("Eits, diisi dulu dong jawabannya! Jangan dikosongin ya Anatasya 😜");
-            } else { next(2); }
-        }
-
-        function hindar() {
-            const btn = document.getElementById('btn-kabur');
-            btn.style.transform = `translate(${Math.floor(Math.random() * 160) - 80}px, ${Math.floor(Math.random() * 100) - 50}px)`;
-        }
-        function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
-
-        // GENERATOR DEKORASI AWAL LANGIT KEDIP
-        const skyBox = document.getElementById('skyBox');
-        for (let s = 0; s < 45; s++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 50 + 'vh';
-            star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-            star.style.animationDelay = (Math.random() * 2) + 's';
-            skyBox.appendChild(star);
-        }
-        for (let ss = 0; ss < 2; ss++) {
-            const sStar = document.createElement('div');
-            sStar.className = 'shooting-star';
-            sStar.style.left = (Math.random() * 60 + 10) + 'vw';
-            sStar.style.top = (Math.random() * 25 + 5) + 'vh';
-            sStar.style.animationDuration = (Math.random() * 4 + 5) + 's';
-            sStar.style.animationDelay = (Math.random() * 5) + 's';
-            skyBox.appendChild(sStar);
-        }
-
-        // ================= PARALLAX DEVICE ORIENTATION & MOUSE ENGINE =================
-        const vp3d = document.getElementById('viewport-3d');
+        /**
+         * INFINITE PROCEDURAL ENGINE (OBJECT-ORIENTED)
+         * Mengatur rendering Rumput, Bunga, Ranting, Daun, Bintang, dan Musik Prosedural.
+         */
+        const canvas = document.getElementById('viewportCanvas');
+        const ctx = canvas.getContext('2d');
         
-        // Responsif untuk PC (Gerakan Mouse)
-        window.addEventListener('mousemove', (e) => {
-            const xPercent = (e.clientX / window.innerWidth) - 0.5;
-            const yPercent = (e.clientY / window.innerHeight) - 0.5;
-            vp3d.style.transform = `rotateY(${xPercent * 14}deg) rotateX(${yPercent * -8}deg)`;
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+        const config = {
+            grassCount: 450,
+            starCount: 120,
+            petalCount: 45,
+            fireflyCount: 25
+        };
+
+        const storage = {
+            grass: [],
+            stars: [],
+            petals: [],
+            fireflies: [],
+            flower: null
+        };
+
+        let globalTime = 0;
+
+        // --- MATH HELPERS ---
+        const randomRange = (min, max) => Math.random() * (max - min) + min;
+
+        // --- CLASSES DEFINITION ---
+        class Star {
+            constructor() {
+                this.x = randomRange(0, w);
+                this.y = randomRange(0, h * 0.65);
+                this.size = randomRange(0.5, 2.2);
+                this.alpha = randomRange(0.1, 0.9);
+                this.speed = randomRange(0.01, 0.03);
+            }
+            render() {
+                this.alpha += this.speed;
+                if (this.alpha > 1 || this.alpha < 0.1) this.speed *= -1;
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class Firefly {
+            constructor() {
+                this.x = randomRange(0, w);
+                this.y = randomRange(h * 0.4, h);
+                this.ang = randomRange(0, Math.PI * 2);
+                this.speed = randomRange(0.4, 1.2);
+                this.radius = randomRange(1, 2.5);
+            }
+            render() {
+                this.ang += randomRange(-0.1, 0.1);
+                this.x += Math.cos(this.ang) * this.speed;
+                this.y += Math.sin(this.ang) * this.speed;
+
+                if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
+                    this.x = randomRange(0, w);
+                    this.y = randomRange(h * 0.4, h);
+                }
+
+                ctx.save();
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#ffb703";
+                ctx.fillStyle = `rgba(255, 183, 3, ${randomRange(0.4, 0.9)})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class GrassBlade {
+            constructor(x) {
+                this.x = x;
+                this.baseWidth = randomRange(3, 7);
+                this.targetHeight = randomRange(60, 130);
+                this.flexibility = randomRange(15, 35);
+                this.phase = randomRange(0, Math.PI * 2);
+                this.speed = randomRange(0.015, 0.03);
+                this.color = this.getNaturalGreen();
+            }
+            getNaturalGreen() {
+                const palette = ['#0d2310', '#133517', '#1b4d22', '#24612d'];
+                return palette[Math.floor(Math.random() * palette.length)];
+            }
+            render() {
+                let offset = Math.sin(globalTime * this.speed + this.phase) * this.flexibility;
+                ctx.save();
+                
+                let grad = ctx.createLinearGradient(this.x, h, this.x + offset, h - this.targetHeight);
+                grad.addColorStop(0, '#020703');
+                grad.addColorStop(1, this.color);
+
+                ctx.beginPath();
+                ctx.moveTo(this.x - this.baseWidth / 2, h);
+                ctx.quadraticCurveTo(this.x + offset * 0.3, h - this.targetHeight * 0.5, this.x + offset, h - this.targetHeight);
+                ctx.quadraticCurveTo(this.x + this.baseWidth / 2 + offset * 0.3, h - this.targetHeight * 0.5, this.x + this.baseWidth / 2, h);
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class FallingPetal {
+            constructor() { this.spawn(); }
+            spawn() {
+                this.x = randomRange(0, w);
+                this.y = randomRange(-50, -10);
+                this.size = randomRange(5, 12);
+                this.speedY = randomRange(0.8, 2.2);
+                this.speedX = randomRange(-0.8, 0.8);
+                this.rot = randomRange(0, Math.PI * 2);
+                this.spin = randomRange(-0.03, 0.03);
+            }
+            render() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(globalTime * 0.02) * 0.3;
+                this.rot += this.spin;
+
+                if (this.y > h || this.x < 0 || this.x > w) this.spawn();
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rot);
+                ctx.fillStyle = 'rgba(255, 77, 109, 0.65)';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class MasterFlower {
+            constructor() {
+                this.rootX = w / 2;
+                this.rootY = h;
+                this.length = 320;
+            }
+            drawDetailedLeaf(x, y, length, angle, isLeft) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                if(!isLeft) ctx.scale(1, -1);
+
+                let leafGrad = ctx.createLinearGradient(0, 0, length, -length*0.3);
+                leafGrad.addColorStop(0, '#102e13');
+                leafGrad.addColorStop(0.6, '#215c27');
+                leafGrad.addColorStop(1, '#3b9444');
+
+                ctx.beginPath();
+                ctx.moveTo(0,0);
+                ctx.bezierCurveTo(length*0.3, -length*0.5, length*0.8, -length*0.4, length, 0);
+                ctx.bezierCurveTo(length*0.7, length*0.3, length*0.3, length*0.3, 0, 0);
+                ctx.fillStyle = leafGrad;
+                ctx.fill();
+
+                // Tulang Daun Vektor Detail
+                ctx.beginPath();
+                ctx.moveTo(0,0);
+                ctx.lineTo(length*0.85, 0);
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+            render() {
+                let windSway = Math.sin(globalTime * 0.02) * 12;
+                let headX = this.rootX + windSway;
+                let headY = this.rootY - this.length;
+
+                // 1. Gambar Batang Artistik Melengkung (Bezier Control Points)
+                ctx.save();
+                let stemGrad = ctx.createLinearGradient(this.rootX, this.rootY, headX, headY);
+                stemGrad.addColorStop(0, '#071709');
+                stemGrad.addColorStop(0.5, '#16421b');
+                stemGrad.addColorStop(1, '#2c7c34');
+
+                ctx.beginPath();
+                ctx.moveTo(this.rootX - 6, this.rootY);
+                ctx.bezierCurveTo(this.rootX - 30 + windSway * 0.5, this.rootY - this.length*0.5, headX - 6, headY + this.length*0.2, headX - 4, headY);
+                ctx.lineTo(headX + 4, headY);
+                ctx.bezierCurveTo(headX + 6, headY + this.length*0.2, this.rootX + 30 + windSway * 0.5, this.rootY - this.length*0.5, this.rootX + 6, this.rootY);
+                ctx.fillStyle = stemGrad;
+                ctx.fill();
+                ctx.restore();
+
+                // 2. Gambar Daun Dinamis Terintegrasi Struktural
+                this.drawDetailedLeaf(this.rootX - 10 + windSway*0.3, this.rootY - 110, 50, -Math.PI/6 + windSway*0.005, true);
+                this.drawDetailedLeaf(this.rootX + 10 + windSway*0.6, this.rootY - 190, 45, Math.PI/5 + windSway*0.005, false);
+
+                // 3. Gambar Rangkaian Kelopak Bunga Vektor 3D Shading
+                ctx.save();
+                ctx.translate(headX, headY);
+                ctx.rotate(windSway * 0.005);
+
+                // Layer Kelopak Luar (Outer Matrix)
+                for(let i=0; i<8; i++) {
+                    ctx.save();
+                    ctx.rotate(i * (Math.PI / 4) + (globalTime * 0.002));
+                    let petalGrad = ctx.createLinearGradient(0, 0, 0, -65);
+                    petalGrad.addColorStop(0, '#ff4d6d');
+                    petalGrad.addColorStop(1, '#ffccd5');
+                    ctx.fillStyle = petalGrad;
+                    ctx.beginPath();
+                    ctx.ellipse(0, -35, 24, 40, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Layer Kelopak Dalam (Inner Core Matrix)
+                for(let i=0; i<8; i++) {
+                    ctx.save();
+                    ctx.rotate(i * (Math.PI / 4) - (globalTime * 0.003) + 0.2);
+                    let innerGrad = ctx.createLinearGradient(0, 0, 0, -45);
+                    innerGrad.addColorStop(0, '#c9184a');
+                    innerGrad.addColorStop(1, '#ff4d6d');
+                    ctx.fillStyle = innerGrad;
+                    ctx.beginPath();
+                    ctx.ellipse(0, -22, 16, 28, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Inti Putik Bercahaya (Glow Generator)
+                let coreGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 22);
+                coreGrad.addColorStop(0, '#ffffff');
+                coreGrad.addColorStop(0.3, '#ffb703');
+                coreGrad.addColorStop(1, '#fb8500');
+                
+                ctx.save();
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = "#ffb703";
+                ctx.beginPath();
+                ctx.arc(0, 0, 20, 0, Math.PI * 2);
+                ctx.fillStyle = coreGrad;
+                ctx.fill();
+                ctx.restore();
+
+                ctx.restore();
+            }
+        }
+
+        // --- ENGINE INIZIALIZATION ---
+        function initEngine() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+
+            storage.stars = Array.from({length: config.starCount}, () => new Star());
+            storage.fireflies = Array.from({length: config.fireflyCount}, () => new Firefly());
+            storage.petals = Array.from({length: config.petalCount}, () => new FallingPetal());
+            
+            storage.grass = [];
+            const placementStep = w / config.grassCount;
+            for(let i=0; i<w; i+=placementStep) {
+                storage.grass.push(new GrassBlade(i));
+            }
+
+            storage.flower = new MasterFlower();
+        }
+
+        function loop() {
+            globalTime++;
+            ctx.fillStyle = varColorGradient();
+            ctx.fillRect(0, 0, w, h);
+
+            // Layers Execution Order
+            storage.stars.forEach(s => s.render());
+            storage.flower.render();
+            storage.grass.forEach(g => g.render());
+            storage.fireflies.forEach(f => f.render());
+            storage.petals.forEach(p => p.render());
+
+            requestAnimationFrame(loop);
+        }
+
+        function varColorGradient() {
+            let spaceGrad = ctx.createLinearGradient(0, 0, 0, h);
+            spaceGrad.addColorStop(0, '#040307');
+            spaceGrad.addColorStop(0.7, '#080611');
+            spaceGrad.addColorStop(1, '#020104');
+            return spaceGrad;
+        }
+
+        // --- CORE SLIDER LOGIC ---
+        const items = document.querySelectorAll('.slide-node');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+        const counterNode = document.getElementById('counterNode');
+        let indexPointer = 0;
+
+        function refreshSliderUI() {
+            items.forEach((node, i) => {
+                node.classList.toggle('active', i === indexPointer);
+            });
+            counterNode.innerText = `${String(indexPointer + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+            leftBtn.disabled = indexPointer === 0;
+            rightBtn.disabled = indexPointer === items.length - 1;
+        }
+
+        rightBtn.addEventListener('click', () => {
+            if(indexPointer < items.length - 1) {
+                indexPointer++;
+                refreshSliderUI();
+                triggerAudioChime(523.25); // Note C5
+            }
         });
 
-        // Responsif untuk HP (Kemiringan Gyroscope / DeviceMotion jika diizinkan)
-        window.addEventListener('deviceorientation', (e) => {
-            if (e.gamma !== null && e.beta !== null) {
-                const xTilt = Math.min(Math.max(e.gamma, -25), 25) / 25;
-                const yTilt = Math.min(Math.max(e.beta - 45, -25), 25) / 25; 
-                vp3d.style.transform = `rotateY(${xTilt * 12}deg) rotateX(${yTilt * -8}deg)`;
+        leftBtn.addEventListener('click', () => {
+            if(indexPointer > 0) {
+                indexPointer--;
+                refreshSliderUI();
+                triggerAudioChime(392.00); // Note G4
             }
-        }, true);
+        });
 
-        // ================= ENGINE UTAMA KEBUN MAGIS REAKTIF =================
-        let grassArray = [];
+        // --- PROCEDURAL AUDIO GENERATOR (WEB AUDIO API SYNTH) ---
+        let audioContextInstance = null;
+        let isAudioMuted = false;
 
-        function triggerFlowerMagic() {
-            document.getElementById('tahap5').remove();
-            document.body.classList.add('night-mode');
-
-            const layerBG = document.getElementById('l-bg');
-            const layerMID = document.getElementById('l-mid');
-            const layerFG = document.getElementById('l-fg');
-
-            // 1. MEMBUAT RUMPUT BERLAPIS DENGAN KECERDASAN GELOMBANG ANGIN
-            const totalRumput = 28; // Dioptimalkan jumlahnya untuk HP agar enteng
-            for (let i = 0; i < totalRumput; i++) {
-                const grass = document.createElement('div');
-                const isLeft = i % 2 === 0;
-                
-                const posLeft = isLeft ? (Math.random() * 22 + 20) : (Math.random() * 22 + 54);
-                const initRotation = isLeft ? (Math.random() * -24 - 4) : (Math.random() * 24 + 4);
-                
-                grass.className = `organic-grass ${isLeft ? 'grass-left' : 'grass-right'}`;
-                grass.style.left = posLeft + 'vw';
-                
-                const wDaun = Math.random() * 6 + 14;
-                const hDaun = Math.random() * 85 + 45;
-                
-                grass.style.width = wDaun + 'px';
-                grass.style.height = hDaun + 'px';
-                grass.style.setProperty('--init-rot', initRotation + 'deg');
-                
-                // Interaksi Sentuh (HP) & Hover (PC)
-                const triggerRippleAction = () => {
-                    createWindRipple(i);
-                    grass.classList.add('active');
-                    setTimeout(() => grass.classList.remove('active'), 600);
-                };
-                
-                grass.addEventListener('mouseenter', triggerRippleAction);
-                grass.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    triggerRippleAction();
-                }, { passive: false });
-
-                // Layering Depth Allocation
-                if (hDaun > 105) {
-                    layerFG.appendChild(grass);
-                    grass.style.filter = "blur(0.5px)";
-                } else {
-                    layerMID.appendChild(grass);
-                }
-                
-                grassArray.push({ element: grass, leftPos: posLeft });
-                
-                grass.style.animationDelay = (Math.random() * 0.4) + 's, ' + (Math.random() * -4) + 's';
-                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2.5 + 4) + 's';
+        function triggerAudioChime(freq) {
+            if(isAudioMuted) return;
+            if(!audioContextInstance) {
+                audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
             }
-
-            // Fungsi Simulasi Riak Angin Menjalar Ke Tetangga Rumput
-            function createWindRipple(centerIdx) {
-                grassArray.forEach((gData, idx) => {
-                    const jarak = Math.abs(idx - centerIdx);
-                    if (jarak <= 3 && jarak > 0) {
-                        setTimeout(() => {
-                            gData.element.classList.add('grass-ripple');
-                            setTimeout(() => gData.element.classList.remove('grass-ripple'), 600);
-                        }, jarak * 100);
-                    }
-                });
-            }
-
-            // 2. Lentera Utama & Sorot Lampu Estetik
-            const lamp = document.createElement('div'); lamp.className = 'sparkle'; layerBG.appendChild(lamp);
-            const beam = document.createElement('div'); beam.className = 'spotlight-glow'; beam.style.height = 'calc(100vh - 8vh - 240px)'; layerBG.appendChild(beam);
-
-            // 3. MENUMBUHKAN STRUKTUR BUNGA UTAMA
-            const flowerContainer = document.createElement('div');
-            flowerContainer.className = 'organic-flower-container';
-
-            const leafCluster = document.createElement('div');
-            leafCluster.className = 'leaf-cluster';
-            leafCluster.innerHTML = `<div class="base-leaf left"></div><div class="base-leaf right"></div><div class="base-leaf mid-left"></div><div class="base-leaf mid-right"></div>`;
-            flowerContainer.appendChild(leafCluster);
-
-            const mainStem = document.createElement('div'); mainStem.className = 'main-stem';
-            mainStem.appendChild(createFlowerHeadElement('0deg'));
-
-            const branchL = document.createElement('div'); branchL.className = 'side-branch-left';
-            branchL.appendChild(createFlowerHeadElement('-22deg'));
-            mainStem.appendChild(branchL);
-
-            const branchR = document.createElement('div'); branchR.className = 'side-branch-right';
-            branchR.appendChild(createFlowerHeadElement('18deg'));
-            mainStem.appendChild(branchR);
-
-            flowerContainer.appendChild(mainStem);
-            layerMID.appendChild(flowerContainer);
-
-            // 4. GENERATOR ENERGI SPORA SARI BUNGA
-            for (let s = 0; s < 10; s++) {
-                setTimeout(() => {
-                    const spore = document.createElement('div');
-                    spore.className = 'spore';
-                    spore.style.left = (Math.random() * 36 + 32) + 'vw';
-                    spore.style.bottom = '35px';
-                    spore.style.width = spore.style.height = (Math.random() * 3 + 2) + 'px';
-                    spore.style.setProperty('--sx', (Math.random() * 120 - 60) + 'px');
-                    spore.style.animationDelay = (Math.random() * 5) + 's';
-                    layerMID.appendChild(spore);
-                }, s * 300);
-            }
-
-            // 5. KUNANG-KUNANG INTELLIGENT AI (Bisa Singgah Di Rumput)
-            for (let f = 0; f < 8; f++) {
-                const firefly = document.createElement('div');
-                firefly.className = 'firefly';
-                layerMID.appendChild(firefly);
-                animateSmartFirefly(firefly);
-            }
+            
+            let osc = audioContextInstance.createOscillator();
+            let gainNode = audioContextInstance.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioContextInstance.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.12, audioContextInstance.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextInstance.currentTime + 0.4);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioContextInstance.destination);
+            
+            osc.start();
+            osc.stop(audioContextInstance.currentTime + 0.4);
         }
 
-        // AI Loop Pergerakan Kunang-Kunang Alami & Hinggap
-        function animateSmartFirefly(ffElement) {
-            function loop() {
-                const targetRumput = grassArray[Math.floor(Math.random() * grassArray.length)];
-                const mauHinggap = Math.random() < 0.35 && targetRumput;
-                let targetX, targetY;
+        document.getElementById('musicToggle').addEventListener('click', () => {
+            isAudioMuted = !isAudioMuted;
+            document.getElementById('musicStatus').innerText = isAudioMuted ? "AUDIO GENERATOR OFF" : "AUDIO GENERATOR ON";
+            document.getElementById('musicToggle').style.borderColor = isAudioMuted ? "rgba(255,255,255,0.1)" : "rgba(255,77,109,0.4)";
+        });
 
-                if (mauHinggap) {
-                    targetX = targetRumput.leftPos + (Math.random() * 2 - 1) + 'vw';
-                    targetY = (parseFloat(targetRumput.element.style.height) + 10) + 'px';
-                    ffElement.style.opacity = "0.9";
-                } else {
-                    targetX = (Math.random() * 40 + 30) + 'vw';
-                    targetY = (Math.random() * 50 + 20) + 'vh';
-                    ffElement.style.opacity = "0.45";
-                }
+        // --- MOUSE PARALLAX ON CARD ---
+        document.addEventListener('mousemove', (e) => {
+            let rotX = (window.innerHeight / 2 - e.pageY) / 35;
+            let rotY = (window.innerWidth / 2 - e.pageX) / 35;
+            document.querySelector('.glass-card').style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        });
 
-                ffElement.style.left = targetX;
-                ffElement.style.bottom = targetY;
-
-                setTimeout(loop, Math.random() * 2000 + 2000);
-            }
-            setTimeout(() => {
-                ffElement.style.opacity = "0.7";
-                loop();
-            }, Math.random() * 3000);
-        }
-
-        function createFlowerHeadElement(rotationAngle) {
-            const head = document.createElement('div'); head.className = 'flower-head';
-            head.style.setProperty('--r', rotationAngle);
-            for(let k = 1; k <= 5; k++) {
-                const p = document.createElement('div'); p.className = `organic-petal op-${k}`; head.appendChild(p);
-            }
-            const center = document.createElement('div'); center.className = 'organic-center'; head.appendChild(center);
-            return head;
-        }
-
-        // Loop Generator Kelopak Sakura Selamanya
-        setInterval(() => {
-            const b = document.createElement('div'); b.className = 'blossom';
-            b.style.left = Math.random() * 100 + 'vw';
-            b.style.width = b.style.height = Math.random() * 10 + 7 + 'px';
-            b.style.animationDuration = Math.random() * 4 + 3 + 's';
-            document.body.appendChild(b);
-            setTimeout(() => b.remove(), 7000);
-        }, 400);
+        // --- START APPLICATION ---
+        window.addEventListener('resize', initEngine);
+        window.addEventListener('DOMContentLoaded', () => {
+            initEngine();
+            loop();
+        });
     </script>
 </body>
 </html>
