@@ -2,10 +2,11 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Gift ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Magical Night Garden ✨</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 40%, #f7a1c4 70%, #e8a598 100%); 
@@ -16,102 +17,195 @@
             overflow: hidden; 
             margin: 0; 
             position: relative; 
-            transition: background 3.5s ease-in-out;
+            transition: background 4s cubic-bezier(0.4, 0, 0.2, 1);
+            perspective: 1000px;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         body.night-mode {
-            background: linear-gradient(to bottom, #040610 0%, #080b18 40%, #0d091a 80%, #03070a 100%) !important;
+            background: linear-gradient(to bottom, #02040a 0%, #050814 30%, #0a0718 70%, #020305 100%) !important;
         }
         
-        /* Desain Kartu Premium */
+        /* ================= KOSMETIK LANGIT MALAM MAGIS ================= */
+        .sky-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 3s ease;
+            z-index: 1;
+        }
+        body.night-mode .sky-elements { opacity: 1; }
+
+        /* Efek Tirai Aurora Gelombang */
+        .aurora {
+            position: absolute;
+            top: -20%;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(78, 168, 222, 0.15), rgba(128, 255, 219, 0.1), transparent 60%);
+            filter: blur(60px);
+            animation: auroraWave 18s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+        @keyframes auroraWave {
+            0% { transform: rotate(-5deg) translateY(0px) scale(1); }
+            50% { transform: rotate(2deg) translateY(30px) scale(1.1); }
+            100% { transform: rotate(-3deg) translateY(-20px) scale(0.95); }
+        }
+
+        /* Bintang Kedip */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twistStar infinite alternate;
+        }
+        @keyframes twistStar {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px #fff; }
+        }
+
+        /* Bintang Jatuh */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+            animation: shoot linear infinite;
+            filter: drop-shadow(0 0 4px #fff);
+            opacity: 0;
+        }
+        @keyframes shoot {
+            0% { transform: translate3d(0,0,0) rotate(-35deg) scaleX(0); opacity: 0; }
+            5% { opacity: 1; transform: translate3d(50px,35px,0) rotate(-35deg) scaleX(30); }
+            15% { opacity: 0; transform: translate3d(300px,210px,0) rotate(-35deg) scaleX(0); }
+            100% { opacity: 0; transform: translate3d(300px,210px,0) rotate(-35deg) scaleX(0); }
+        }
+
+        /* ================= INTERFACE INTERAKTIF KARTU ================= */
         .card { 
             text-align: center; 
-            background: rgba(255, 255, 255, 0.88); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px); 
-            padding: 45px 35px; 
-            border-radius: 35px; 
-            box-shadow: 0 25px 55px rgba(255, 77, 109, 0.35); 
-            max-width: 440px; 
-            width: 90%; 
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-            z-index: 20; 
-            border: 2px solid rgba(255, 255, 255, 0.6); 
-            animation: cardPop 0.6s ease-out; 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
+            padding: 35px 25px; 
+            border-radius: 30px; 
+            box-shadow: 0 25px 55px rgba(255, 77, 109, 0.3); 
+            max-width: 400px; 
+            width: 88%; 
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            z-index: 100; 
+            border: 2px solid rgba(255, 255, 255, 0.7); 
+            animation: cardPop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) ease-out; 
             position: relative; 
         }
         
-        h1 { color: #ff4d6d; font-size: 1.8rem; margin-bottom: 15px; font-weight: 800; }
-        p { color: #495057; font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; }
+        h1 { color: #ff4d6d; font-size: 1.6rem; margin-bottom: 12px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        p { color: #495057; font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
         
         .btn { 
             background: linear-gradient(135deg, #ff758f 0%, #ff4d6d 100%); 
-            color: white; border: none; padding: 15px 32px; font-size: 1rem; 
-            border-radius: 50px; cursor: pointer; font-weight: bold; margin: 10px 5px; 
-            transition: all 0.3s ease; box-shadow: 0 6px 18px rgba(255, 77, 109, 0.4); 
+            color: white; border: none; padding: 14px 32px; font-size: 0.95rem; 
+            border-radius: 50px; cursor: pointer; font-weight: bold; margin: 8px 4px; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4); 
             display: inline-block; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 10px 28px rgba(255, 77, 109, 0.6); }
+        .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 28px rgba(255, 77, 109, 0.55); }
         
         .btn-choice { 
             background: white; color: #ff4d6d; border: 2px solid #ff758f; width: 100%; 
-            text-align: left; padding: 15px 22px; border-radius: 18px; font-weight: 600; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.02); margin-bottom: 12px; transition: all 0.2s ease; cursor: pointer; 
+            text-align: left; padding: 14px 20px; border-radius: 18px; font-weight: 600; font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 12px; transition: all 0.25s ease; cursor: pointer; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .btn-choice:hover { background: #ffe5ec; transform: translateX(6px); border-color: #ff4d6d; }
-        #btn-kabur { position: relative; transition: all 0.15s ease; z-index: 25; }
+        .btn-choice:hover { background: #ffe5ec; transform: translateX(5px); border-color: #ff4d6d; }
+        #btn-kabur { position: relative; transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1); z-index: 105; }
         
-        .hidden { display: none !important; opacity: 0; transform: scale(0.8); }
+        .hidden { display: none !important; opacity: 0; transform: scale(0.7) translateY(40px); }
         
         .input-custom { 
-            padding: 15px; width: 100%; border-radius: 16px; border: 2px solid #ff758f; outline: none; 
-            font-size: 1rem; color: #495057; text-align: center; transition: 0.3s; background: rgba(255, 255, 255, 0.6); 
+            padding: 14px; width: 100%; border-radius: 16px; border: 2px solid #ff758f; outline: none; 
+            font-size: 1rem; color: #495057; text-align: center; transition: 0.3s; background: rgba(255, 255, 255, 0.7); 
         }
-        .input-custom:focus { border-color: #ff4d6d; background: white; box-shadow: 0 0 14px rgba(255, 77, 109, 0.35); }
+        .input-custom:focus { border-color: #ff4d6d; background: white; box-shadow: 0 0 16px rgba(255, 77, 109, 0.4); }
         
-        .gift-box { font-size: 4.5rem; cursor: pointer; display: inline-block; animation: shakeGift 1.2s infinite ease-in-out; transition: transform 0.3s; }
+        .gift-box { font-size: 4.5rem; cursor: pointer; display: inline-block; animation: shakeGift 1s infinite ease-in-out; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+        .gift-box:hover { transform: scale(1.15) rotate(5deg); }
         @keyframes shakeGift {
-            0% { transform: rotate(0deg); }
-            15% { transform: rotate(8deg); }
-            30% { transform: rotate(-8deg); }
-            45% { transform: rotate(4deg); }
-            60% { transform: rotate(-4deg); }
-            75% { transform: rotate(2deg); }
-            100% { transform: rotate(0deg); }
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(10deg); }
+            40% { transform: rotate(-10deg); }
+            60% { transform: rotate(6deg); }
+            80% { transform: rotate(-6deg); }
         }
 
-        .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.3; pointer-events: none; animation: fall linear infinite; z-index: 1; }
-        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+        /* Kelopak Sakura Berguguran Alami */
+        .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.35; pointer-events: none; animation: fall linear infinite; z-index: 2; will-change: transform; }
+        @keyframes fall { 
+            0% { transform: translate3d(0, -5vh, 0) rotate(0deg); }
+            100% { transform: translate3d(100px, 105vh, 0) rotate(430deg); }
+        }
 
-        /* WADAH KEBUN FOKUS TENGAH */
-        #garden { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; }
+        /* ================= SISTEM CAMERA LAYER 3D PARALLAX ================= */
+        #viewport-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+        }
+
+        /* Lapisan-lapisan Kebun */
+        .garden-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
         
-        /* Spotlight Cahaya Atas Lampu */
+        .layer-bg { transform: translateZ(-100px) scale(1.15); z-index: 10; }
+        .layer-mid { transform: translateZ(0px); z-index: 20; }
+        .layer-fg { transform: translateZ(60px) scale(0.95); z-index: 30; }
+
+        /* Spotlight Cahaya Lentera Atas */
         .spotlight-glow {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 360px;
-            background: linear-gradient(to bottom, rgba(162, 210, 255, 0.22) 0%, rgba(162, 210, 255, 0.04) 65%, rgba(255,255,255,0) 100%);
-            clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
+            width: 85%;
+            max-width: 400px;
+            background: linear-gradient(to bottom, rgba(162, 210, 255, 0.25) 0%, rgba(144, 224, 239, 0.05) 60%, rgba(0,0,0,0) 100%);
+            clip-path: polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%);
             opacity: 0;
-            animation: lightBeamOn 3s 1s ease-out forwards;
-            pointer-events: none;
-            z-index: 4;
+            animation: lightBeamOn 4s 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            z-index: 11;
         }
-        @keyframes lightBeamOn { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes lightBeamOn { 0% { opacity: 0; transform: translate3d(-50%,0,0) scale(0.8); } 100% { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
 
-        /* STRUKTUR BUNGA ORGANIK */
+        /* ARSITEKTUR STRUKTUR POHON UTAMA */
         .organic-flower-container {
             position: absolute;
             left: 50%;
             bottom: 0;
             transform: translateX(-50%);
-            width: 300px;
-            height: 420px;
-            pointer-events: none;
-            z-index: 6;
+            width: 280px;
+            height: 380px;
         }
 
         .main-stem {
@@ -120,176 +214,203 @@
             left: 50%;
             transform: translateX(-50%);
             width: 6px;
-            background: linear-gradient(to top, #0f4c5c, #52b788, #a2d2ff);
-            border-radius: 4px;
+            background: linear-gradient(to top, #06151c, #0f4c5c, #52b788, #90e0ef);
+            border-radius: 6px;
             height: 0;
-            animation: growStemOrganic 4.5s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
-            box-shadow: 0 0 8px rgba(162, 210, 255, 0.3);
+            animation: growStemOrganic 5s cubic-bezier(0.34, 1.1, 0.64, 1) 0.8s forwards;
+            box-shadow: 0 0 10px rgba(144, 224, 239, 0.4);
         }
-        @keyframes growStemOrganic { 0% { height: 0px; } 100% { height: 270px; } }
+        @keyframes growStemOrganic { 0% { height: 0px; } 100% { height: 240px; } }
 
         .side-branch-left {
             position: absolute;
-            bottom: 110px;
+            bottom: 100px;
             left: 50%;
-            width: 5px;
-            background: linear-gradient(to top, #0f4c5c, #48cae4);
+            width: 4px;
+            background: linear-gradient(to top, #0f4c5c, #3a0ca3, #48cae4);
             border-radius: 4px;
             transform-origin: bottom left;
-            transform: rotate(-30deg);
+            transform: rotate(-28deg);
             height: 0;
-            animation: growBranchL 2s ease-out 3.2s forwards;
+            animation: growBranchL 2.2s cubic-bezier(0.4, 0, 0.2, 1) 2.8s forwards;
         }
-        @keyframes growBranchL { 0% { height: 0; } 100% { height: 85px; } }
+        @keyframes growBranchL { 0% { height: 0; } 100% { height: 80px; } }
 
         .side-branch-right {
             position: absolute;
-            bottom: 130px;
+            bottom: 115px;
             left: 50%;
-            width: 5px;
-            background: linear-gradient(to top, #0f4c5c, #48cae4);
+            width: 4px;
+            background: linear-gradient(to top, #0f4c5c, #3a0ca3, #48cae4);
             border-radius: 4px;
             transform-origin: bottom right;
-            transform: rotate(35deg);
+            transform: rotate(32deg);
             height: 0;
-            animation: growBranchR 2s ease-out 3.7s forwards;
+            animation: growBranchR 2.2s cubic-bezier(0.4, 0, 0.2, 1) 3.3s forwards;
         }
-        @keyframes growBranchR { 0% { height: 0; } 100% { height: 80px; } }
+        @keyframes growBranchR { 0% { height: 0; } 100% { height: 75px; } }
 
+        /* MEKARNYA KEPALA BUNGA BERTIKAT STAGGERED */
         .flower-head {
             position: absolute;
             top: 0;
             left: 50%;
-            width: 52px;
-            height: 52px;
+            width: 46px;
+            height: 46px;
             transform: translate(-50%, -100%) scale(0);
             transform-origin: center bottom;
         }
-        .main-stem .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.2s forwards; transform: translate(-50%, -100%) scale(0) rotate(-5deg); }
-        .side-branch-left .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.0s forwards; transform: translate(-50%, -100%) scale(0) rotate(-25deg); }
-        .side-branch-right .flower-head { animation: bloomOrganic 2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 5.5s forwards; transform: translate(-50%, -100%) scale(0) rotate(20deg); }
+        .main-stem .flower-head { animation: bloomOrganic 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 4.8s forwards; transform: translate(-50%, -100%) scale(0) rotate(-3deg); }
+        .side-branch-left .flower-head { animation: bloomOrganic 2.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s forwards; transform: translate(-50%, -100%) scale(0) rotate(-22deg); }
+        .side-branch-right .flower-head { animation: bloomOrganic 2.4s cubic-bezier(0.34, 1.56, 0.64, 1) 5.2s forwards; transform: translate(-50%, -100%) scale(0) rotate(18deg); }
 
         @keyframes bloomOrganic { 
             0% { transform: translate(-50%, -100%) scale(0) rotate(var(--r, 0deg)); } 
             100% { transform: translate(-50%, -100%) scale(1) rotate(var(--r, 0deg)); } 
         }
 
-        .organic-petal { position: absolute; width: 100%; height: 100%; background: #90e0ef; border-radius: 50% 50% 0 50%; transform-origin: center; box-shadow: 0 0 12px rgba(144, 224, 239, 0.7); border: 1px solid rgba(255,255,255,0.3); }
+        /* Kelopak Seni Neon */
+        .organic-petal { position: absolute; width: 100%; height: 100%; background: #90e0ef; border-radius: 50% 50% 0 50%; transform-origin: center; box-shadow: 0 0 12px rgba(144, 224, 239, 0.85); border: 1px solid rgba(255,255,255,0.4); }
         .op-1 { transform: rotate(0deg); background: #caf0f8; }
         .op-2 { transform: rotate(72deg); background: #90e0ef; }
         .op-3 { transform: rotate(144deg); background: #00b4d8; }
         .op-4 { transform: rotate(216deg); background: #0077b6; }
         .op-5 { transform: rotate(288deg); background: #90e0ef; }
-        .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 19px; left: 19px; z-index: 12; box-shadow: 0 0 12px 3px #fff; }
+        .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 16px; left: 16px; z-index: 12; box-shadow: 0 0 14px 4px #fff; animation: corePulse 2s infinite alternate; }
+        @keyframes corePulse { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 18px 6px #fff, 0 0 10px #90e0ef; } }
 
+        /* Kluster Rimbun Dedauan Bawah */
         .leaf-cluster {
             position: absolute;
-            bottom: 10px;
+            bottom: 100px;
             left: 50%;
-            transform: translateX(-50%) scale(0.5);
-            width: 140px;
-            height: 90px;
-            opacity: 0;
-            animation: fadeInCluster 2.5s ease-out 2.5s forwards;
+            transform: translateX(-50%) scale(0);
+            width: 130px;
+            height: 80px;
+            animation: fadeInCluster 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s forwards;
         }
-        @keyframes fadeInCluster { 0% { opacity: 0; transform: translateX(-50%) scale(0.5); } 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
+        @keyframes fadeInCluster { 0% { transform: translateX(-50%) scale(0); opacity: 0; } 100% { transform: translateX(-50%) scale(1); opacity: 1; } }
 
         .base-leaf {
             position: absolute;
-            background: linear-gradient(135deg, #48cae4, #0077b6);
+            background: linear-gradient(135deg, #00b4d8, #03045e);
             border-radius: 100% 0% 100% 0%;
             transform-origin: bottom left;
+            box-shadow: inset -1px 1px 4px rgba(255,255,255,0.2);
         }
-        .base-leaf.left { width: 45px; height: 25px; bottom: 10px; left: 10px; transform: rotate(-30deg); }
-        .base-leaf.right { width: 45px; height: 25px; bottom: 10px; right: 10px; transform: scaleX(-1) rotate(-30deg); }
-        .base-leaf.mid-left { width: 55px; height: 28px; bottom: 32px; left: 0px; transform: rotate(-15deg); }
-        .base-leaf.mid-right { width: 55px; height: 28px; bottom: 32px; right: 0px; transform: scaleX(-1) rotate(-15deg); }
+        .base-leaf.left { width: 42px; height: 24px; bottom: 10px; left: 10px; transform: rotate(-35deg); }
+        .base-leaf.right { width: 42px; height: 24px; bottom: 10px; right: 10px; transform: scaleX(-1) rotate(-35deg); }
+        .base-leaf.mid-left { width: 50px; height: 26px; bottom: 30px; left: -2px; transform: rotate(-18deg); }
+        .base-leaf.mid-right { width: 50px; height: 26px; bottom: 30px; right: -2px; transform: scaleX(-1) rotate(-18deg); }
 
-        /* ================= SEKTOR RUMPUT INTERAKTIF DENGAN DOT-GLOW ================= */
+        /* ================= ARSITEKTUR KODE RUMPUT BUSUR ASIMETRIS ================= */
         .organic-grass {
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             transform-origin: bottom center;
             opacity: 0;
-            z-index: 5;
-            pointer-events: auto; /* Agar bisa menerima interaksi hover/touch */
+            pointer-events: auto;
             cursor: pointer;
-            box-shadow: inset -1px 0 4px rgba(255, 255, 255, 0.1);
-            animation: grassFadeUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, swayGrass 5s ease-in-out infinite alternate;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+            box-shadow: inset -1.5px 0 5px rgba(255, 255, 255, 0.12);
+            animation: grassFadeUp 2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards, swayGrass 5s ease-in-out infinite alternate;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), filter 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
+            will-change: transform;
         }
 
+        /* Lengkungan Sisi Kiri (Tebal & Pipih Sempurna Bak Vektor) */
         .grass-left {
             border-radius: 100% 0px 100% 0px;
-            background: linear-gradient(to top right, #04141c 15%, #0f4c5c 55%, #4ea8de 92%, #a2d2ff 100%);
-            filter: drop-shadow(0 0 6px rgba(78, 168, 222, 0.45));
+            background: linear-gradient(to top right, #020b12 10%, #0c3c4a 45%, #00b4d8 88%, #caf0f8 100%);
+            filter: drop-shadow(0 0 4px rgba(0, 180, 216, 0.4));
         }
 
+        /* Lengkungan Sisi Kanan */
         .grass-right {
             border-radius: 0px 100% 0px 100%;
-            background: linear-gradient(to top left, #04141c 15%, #0f4c5c 55%, #4ea8de 92%, #a2d2ff 100%);
-            filter: drop-shadow(0 0 6px rgba(78, 168, 222, 0.45));
+            background: linear-gradient(to top left, #020b12 10%, #0c3c4a 45%, #00b4d8 88%, #caf0f8 100%);
+            filter: drop-shadow(0 0 4px rgba(0, 180, 216, 0.4));
         }
 
-        /* EFEK HOVER/SENTUH: Rumput Melengkung Lebih Sempurna & Berpendar */
-        .organic-grass:hover {
-            filter: drop-shadow(0 0 15px #90e0ef) brightness(1.3) !important;
-            transform: rotate(calc(var(--init-rot) * 1.6)) scaleY(1.08) !important;
+        /* HOVER RUMPUT: Bereaksi Goyang Hebat & Pancarkan Neon Terang */
+        .organic-grass:hover, .organic-grass.active {
+            filter: drop-shadow(0 0 15px #90e0ef) brightness(1.35) !important;
+            transform: rotate(calc(var(--init-rot) * 1.7)) scaleY(1.08) skewX(3deg) !important;
+        }
+
+        /* Kelas Pemicu Ombak Angin Berantai via JS */
+        .grass-ripple {
+            transform: rotate(calc(var(--init-rot) + 15deg)) scaleY(1.03);
+            filter: brightness(1.15);
         }
 
         @keyframes grassFadeUp {
-            0% { height: 0px; opacity: 0; }
+            0% { height: 0px; opacity: 0; transform: translate3d(0,30px,0) rotate(0deg); }
             100% { opacity: 0.95; }
         }
 
         @keyframes swayGrass {
-            0% { transform: rotate(var(--init-rot, -15deg)) scaleX(0.96) skewY(-0.5deg); }
-            100% { transform: rotate(calc(var(--init-rot, -15deg) + 10deg)) scaleX(1.04) skewY(1.5deg); }
+            0% { transform: rotate(var(--init-rot, -12deg)) scaleX(0.96) skewY(-0.5deg); }
+            100% { transform: rotate(calc(var(--init-rot, -12deg) + 8deg)) scaleX(1.04) skewY(1deg); }
         }
 
-        /* Spore/Sari Bunga Ajaib yang Terbang Naik dari Rumput */
+        /* ================= PARTIKEL ENERGY & ENTITAS KUNANG-KUNANG HIDUP ================= */
+        /* Spora Sari Bunga Terbang */
         .spore {
             position: absolute;
-            background: #90e0ef;
+            background: radial-gradient(circle, #fff, rgba(144, 224, 239, 0.8));
             border-radius: 50%;
-            box-shadow: 0 0 10px #fff;
             opacity: 0;
             pointer-events: none;
-            animation: floatSpore 5s ease-in-out infinite;
+            animation: floatSpore 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+            will-change: transform;
         }
         @keyframes floatSpore {
-            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.6; }
-            100% { transform: translateY(-75vh) translateX(var(--sx)) scale(1.2); opacity: 0; }
+            0% { transform: translate3d(0,0,0) scale(0.4); opacity: 0; }
+            30% { opacity: 0.8; filter: drop-shadow(0 0 4px #90e0ef); }
+            90% { opacity: 0.5; }
+            100% { transform: translate3d(var(--sx), -75vh, 0) scale(1.2); opacity: 0; }
         }
 
-        /* Elemen Atas */
-        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; pointer-events: none; }
-        @keyframes flashLamp { 0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); } 100% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
-        @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .firefly { position: absolute; width: 5px; height: 5px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 7s linear infinite; z-index: 8; pointer-events: none; }
-        @keyframes flyFirefly {
-            0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            15% { opacity: 0.8; }
-            85% { opacity: 0.8; }
-            100% { opacity: 0; transform: translate(var(--fx), var(--fy)) scale(1); }
+        /* Kunang-Kunang Dinamis */
+        .firefly { 
+            position: absolute; 
+            width: 5px; 
+            height: 5px; 
+            background: #d8f3dc; 
+            border-radius: 50%; 
+            box-shadow: 0 0 12px 3px #ccff33, 0 0 5px 1px #fff; 
+            opacity: 0; 
+            z-index: 25;
+            pointer-events: none; 
+            transition: left 2s ease-in-out, bottom 2s ease-in-out, opacity 1s;
+            will-change: left, bottom, opacity;
         }
+
+        /* Lampu Lentera Utama */
+        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 30px 12px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 3s ease-in-out infinite alternate; z-index: 40; pointer-events: none; }
+        @keyframes flashLamp { 0% { opacity: 0.6; transform: translate3d(-50%,0,0) scale(0.9); } 100% { opacity: 1; transform: translate3d(-50%,0,0) scale(1.1); } }
+        @keyframes cardPop { 0% { transform: scale(0.7) translateY(30px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="garden"></div>
+    <div class="sky-elements" id="skyBox">
+        <div class="aurora"></div>
+    </div>
 
-    <!-- TAHAP 1 -->
+    <div id="viewport-3d">
+        <div class="garden-layer layer-bg" id="l-bg"></div>
+        <div class="garden-layer layer-mid" id="l-mid"></div>
+        <div class="garden-layer layer-fg" id="l-fg"></div>
+    </div>
+
     <div id="tahap1" class="card">
         <h1>Hai, Anatasya Rembulan! 👋</h1>
         <p>Ada halaman interaktif kecil yang sengaja kubuat khusus buat kamu hari ini. Coba ikutin kuis singkat ini sebentar yuk, seru-seruan aja!</p>
         <button class="btn" onclick="playBeep(440); next(1)">Mulai 🚀</button>
     </div>
 
-    <!-- TAHAP 2 -->
     <div id="tahap2" class="card hidden">
         <h1>Pertanyaan Pertama</h1>
         <p>Dari semua momen atau topik seru yang belakangan ini sering kita bahas, apa sih yang paling berkesan menurut kamu?</p>
@@ -298,7 +419,6 @@
         <button class="btn" onclick="playBeep(523); validasiTahap2()">Kirim 📩</button>
     </div>
 
-    <!-- TAHAP 3 -->
     <div id="tahap3" class="card hidden">
         <h1>Pertanyaan Kedua</h1>
         <p>Jawab jujur, seberapa sering kamu nyariin atau nungguin kabar dari aku pas lagi senggang? 😉</p>
@@ -307,14 +427,12 @@
         <button class="btn-choice" onclick="playBeep(659); next(3)">C. Sering banget, pokoknya selalu ditunggu! ✨</button>
     </div>
 
-    <!-- TAHAP 4 -->
     <div id="tahap4" class="card hidden">
         <h1>Terima Kasih, Anatasya! ✨</h1>
         <p>Makasih banyak ya sudah selalu meluangkan waktu dan membawa banyak cerita seru ke hari-hariku. Tetap jadi seseorang yang menyenangkan ya! 😊🙌</p>
         <button class="btn" onclick="playBeep(784); next(4)">Lihat Hadiah 🎁</button>
     </div>
 
-    <!-- TAHAP 5 -->
     <div id="tahap5" class="card hidden">
         <h1>Ada Hadiah dari Carles! ✨</h1>
         <p>Carles punya satu bingkisan kotak hadiah ajaib khusus buat kamu. Silakan ketuk kotaknya untuk membuka kejutan malam ini...</p>
@@ -323,6 +441,7 @@
     </div>
 
     <script>
+        // AUDIO SYSTEM ENGINE
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBeep(freq) {
             try {
@@ -330,16 +449,16 @@
                 const gain = audioCtx.createGain();
                 osc.type = 'sine'; osc.frequency.value = freq;
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
                 osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.35);
             } catch(e) {}
         }
 
         function playChime() {
-            const notes = [523, 659, 784, 1046];
-            notes.forEach((note, index) => {
-                setTimeout(() => playBeep(note), index * 120);
+            const notes = [523, 659, 784, 988, 1175, 1318];
+            notes.forEach((note, idx) => {
+                setTimeout(() => playBeep(note), idx * 100);
             });
         }
 
@@ -347,168 +466,229 @@
             document.getElementById('tahap' + tahap).classList.add('hidden');
             setTimeout(() => {
                 document.getElementById('tahap' + (tahap + 1)).classList.remove('hidden');
-            }, 150);
+            }, 200);
         }
 
         function validasiTahap2() {
-            const val = document.getElementById('jawabanTeks').value.trim();
-            if(val === "") {
+            if(document.getElementById('jawabanTeks').value.trim() === "") {
                 alert("Eits, diisi dulu dong jawabannya! Jangan dikosongin ya Anatasya 😜");
             } else { next(2); }
         }
 
         function hindar() {
             const btn = document.getElementById('btn-kabur');
-            const acakX = Math.floor(Math.random() * 180) - 90;
-            const acakY = Math.floor(Math.random() * 130) - 65;
-            btn.style.transform = `translate(${acakX}px, ${acakY}px)`;
+            btn.style.transform = `translate(${Math.floor(Math.random() * 160) - 80}px, ${Math.floor(Math.random() * 100) - 50}px)`;
         }
         function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
 
-        // GERAKAN UTAMA MAGIS KEBUN
-        function triggerFlowerMagic() {
-            const finalCard = document.getElementById('tahap5');
-            finalCard.style.opacity = '0';
-            finalCard.style.transform = 'scale(0.6)';
-            setTimeout(() => finalCard.remove(), 400);
+        // GENERATOR DEKORASI AWAL LANGIT KEDIP
+        const skyBox = document.getElementById('skyBox');
+        for (let s = 0; s < 45; s++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 50 + 'vh';
+            star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            star.style.animationDelay = (Math.random() * 2) + 's';
+            skyBox.appendChild(star);
+        }
+        for (let ss = 0; ss < 2; ss++) {
+            const sStar = document.createElement('div');
+            sStar.className = 'shooting-star';
+            sStar.style.left = (Math.random() * 60 + 10) + 'vw';
+            sStar.style.top = (Math.random() * 25 + 5) + 'vh';
+            sStar.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            sStar.style.animationDelay = (Math.random() * 5) + 's';
+            skyBox.appendChild(sStar);
+        }
 
+        // ================= PARALLAX DEVICE ORIENTATION & MOUSE ENGINE =================
+        const vp3d = document.getElementById('viewport-3d');
+        
+        // Responsif untuk PC (Gerakan Mouse)
+        window.addEventListener('mousemove', (e) => {
+            const xPercent = (e.clientX / window.innerWidth) - 0.5;
+            const yPercent = (e.clientY / window.innerHeight) - 0.5;
+            vp3d.style.transform = `rotateY(${xPercent * 14}deg) rotateX(${yPercent * -8}deg)`;
+        });
+
+        // Responsif untuk HP (Kemiringan Gyroscope / DeviceMotion jika diizinkan)
+        window.addEventListener('deviceorientation', (e) => {
+            if (e.gamma !== null && e.beta !== null) {
+                const xTilt = Math.min(Math.max(e.gamma, -25), 25) / 25;
+                const yTilt = Math.min(Math.max(e.beta - 45, -25), 25) / 25; 
+                vp3d.style.transform = `rotateY(${xTilt * 12}deg) rotateX(${yTilt * -8}deg)`;
+            }
+        }, true);
+
+        // ================= ENGINE UTAMA KEBUN MAGIS REAKTIF =================
+        let grassArray = [];
+
+        function triggerFlowerMagic() {
+            document.getElementById('tahap5').remove();
             document.body.classList.add('night-mode');
-            const garden = document.getElementById('garden');
-            
-            // GENERATOR RUMPUT REALISTIS & INTERAKTIF
-            const totalRumput = 26;
+
+            const layerBG = document.getElementById('l-bg');
+            const layerMID = document.getElementById('l-mid');
+            const layerFG = document.getElementById('l-fg');
+
+            // 1. MEMBUAT RUMPUT BERLAPIS DENGAN KECERDASAN GELOMBANG ANGIN
+            const totalRumput = 28; // Dioptimalkan jumlahnya untuk HP agar enteng
             for (let i = 0; i < totalRumput; i++) {
                 const grass = document.createElement('div');
                 const isLeft = i % 2 === 0;
                 
-                // Distribusi menyebar alami
-                const posLeft = isLeft ? (Math.random() * 18 + 28) : (Math.random() * 18 + 54);
-                const initRotation = isLeft ? (Math.random() * -22 - 8) : (Math.random() * 22 + 8);
+                const posLeft = isLeft ? (Math.random() * 22 + 20) : (Math.random() * 22 + 54);
+                const initRotation = isLeft ? (Math.random() * -24 - 4) : (Math.random() * 24 + 4);
                 
                 grass.className = `organic-grass ${isLeft ? 'grass-left' : 'grass-right'}`;
                 grass.style.left = posLeft + 'vw';
                 
-                const lebarDaun = Math.random() * 10 + 15; 
-                const tinggiDaun = Math.random() * 80 + 45; 
+                const wDaun = Math.random() * 6 + 14;
+                const hDaun = Math.random() * 85 + 45;
                 
-                grass.style.width = lebarDaun + 'px';
-                grass.style.height = tinggiDaun + 'px';
+                grass.style.width = wDaun + 'px';
+                grass.style.height = hDaun + 'px';
                 grass.style.setProperty('--init-rot', initRotation + 'deg');
                 
-                // Keberagaman kedalaman kamera (Cinematic Layering)
-                if (tinggiDaun > 105) {
-                    grass.style.zIndex = "7"; // Di depan batang
-                    grass.style.filter += " blur(0.5px)";
-                } else if (tinggiDaun < 60) {
-                    grass.style.zIndex = "4"; // Di belakang batang
-                    grass.style.opacity = "0.75";
-                }
-
-                grass.style.animationDelay = (Math.random() * 0.5) + 's, ' + (Math.random() * -4) + 's';
-                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 4) + 's';
+                // Interaksi Sentuh (HP) & Hover (PC)
+                const triggerRippleAction = () => {
+                    createWindRipple(i);
+                    grass.classList.add('active');
+                    setTimeout(() => grass.classList.remove('active'), 600);
+                };
                 
-                garden.appendChild(grass);
+                grass.addEventListener('mouseenter', triggerRippleAction);
+                grass.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    triggerRippleAction();
+                }, { passive: false });
+
+                // Layering Depth Allocation
+                if (hDaun > 105) {
+                    layerFG.appendChild(grass);
+                    grass.style.filter = "blur(0.5px)";
+                } else {
+                    layerMID.appendChild(grass);
+                }
+                
+                grassArray.push({ element: grass, leftPos: posLeft });
+                
+                grass.style.animationDelay = (Math.random() * 0.4) + 's, ' + (Math.random() * -4) + 's';
+                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2.5 + 4) + 's';
             }
 
-            // Spore Generator (Partikel Energi Terbang)
+            // Fungsi Simulasi Riak Angin Menjalar Ke Tetangga Rumput
+            function createWindRipple(centerIdx) {
+                grassArray.forEach((gData, idx) => {
+                    const jarak = Math.abs(idx - centerIdx);
+                    if (jarak <= 3 && jarak > 0) {
+                        setTimeout(() => {
+                            gData.element.classList.add('grass-ripple');
+                            setTimeout(() => gData.element.classList.remove('grass-ripple'), 600);
+                        }, jarak * 100);
+                    }
+                });
+            }
+
+            // 2. Lentera Utama & Sorot Lampu Estetik
+            const lamp = document.createElement('div'); lamp.className = 'sparkle'; layerBG.appendChild(lamp);
+            const beam = document.createElement('div'); beam.className = 'spotlight-glow'; beam.style.height = 'calc(100vh - 8vh - 240px)'; layerBG.appendChild(beam);
+
+            // 3. MENUMBUHKAN STRUKTUR BUNGA UTAMA
+            const flowerContainer = document.createElement('div');
+            flowerContainer.className = 'organic-flower-container';
+
+            const leafCluster = document.createElement('div');
+            leafCluster.className = 'leaf-cluster';
+            leafCluster.innerHTML = `<div class="base-leaf left"></div><div class="base-leaf right"></div><div class="base-leaf mid-left"></div><div class="base-leaf mid-right"></div>`;
+            flowerContainer.appendChild(leafCluster);
+
+            const mainStem = document.createElement('div'); mainStem.className = 'main-stem';
+            mainStem.appendChild(createFlowerHeadElement('0deg'));
+
+            const branchL = document.createElement('div'); branchL.className = 'side-branch-left';
+            branchL.appendChild(createFlowerHeadElement('-22deg'));
+            mainStem.appendChild(branchL);
+
+            const branchR = document.createElement('div'); branchR.className = 'side-branch-right';
+            branchR.appendChild(createFlowerHeadElement('18deg'));
+            mainStem.appendChild(branchR);
+
+            flowerContainer.appendChild(mainStem);
+            layerMID.appendChild(flowerContainer);
+
+            // 4. GENERATOR ENERGI SPORA SARI BUNGA
             for (let s = 0; s < 10; s++) {
                 setTimeout(() => {
                     const spore = document.createElement('div');
                     spore.className = 'spore';
-                    spore.style.left = (Math.random() * 40 + 30) + 'vw';
-                    spore.style.bottom = '40px';
-                    spore.style.width = spore.style.height = (Math.random() * 4 + 3) + 'px';
-                    spore.style.setProperty('--sx', (Math.random() * 160 - 80) + 'px');
-                    spore.style.animationDelay = (Math.random() * 4) + 's';
-                    garden.appendChild(spore);
+                    spore.style.left = (Math.random() * 36 + 32) + 'vw';
+                    spore.style.bottom = '35px';
+                    spore.style.width = spore.style.height = (Math.random() * 3 + 2) + 'px';
+                    spore.style.setProperty('--sx', (Math.random() * 120 - 60) + 'px');
+                    spore.style.animationDelay = (Math.random() * 5) + 's';
+                    layerMID.appendChild(spore);
                 }, s * 300);
             }
 
-            // Lampu Sorot Atas
-            const lamp = document.createElement('div');
-            lamp.className = 'sparkle';
-            garden.appendChild(lamp);
-
-            const beam = document.createElement('div');
-            beam.className = 'spotlight-glow';
-            beam.style.height = 'calc(100vh - 8vh - 270px)';
-            garden.appendChild(beam);
-
-            // MEMBANGUN POHON UTAMA
-            const container = document.createElement('div');
-            container.className = 'organic-flower-container';
-
-            const leafCluster = document.createElement('div');
-            leafCluster.className = 'leaf-cluster';
-            leafCluster.innerHTML = `
-                <div class="base-leaf left"></div>
-                <div class="base-leaf right"></div>
-                <div class="base-leaf mid-left"></div>
-                <div class="base-leaf mid-right"></div>
-            `;
-            container.appendChild(leafCluster);
-
-            const mainStem = document.createElement('div');
-            mainStem.className = 'main-stem';
-
-            const headTop = createFlowerHeadElement('0deg');
-            mainStem.appendChild(headTop);
-
-            const branchL = document.createElement('div');
-            branchL.className = 'side-branch-left';
-            const headLeft = createFlowerHeadElement('-25deg');
-            branchL.appendChild(headLeft);
-            mainStem.appendChild(branchL);
-
-            const branchR = document.createElement('div');
-            branchR.className = 'side-branch-right';
-            const headRight = createFlowerHeadElement('20deg');
-            branchR.appendChild(headRight);
-            mainStem.appendChild(branchR);
-
-            container.appendChild(mainStem);
-            garden.appendChild(container);
-
-            // Kunang-Kunang Malam
-            for (let f = 0; f < 12; f++) {
+            // 5. KUNANG-KUNANG INTELLIGENT AI (Bisa Singgah Di Rumput)
+            for (let f = 0; f < 8; f++) {
                 const firefly = document.createElement('div');
                 firefly.className = 'firefly';
-                firefly.style.left = (Math.random() * 30 + 35) + 'vw';
-                firefly.style.bottom = (Math.random() * 50 + 15) + 'vh';
-                firefly.style.setProperty('--fx', (Math.random() * 120 - 60) + 'px');
-                firefly.style.setProperty('--fy', (Math.random() * -180 - 40) + 'px');
-                firefly.style.animationDelay = (Math.random() * 3) + 's';
-                garden.appendChild(firefly);
+                layerMID.appendChild(firefly);
+                animateSmartFirefly(firefly);
             }
+        }
+
+        // AI Loop Pergerakan Kunang-Kunang Alami & Hinggap
+        function animateSmartFirefly(ffElement) {
+            function loop() {
+                const targetRumput = grassArray[Math.floor(Math.random() * grassArray.length)];
+                const mauHinggap = Math.random() < 0.35 && targetRumput;
+                let targetX, targetY;
+
+                if (mauHinggap) {
+                    targetX = targetRumput.leftPos + (Math.random() * 2 - 1) + 'vw';
+                    targetY = (parseFloat(targetRumput.element.style.height) + 10) + 'px';
+                    ffElement.style.opacity = "0.9";
+                } else {
+                    targetX = (Math.random() * 40 + 30) + 'vw';
+                    targetY = (Math.random() * 50 + 20) + 'vh';
+                    ffElement.style.opacity = "0.45";
+                }
+
+                ffElement.style.left = targetX;
+                ffElement.style.bottom = targetY;
+
+                setTimeout(loop, Math.random() * 2000 + 2000);
+            }
+            setTimeout(() => {
+                ffElement.style.opacity = "0.7";
+                loop();
+            }, Math.random() * 3000);
         }
 
         function createFlowerHeadElement(rotationAngle) {
-            const head = document.createElement('div');
-            head.className = 'flower-head';
+            const head = document.createElement('div'); head.className = 'flower-head';
             head.style.setProperty('--r', rotationAngle);
-            
             for(let k = 1; k <= 5; k++) {
-                const p = document.createElement('div');
-                p.className = `organic-petal op-${k}`;
-                head.appendChild(p);
+                const p = document.createElement('div'); p.className = `organic-petal op-${k}`; head.appendChild(p);
             }
-            const center = document.createElement('div');
-            center.className = 'organic-center';
-            head.appendChild(center);
-            
+            const center = document.createElement('div'); center.className = 'organic-center'; head.appendChild(center);
             return head;
         }
 
-        function createBlossom() {
-            const b = document.createElement('div');
-            b.className = 'blossom';
+        // Loop Generator Kelopak Sakura Selamanya
+        setInterval(() => {
+            const b = document.createElement('div'); b.className = 'blossom';
             b.style.left = Math.random() * 100 + 'vw';
-            b.style.width = b.style.height = Math.random() * 14 + 8 + 'px';
-            b.style.animationDuration = Math.random() * 3 + 3 + 's';
+            b.style.width = b.style.height = Math.random() * 10 + 7 + 'px';
+            b.style.animationDuration = Math.random() * 4 + 3 + 's';
             document.body.appendChild(b);
-            setTimeout(() => b.remove(), 6000);
-        }
-        setInterval(createBlossom, 350);
+            setTimeout(() => b.remove(), 7000);
+        }, 400);
     </script>
 </body>
 </html>
