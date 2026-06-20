@@ -80,11 +80,11 @@
             100% { transform: rotate(0deg); }
         }
 
-        .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.4; pointer-events: none; animation: fall linear infinite; z-index: 1; }
+        .blossom { position: absolute; background: #ffb3c6; border-radius: 150% 0 150% 150%; opacity: 0.3; pointer-events: none; animation: fall linear infinite; z-index: 1; }
         @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
 
         /* WADAH KEBUN FOKUS TENGAH */
-        #garden { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
+        #garden { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; }
         
         /* Spotlight Cahaya Atas Lampu */
         .spotlight-glow {
@@ -97,6 +97,7 @@
             clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
             opacity: 0;
             animation: lightBeamOn 3s 1s ease-out forwards;
+            pointer-events: none;
             z-index: 4;
         }
         @keyframes lightBeamOn { 0% { opacity: 0; } 100% { opacity: 1; } }
@@ -109,10 +110,10 @@
             transform: translateX(-50%);
             width: 300px;
             height: 420px;
+            pointer-events: none;
             z-index: 6;
         }
 
-        /* 1. Batang Utama Tengah */
         .main-stem {
             position: absolute;
             bottom: 0;
@@ -127,7 +128,6 @@
         }
         @keyframes growStemOrganic { 0% { height: 0px; } 100% { height: 270px; } }
 
-        /* 2. Batang Cabang Kiri Miring */
         .side-branch-left {
             position: absolute;
             bottom: 110px;
@@ -142,7 +142,6 @@
         }
         @keyframes growBranchL { 0% { height: 0; } 100% { height: 85px; } }
 
-        /* 3. Batang Cabang Kanan Miring */
         .side-branch-right {
             position: absolute;
             bottom: 130px;
@@ -157,7 +156,6 @@
         }
         @keyframes growBranchR { 0% { height: 0; } 100% { height: 80px; } }
 
-        /* KEPALA BUNGA */
         .flower-head {
             position: absolute;
             top: 0;
@@ -176,7 +174,6 @@
             100% { transform: translate(-50%, -100%) scale(1) rotate(var(--r, 0deg)); } 
         }
 
-        /* Kelopak Biru Glowing */
         .organic-petal { position: absolute; width: 100%; height: 100%; background: #90e0ef; border-radius: 50% 50% 0 50%; transform-origin: center; box-shadow: 0 0 12px rgba(144, 224, 239, 0.7); border: 1px solid rgba(255,255,255,0.3); }
         .op-1 { transform: rotate(0deg); background: #caf0f8; }
         .op-2 { transform: rotate(72deg); background: #90e0ef; }
@@ -185,7 +182,6 @@
         .op-5 { transform: rotate(288deg); background: #90e0ef; }
         .organic-center { width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 19px; left: 19px; z-index: 12; box-shadow: 0 0 12px 3px #fff; }
 
-        /* Rimbun Daun Bawah */
         .leaf-cluster {
             position: absolute;
             bottom: 10px;
@@ -209,48 +205,71 @@
         .base-leaf.mid-left { width: 55px; height: 28px; bottom: 32px; left: 0px; transform: rotate(-15deg); }
         .base-leaf.mid-right { width: 55px; height: 28px; bottom: 32px; right: 0px; transform: scaleX(-1) rotate(-15deg); }
 
-        /* ================= DETAIL BARU: RUMPUT MIRIP REFERENSI FOTO ================= */
+        /* ================= SEKTOR RUMPUT INTERAKTIF DENGAN DOT-GLOW ================= */
         .organic-grass {
             position: absolute;
             bottom: -10px;
             transform-origin: bottom center;
             opacity: 0;
             z-index: 5;
-            box-shadow: inset -2px 0 6px rgba(255, 255, 255, 0.15);
-            animation: grassFadeUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, swayGrass 4.5s ease-in-out infinite alternate;
+            pointer-events: auto; /* Agar bisa menerima interaksi hover/touch */
+            cursor: pointer;
+            box-shadow: inset -1px 0 4px rgba(255, 255, 255, 0.1);
+            animation: grassFadeUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, swayGrass 5s ease-in-out infinite alternate;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
         }
 
-        /* Rumput Sisi Kiri: Melengkung Indah ke Kiri (Gaya Daun Melengkung Lebar) */
         .grass-left {
             border-radius: 100% 0px 100% 0px;
-            background: linear-gradient(to top right, #051923 15%, #0f4c5c 50%, #4ea8de 90%, #a2d2ff 100%);
-            filter: drop-shadow(0 0 8px rgba(78, 168, 222, 0.5));
+            background: linear-gradient(to top right, #04141c 15%, #0f4c5c 55%, #4ea8de 92%, #a2d2ff 100%);
+            filter: drop-shadow(0 0 6px rgba(78, 168, 222, 0.45));
         }
 
-        /* Rumput Sisi Kanan: Melengkung Terbalik secara Simetris ke Kanan */
         .grass-right {
             border-radius: 0px 100% 0px 100%;
-            background: linear-gradient(to top left, #051923 15%, #0f4c5c 50%, #4ea8de 90%, #a2d2ff 100%);
-            filter: drop-shadow(0 0 8px rgba(78, 168, 222, 0.5));
+            background: linear-gradient(to top left, #04141c 15%, #0f4c5c 55%, #4ea8de 92%, #a2d2ff 100%);
+            filter: drop-shadow(0 0 6px rgba(78, 168, 222, 0.45));
+        }
+
+        /* EFEK HOVER/SENTUH: Rumput Melengkung Lebih Sempurna & Berpendar */
+        .organic-grass:hover {
+            filter: drop-shadow(0 0 15px #90e0ef) brightness(1.3) !important;
+            transform: rotate(calc(var(--init-rot) * 1.6)) scaleY(1.08) !important;
         }
 
         @keyframes grassFadeUp {
             0% { height: 0px; opacity: 0; }
-            100% { opacity: 0.9; }
+            100% { opacity: 0.95; }
         }
 
-        /* Goyangan Daun Rumput Alami Akibat Hembusan Angin */
         @keyframes swayGrass {
-            0% { transform: rotate(var(--init-rot, -15deg)) scaleX(0.95) skewY(-1deg); }
-            100% { transform: rotate(calc(var(--init-rot, -15deg) + 12deg)) scaleX(1.05) skewY(2deg); }
+            0% { transform: rotate(var(--init-rot, -15deg)) scaleX(0.96) skewY(-0.5deg); }
+            100% { transform: rotate(calc(var(--init-rot, -15deg) + 10deg)) scaleX(1.04) skewY(1.5deg); }
         }
 
-        /* Lampu Sorot & Elemen Lain */
-        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; }
+        /* Spore/Sari Bunga Ajaib yang Terbang Naik dari Rumput */
+        .spore {
+            position: absolute;
+            background: #90e0ef;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatSpore 5s ease-in-out infinite;
+        }
+        @keyframes floatSpore {
+            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-75vh) translateX(var(--sx)) scale(1.2); opacity: 0; }
+        }
+
+        /* Elemen Atas */
+        .sparkle { position: absolute; left: 50%; transform: translateX(-50%); top: 8vh; width: 22px; height: 22px; background: #fff; border-radius: 50%; box-shadow: 0 0 35px 15px #fff, 0 0 70px 30px #90e0ef; opacity: 0; animation: flashLamp 2.5s ease-out infinite alternate; z-index: 7; pointer-events: none; }
         @keyframes flashLamp { 0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); } 100% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
         @keyframes cardPop { 0% { transform: scale(0.75); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .firefly { position: absolute; width: 5px; height: 5px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 6s linear infinite; z-index: 8; }
+        .firefly { position: absolute; width: 5px; height: 5px; background: #ccff33; border-radius: 50%; box-shadow: 0 0 15px 5px #ccff33; opacity: 0; animation: flyFirefly 7s linear infinite; z-index: 8; pointer-events: none; }
         @keyframes flyFirefly {
             0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
             15% { opacity: 0.8; }
@@ -346,7 +365,7 @@
         }
         function hindarClicked() { alert("Hayo mau klik Pilihan A ya? Gak bisa dong! 😜"); }
 
-        // GENERATOR STRUKTUR UTAMA
+        // GERAKAN UTAMA MAGIS KEBUN
         function triggerFlowerMagic() {
             const finalCard = document.getElementById('tahap5');
             finalCard.style.opacity = '0';
@@ -356,33 +375,53 @@
             document.body.classList.add('night-mode');
             const garden = document.getElementById('garden');
             
-            // GENERATOR HELAI DAUN RUMPUT MIRIP FOTO
-            const totalRumput = 22;
+            // GENERATOR RUMPUT REALISTIS & INTERAKTIF
+            const totalRumput = 26;
             for (let i = 0; i < totalRumput; i++) {
                 const grass = document.createElement('div');
                 const isLeft = i % 2 === 0;
                 
-                // Distribusi melebar mengelilingi pusat bunga
-                const posLeft = isLeft ? (Math.random() * 15 + 30) : (Math.random() * 15 + 55);
-                // Menentukan sudut kemiringan awal helai daun
-                const initRotation = isLeft ? (Math.random() * -20 - 10) : (Math.random() * 20 + 10);
+                // Distribusi menyebar alami
+                const posLeft = isLeft ? (Math.random() * 18 + 28) : (Math.random() * 18 + 54);
+                const initRotation = isLeft ? (Math.random() * -22 - 8) : (Math.random() * 22 + 8);
                 
                 grass.className = `organic-grass ${isLeft ? 'grass-left' : 'grass-right'}`;
                 grass.style.left = posLeft + 'vw';
                 
-                // Menghasilkan dimensi daun rumput yang lebar dan tebal di bagian dasar
-                const lebarDaun = Math.random() * 12 + 16; 
-                const tinggiDaun = Math.random() * 70 + 50; 
+                const lebarDaun = Math.random() * 10 + 15; 
+                const tinggiDaun = Math.random() * 80 + 45; 
                 
                 grass.style.width = lebarDaun + 'px';
                 grass.style.height = tinggiDaun + 'px';
-                
                 grass.style.setProperty('--init-rot', initRotation + 'deg');
-                // Mengacak delay animasi ayunan angin biar ga kompak/kaku
-                grass.style.animationDelay = (Math.random() * 0.6) + 's, ' + (Math.random() * -3) + 's';
-                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 3.5) + 's';
+                
+                // Keberagaman kedalaman kamera (Cinematic Layering)
+                if (tinggiDaun > 105) {
+                    grass.style.zIndex = "7"; // Di depan batang
+                    grass.style.filter += " blur(0.5px)";
+                } else if (tinggiDaun < 60) {
+                    grass.style.zIndex = "4"; // Di belakang batang
+                    grass.style.opacity = "0.75";
+                }
+
+                grass.style.animationDelay = (Math.random() * 0.5) + 's, ' + (Math.random() * -4) + 's';
+                grass.style.animationDuration = '1.8s, ' + (Math.random() * 2 + 4) + 's';
                 
                 garden.appendChild(grass);
+            }
+
+            // Spore Generator (Partikel Energi Terbang)
+            for (let s = 0; s < 10; s++) {
+                setTimeout(() => {
+                    const spore = document.createElement('div');
+                    spore.className = 'spore';
+                    spore.style.left = (Math.random() * 40 + 30) + 'vw';
+                    spore.style.bottom = '40px';
+                    spore.style.width = spore.style.height = (Math.random() * 4 + 3) + 'px';
+                    spore.style.setProperty('--sx', (Math.random() * 160 - 80) + 'px');
+                    spore.style.animationDelay = (Math.random() * 4) + 's';
+                    garden.appendChild(spore);
+                }, s * 300);
             }
 
             // Lampu Sorot Atas
@@ -395,11 +434,10 @@
             beam.style.height = 'calc(100vh - 8vh - 270px)';
             garden.appendChild(beam);
 
-            // MEMBANGUN STRUKTUR POHON UTAMA
+            // MEMBANGUN POHON UTAMA
             const container = document.createElement('div');
             container.className = 'organic-flower-container';
 
-            // Daun Rimbun Bawah Tanaman
             const leafCluster = document.createElement('div');
             leafCluster.className = 'leaf-cluster';
             leafCluster.innerHTML = `
@@ -410,22 +448,18 @@
             `;
             container.appendChild(leafCluster);
 
-            // Batang Utama Tengah
             const mainStem = document.createElement('div');
             mainStem.className = 'main-stem';
 
-            // Kepala bunga Tengah
             const headTop = createFlowerHeadElement('0deg');
             mainStem.appendChild(headTop);
 
-            // Batang Samping Kiri Miring
             const branchL = document.createElement('div');
             branchL.className = 'side-branch-left';
             const headLeft = createFlowerHeadElement('-25deg');
             branchL.appendChild(headLeft);
             mainStem.appendChild(branchL);
 
-            // Batang Samping Kanan Miring
             const branchR = document.createElement('div');
             branchR.className = 'side-branch-right';
             const headRight = createFlowerHeadElement('20deg');
@@ -435,7 +469,7 @@
             container.appendChild(mainStem);
             garden.appendChild(container);
 
-            // Efek Kunang-Kunang
+            // Kunang-Kunang Malam
             for (let f = 0; f < 12; f++) {
                 const firefly = document.createElement('div');
                 firefly.className = 'firefly';
