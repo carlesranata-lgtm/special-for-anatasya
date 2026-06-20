@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anatasya's Radiant Bioluminescent Garden</title>
+    <title>Anatasya's Perfect Blooming Garden</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -136,7 +136,6 @@
         }
 
         .stars-indicator { color: #ffb703; font-size: 0.85rem; }
-
         .media-buttons { display: flex; gap: 14px; align-items: center; }
 
         .btn-media {
@@ -225,7 +224,7 @@
     </div>
 
     <script>
-        // 1. GENERATE BACKGROUND TEXT CODE WRAPPER
+        // BACKGROUND CODE MATRIX POPULATION
         const codeLines = [
             "def create_bioluminescent_complex():",
             "    initialize_garden()",
@@ -265,22 +264,22 @@
         });
         container.innerHTML = codeBuffer;
 
-        // 2. CANVAS CORE RENDERING SYSTEM
+        // CANVAS CORE ENGINE
         const canvas = document.getElementById('gardenCanvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
         let h = canvas.height = window.innerHeight;
 
         let globalTime = 0;
-        let bloomScale = 0; // Mengatur jalannya animasi mekar bunga (0 ke 1)
+        let bloomScale = 0; // Mengontrol animasi mekar penuh secara real-time (0 -> 1)
 
         const hearts = [], notes = [], butterflies = [], grasses = [], hangingLeaves = [];
 
-        // --- EXTENSION STRUCT: GRASS BLADE ---
+        // STRUCT: RUMPUT INDAH DI SEKITAR BUNGA
         class GrassBlade {
             constructor(x) {
                 this.x = x;
-                this.height = Math.random() * 40 + 35;
+                this.height = Math.random() * 45 + 35;
                 this.width = Math.random() * 2 + 2;
                 this.swayMax = Math.random() * 12 + 6;
                 this.phase = Math.random() * Math.PI * 2;
@@ -302,7 +301,7 @@
             }
         }
 
-        // --- EXTENSION STRUCT: HANGING LEAVES (ATAS SKRIN) ---
+        // STRUCT: DAUN GANTUNG ATAS
         class HangingLeaf {
             constructor(x) {
                 this.x = x;
@@ -315,7 +314,6 @@
                 ctx.save();
                 ctx.translate(this.x, 0);
                 
-                // Tali Tangkai Daun
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
                 ctx.quadraticCurveTo(sway*0.5, this.length*0.5, sway, this.length);
@@ -323,7 +321,6 @@
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Daun Menjuntai
                 ctx.translate(sway, this.length);
                 ctx.rotate(sway * 0.02);
                 let leafGrad = ctx.createLinearGradient(0, 0, 0, 18);
@@ -338,7 +335,7 @@
             }
         }
 
-        // --- DECORATIVE FLOATING OBJECT MATRIX ---
+        // STRUCT: PARTICLES
         class FloatingDecoration {
             constructor(type) {
                 this.type = type;
@@ -364,8 +361,7 @@
                 
                 if(this.type === 'heart') {
                     ctx.fillStyle = 'rgba(255, 117, 143, 0.5)';
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
+                    ctx.beginPath(); ctx.moveTo(0, 0);
                     ctx.bezierCurveTo(-10, -12, -20, -5, -20, 5);
                     ctx.bezierCurveTo(-20, 15, -10, 22, 0, 30);
                     ctx.bezierCurveTo(10, 22, 20, 15, 20, 5);
@@ -373,9 +369,7 @@
                     ctx.fill();
                 } else if(this.type === 'note') {
                     ctx.fillStyle = 'rgba(0, 245, 212, 0.55)';
-                    ctx.beginPath();
-                    ctx.arc(0, 0, 4, 0, Math.PI*2);
-                    ctx.fill();
+                    ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI*2); ctx.fill();
                     ctx.fillRect(3, -12, 2.5, 12);
                     ctx.fillRect(3, -12, 8, 3);
                 } else {
@@ -390,7 +384,7 @@
             }
         }
 
-        // --- DRAW CEILING LIGHT SYSTEM (GOD RAYS) ---
+        // LIGHT RAY GRADIENTS (GOD RAYS)
         function drawGodRays() {
             ctx.save();
             let rayGrad = ctx.createLinearGradient(w/2, 0, w/2, h*0.7);
@@ -400,129 +394,122 @@
             
             ctx.fillStyle = rayGrad;
             ctx.beginPath();
-            ctx.moveTo(w/2 - 120, 0);
-            ctx.lineTo(w/2 + 120, 0);
-            ctx.lineTo(w/2 + 350, h * 0.8);
-            ctx.lineTo(w/2 - 350, h * 0.8);
+            ctx.moveTo(w/2 - 140, 0); ctx.lineTo(w/2 + 140, 0);
+            ctx.lineTo(w/2 + 380, h * 0.85); ctx.lineTo(w/2 - 380, h * 0.85);
             ctx.closePath();
             ctx.fill();
             ctx.restore();
         }
 
-        // --- ADVANCED BLOOMING BIOLUMINESCENT FLOWER SHAPER ---
-        function drawBloomingFlower(centerX, centerY, baseSize, maxSway) {
-            let sway = Math.sin(globalTime * 0.018 + centerX) * maxSway;
+        // MASTER FUNCTION: THE PERFECT SMOOTH ANIMATED BLOOMING FLOWER
+        function drawPerfectBloomingFlower(centerX, centerY, baseSize, maxSway) {
+            let sway = Math.sin(globalTime * 0.02 + centerX) * maxSway;
             let endX = centerX + sway;
             let endY = centerY - baseSize;
 
-            // 1. Stem Path
+            // Batang Bunga
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.quadraticCurveTo(centerX - sway*0.2, centerY - baseSize*0.5, endX, endY);
             ctx.strokeStyle = 'rgba(0, 132, 186, 0.5)';
-            ctx.lineWidth = 3.5;
+            ctx.lineWidth = 3;
             ctx.stroke();
 
-            // Tangkai Daun Bawah
+            // Sisi Daun Kecil Tangkai
             ctx.save();
-            ctx.translate(centerX + sway*0.4, centerY - baseSize*0.3);
-            ctx.rotate(Math.PI/4 + sway*0.01);
-            let leafGrad = ctx.createLinearGradient(0,0,25,0);
-            leafGrad.addColorStop(0, '#005f73');
-            leafGrad.addColorStop(1, '#00f5d4');
+            ctx.translate(centerX + sway*0.35, centerY - baseSize*0.3);
+            ctx.rotate(Math.PI/4);
+            let leafGrad = ctx.createLinearGradient(0,0,20,0);
+            leafGrad.addColorStop(0, '#005f73'); leafGrad.addColorStop(1, '#00f5d4');
             ctx.fillStyle = leafGrad;
-            ctx.beginPath(); ctx.ellipse(12, 0, 14, 5, 0, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(10, 0, 12, 4, 0, 0, Math.PI*2); ctx.fill();
             ctx.restore();
 
-            // 2. Blooming Petals Matrix (Mekar Tergantung Nilai bloomScale)
+            // Kelopak Bunga Mekar (Mengikuti Skala Dinamis bloomScale)
             ctx.save();
             ctx.translate(endX, endY);
-            ctx.scale(bloomScale, bloomScale); // Efek pertumbuhan animasi mekar
-            ctx.rotate(sway * 0.004);
+            ctx.scale(bloomScale, bloomScale); // Efek membesar/tumbuh murni berbasis matriks skala
+            ctx.rotate(sway * 0.005);
             
-            // Outer Ring Petals (6 unit)
             for(let i=0; i<6; i++) {
                 ctx.rotate(Math.PI / 3);
-                let petalGrad = ctx.createLinearGradient(0, 0, 0, -28);
+                let petalGrad = ctx.createLinearGradient(0, 0, 0, -25);
                 petalGrad.addColorStop(0, '#00b4d8');
                 petalGrad.addColorStop(0.7, '#00f5d4');
                 petalGrad.addColorStop(1, '#ffffff');
                 ctx.fillStyle = petalGrad;
                 ctx.beginPath();
-                ctx.ellipse(0, -14, 8, 18, 0, 0, Math.PI*2);
+                ctx.ellipse(0, -12, 7, 16, 0, 0, Math.PI*2);
                 ctx.fill();
             }
 
-            // Inner Core Light Putik
+            // Putik Bercahaya Tengah
             ctx.beginPath();
-            ctx.arc(0, 0, 6, 0, Math.PI*2);
+            ctx.arc(0, 0, 5, 0, Math.PI*2);
             ctx.fillStyle = '#ffffff';
-            ctx.shadowBlur = 18;
-            ctx.shadowColor = '#00f5d4';
+            ctx.shadowBlur = 15; ctx.shadowColor = '#00f5d4';
             ctx.fill();
             ctx.restore();
             ctx.shadowBlur = 0;
         }
 
-        // --- POOL CONSTRUCTOR INITIALIZER ---
+        // POOL CONSTRUCTOR
         function setupEnvironmentPool() {
-            grasses.length = 0;
-            hangingLeaves.length = 0;
-
-            // Susun Rerumputan Rapat di Bawah
-            for(let x=0; x<w; x+=5) grasses.push(new GrassBlade(x));
-            // Susun Daun Menggantung di Atas
+            grasses.length = 0; hangingLeaves.length = 0;
+            for(let x=0; x<w; x+=6) grasses.push(new GrassBlade(x));
             for(let x=20; x<w; x+=45) hangingLeaves.push(new HangingLeaf(x));
             
             hearts.length = 0; notes.length = 0; butterflies.length = 0;
-            for(let i=0; i<10; i++) hearts.push(new FloatingDecoration('heart'));
-            for(let i=10; i<20; i++) notes.push(new FloatingDecoration('note'));
-            for(let i=0; i<7; i++) butterflies.push(new FloatingDecoration('butterfly'));
+            for(let i=0; i<12; i++) hearts.push(new FloatingDecoration('heart'));
+            for(let i=0; i<12; i++) notes.push(new FloatingDecoration('note'));
+            for(let i=0; i<8; i++) butterflies.push(new FloatingDecoration('butterfly'));
         }
 
-        // 3. MASTER REAL-TIME REFRESH RENDER PIPELINE
-        function masterEngineRun() {
+        // MAIN REFRESH PIPELINE
+        function runEngine() {
             globalTime++;
             
-            // Jalankan Animasi Mekar Perlahan di Awal Load
-            if(bloomScale < 1) bloomScale += 0.006;
+            // Animasi mekar tumbuh berjalan konstan sampai mekar penuh sempurna
+            if(bloomScale < 1) {
+                bloomScale += 0.005; // Nilai kelenturan mekar yang pas
+            }
 
             ctx.clearRect(0, 0, w, h);
 
-            // Layer 1: Sorotan Cahaya Langit (Menerangi Atas ke Bawah)
+            // 1. Sorotan Cahaya Langit (God Rays)
             drawGodRays();
 
-            // Layer 2: Daun Atas Layar
+            // 2. Daun Atas Layar
             hangingLeaves.forEach(l => l.draw());
 
-            // Layer 3: Elemen Dekorasi Melayang
+            // 3. Objek Melayang
             hearts.forEach(h => { h.update(); h.draw(); });
             notes.forEach(n => { n.update(); n.draw(); });
             butterflies.forEach(b => { b.update(); b.draw(); });
 
-            // Layer 4: Rimbunan Semak Bunga Mekar (Tengah Bawah)
+            // 4. Proses Pembuatan Semak Rimbun & Mekar Sempurna
             let centerPoint = w / 2;
-            for(let xOffset = -240; xOffset <= 240; xOffset += 28) {
+            for(let xOffset = -220; xOffset <= 220; xOffset += 25) {
                 let currentX = centerPoint + xOffset;
-                let heightFactor = (1 - Math.abs(xOffset) / 320); 
-                let calculatedHeight = 110 + (heightFactor * 140) + Math.sin(currentX) * 15;
+                let heightFactor = (1 - Math.abs(xOffset) / 300); 
+                let calculatedHeight = 110 + (heightFactor * 130) + Math.sin(currentX) * 20;
                 
-                drawBloomingFlower(currentX, h + 5, calculatedHeight, 14 + (heightFactor * 10));
+                drawPerfectBloomingFlower(currentX, h + 8, calculatedHeight, 15 + (heightFactor * 10));
             }
 
-            // Layer 5: Hamparan Rumput Keliling di Depan Bunga
+            // 5. Hamparan Rerumputan di Bagian Depan
             grasses.forEach(g => g.draw());
 
-            // Timeline Player Tracker Bar Sync
+            // Music Controller Tracker
             if(activeFillId) {
                 trackProgress = (trackProgress + 0.05) % 100;
                 document.getElementById(activeFillId).style.width = trackProgress + "%";
             }
 
-            requestAnimationFrame(masterEngineRun);
+            requestAnimationFrame(runEngine);
         }
 
-        // 4. AUDIO CONTROLLER INTEGRATION (WEB AUDIO API)
+        // AUDIO ENGINE
         let audioCtx = null, audioInterval = null, isPlaying = false, activeFillId = null, trackProgress = 0;
 
         function toggleAudio(tempo, notesArr, fillId) {
@@ -558,13 +545,9 @@
             }, tempo);
         }
 
-        window.addEventListener('resize', () => { 
-            w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; 
-            setupEnvironmentPool(); 
-        });
-
+        window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; setupEnvironmentPool(); });
         setupEnvironmentPool();
-        masterEngineRun();
+        runEngine();
     </script>
 </body>
 </html>
